@@ -9,6 +9,10 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Service class for managing exercises.
+ * It handles CRUD operations for exercises, ensuring that operations are performed for the currently authenticated user.
+ */
 @Service
 public class ExerciseService {
 
@@ -18,32 +22,63 @@ public class ExerciseService {
         this.exerciseRepository = exerciseRepository;
     }
 
+    /**
+     * Retrieves all exercises associated with the currently authenticated user.
+     *
+     * @return A list of Exercise entities.
+     */
     public List<Exercise> getAllExercises() {
         return exerciseRepository.findAllByUser(getCurrentUser());
     }
 
+    /**
+     * Retrieves a specific exercise by its ID, for the currently authenticated user.
+     * @param id The ID of the exercise to retrieve.
+     * @return An Optional containing the Exercise if found, otherwise empty.
+     */
     public Optional<Exercise> getExerciseById(Long id) {
         return exerciseRepository.findByIdAndUser(id, getCurrentUser());
     }
 
+    /**
+     * Updates an existing exercise for the currently authenticated user.
+     * It finds the exercise by ID and user, then updates its name and description.
+     * @param id The ID of the exercise to update.
+     * @param updatedExercise The Exercise entity with updated information.
+     * @return An Optional containing the updated Exercise if successful, otherwise empty.
+     */
     public Optional<Exercise> updateExercise(Long id, Exercise updatedExercise) {
+        // Find the exercise by ID and current user before updating
         return exerciseRepository.findByIdAndUser(id, getCurrentUser())
                 .map(exercise -> {
                     exercise.setName(updatedExercise.getName());
                     exercise.setDescription(updatedExercise.getDescription());
-                    return exerciseRepository.save(exercise);
+                    return exerciseRepository.save(exercise); // Persist changes
                 });
     }
 
+    /**
+     * Saves a new exercise, associating it with the currently authenticated user.
+     * @param newExercise The Exercise entity to save.
+     * @return The saved Exercise entity.
+     */
     public Exercise saveExercise(Exercise newExercise) {
-        newExercise.setUser(getCurrentUser());
+        newExercise.setUser(getCurrentUser()); // Set the current user to the new exercise
         return exerciseRepository.save(newExercise);
     }
 
+    /**
+     * Deletes an exercise by its ID, for the currently authenticated user.
+     * @param id The ID of the exercise to delete.
+     */
     public void deleteExercise(Long id) {
         exerciseRepository.deleteByIdAndUser(id, getCurrentUser());
     }
 
+    /**
+     * Retrieves the currently authenticated user from the security context.
+     * @return The User entity representing the current user.
+     */
     private User getCurrentUser() {
         return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
