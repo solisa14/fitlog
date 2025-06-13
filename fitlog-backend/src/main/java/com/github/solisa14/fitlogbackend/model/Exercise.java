@@ -2,6 +2,10 @@ package com.github.solisa14.fitlogbackend.model;
 
 import jakarta.persistence.*;
 
+/**
+ * Represents an exercise entity in the application.
+ * Each exercise is associated with a user and has a name and description.
+ */
 @Entity(name = "exercise")
 @Table(name = "exercises")
 public class Exercise {
@@ -18,6 +22,7 @@ public class Exercise {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
+    // Specifies the foreign key column in the exercises table
     private User user;
 
     public Exercise() {

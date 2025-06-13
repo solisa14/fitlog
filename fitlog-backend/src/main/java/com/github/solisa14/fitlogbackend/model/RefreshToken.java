@@ -4,6 +4,10 @@ import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
+/**
+ * Represents a refresh token entity used for maintaining user authentication sessions.
+ * Each token is associated with a user and has an expiry date.
+ */
 @Entity
 @Table(name = "refresh_tokens")
 public class RefreshToken {
@@ -19,6 +23,7 @@ public class RefreshToken {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
+    // Specifies the foreign key column
     private User user;
 
     // Constructors

@@ -7,6 +7,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * Represents a user in the application.
+ * Implements UserDetails for Spring Security integration, providing core user information.
+ */
 @Entity(name = "app_user")
 @Table(name = "users")
 public class User implements UserDetails {
