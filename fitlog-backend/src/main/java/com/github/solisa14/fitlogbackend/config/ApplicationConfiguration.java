@@ -1,3 +1,8 @@
+/**
+ * Configures the application beans, including user details service, authentication manager,
+ * authentication provider, and password encoder.
+ * This configuration is essential for setting up Spring Security throughout the application.
+ */
 package com.github.solisa14.fitlogbackend.config;
 
 import com.github.solisa14.fitlogbackend.repository.UserRepository;
@@ -20,6 +25,12 @@ public class ApplicationConfiguration {
         this.userRepository = userRepository;
     }
 
+    /**
+     * Provides a UserDetailsService bean that retrieves user details by email.
+     * This is used for authentication.
+     *
+     * @return UserDetailsService implementation
+     */
     @Bean
     UserDetailsService userDetailsService() {
         return username -> userRepository.findByEmail(username)
@@ -28,11 +39,24 @@ public class ApplicationConfiguration {
                 ));
     }
 
+    /**
+     * Provides an AuthenticationManager bean for managing authentication.
+     *
+     * @param configuration the AuthenticationConfiguration
+     * @return the AuthenticationManager
+     * @throws Exception if an error occurs while creating the AuthenticationManager
+     */
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
         return configuration.getAuthenticationManager();
     }
 
+    /**
+     * Provides an AuthenticationProvider bean that uses the UserDetailsService and PasswordEncoder.
+     * This is used for authenticating users.
+     *
+     * @return AuthenticationProvider implementation
+     */
     @Bean
     AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider(userDetailsService());
@@ -40,6 +64,12 @@ public class ApplicationConfiguration {
         return authenticationProvider;
     }
 
+    /**
+     * Provides a PasswordEncoder bean that uses BCrypt for encoding passwords.
+     * This is used to securely store and verify user passwords.
+     *
+     * @return PasswordEncoder implementation
+     */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
