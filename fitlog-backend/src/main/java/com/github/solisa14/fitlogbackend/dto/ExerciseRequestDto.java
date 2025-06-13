@@ -8,6 +8,9 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+/**
+ * Data Transfer Object for exercise creation and update requests.
+ */
 public class ExerciseRequestDto {
     @NotBlank(message = "Exercise name should not be blank")
     @Size(max = 50, message = "Exercise name should not exceed 50 characters")

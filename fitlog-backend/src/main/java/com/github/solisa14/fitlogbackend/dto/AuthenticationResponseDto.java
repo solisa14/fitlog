@@ -1,5 +1,8 @@
 package com.github.solisa14.fitlogbackend.dto;
 
+/**
+ * Data Transfer Object for authentication responses.
+ */
 public class AuthenticationResponseDto {
     private String token;
     private String username;

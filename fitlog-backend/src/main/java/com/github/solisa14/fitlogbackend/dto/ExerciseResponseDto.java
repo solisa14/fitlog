@@ -2,6 +2,9 @@ package com.github.solisa14.fitlogbackend.dto;
 
 import com.github.solisa14.fitlogbackend.model.Exercise;
 
+/**
+ * Data Transfer Object for exercise responses.
+ */
 public class ExerciseResponseDto {
     private Long id;
     private String name;

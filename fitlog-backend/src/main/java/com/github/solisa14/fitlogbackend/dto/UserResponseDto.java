@@ -1,5 +1,8 @@
 package com.github.solisa14.fitlogbackend.dto;
 
+/**
+ * Data Transfer Object for user responses.
+ */
 public class UserResponseDto {
     private Long id;
     private String email;

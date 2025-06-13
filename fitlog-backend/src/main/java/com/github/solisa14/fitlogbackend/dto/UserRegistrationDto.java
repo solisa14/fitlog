@@ -4,6 +4,9 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 
+/**
+ * Data Transfer Object for user registration.
+ */
 public class UserRegistrationDto {
     @NotBlank(message = "Email should not be blank")
     @Email(message = "Email should be a valid email address")
