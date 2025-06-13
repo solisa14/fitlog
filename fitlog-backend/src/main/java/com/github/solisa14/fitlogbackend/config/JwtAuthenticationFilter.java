@@ -1,3 +1,9 @@
+/**
+ * Configuration class for the JWT authentication filter. This filter
+ * intercepts requests and checks for a valid JWT token and valid user details.
+ * Throws exceptions if the token is invalid or user details are not found.
+ */
+
 package com.github.solisa14.fitlogbackend.config;
 
 import com.github.solisa14.fitlogbackend.util.JwtUtil;
@@ -35,6 +41,19 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         this.handlerExceptionResolver = handlerExceptionResolver;
     }
 
+    /**
+     * This method is called once per request to filter the incoming HTTP request.
+     * It checks for a valid JWT token. It then retrieves the user's email from the token's
+     * claims and loads user details. If the token is valid and user details are found, it sets
+     * the authentication in the security context and continues the filter chain. Throws
+     * exceptions if the token is invalid or user details are not found.
+     *
+     * @param request     HTTP request
+     * @param response    HTTP response
+     * @param filterChain Filter chain to continue processing the request
+     * @throws ServletException If an error occurs during request processing
+     * @throws IOException      If an I/O error occurs during request processing
+     */
     @Override
     protected void doFilterInternal(
             @NonNull HttpServletRequest request,
@@ -54,8 +73,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
+            // Check if the email was extracted and if user is not already authenticated
             if (email != null && authentication == null) {
                 UserDetails userDetails = this.userDetailsService.loadUserByUsername(email);
+                // Set an authentication token with user details if the JWT is valid
                 if (jwtService.isTokenValid(jwt, userDetails)) {
                     UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                             userDetails,
@@ -63,6 +84,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                             userDetails.getAuthorities()
                     );
 
+                    // Set details for the authentication token
                     authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                     SecurityContextHolder.getContext().setAuthentication(authToken);
                 }
