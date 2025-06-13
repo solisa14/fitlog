@@ -1,9 +1,3 @@
-/**
- * Configuration class for the JWT authentication filter. This filter
- * intercepts requests and checks for a valid JWT token and valid user details.
- * Throws exceptions if the token is invalid or user details are not found.
- */
-
 package com.github.solisa14.fitlogbackend.config;
 
 import com.github.solisa14.fitlogbackend.util.JwtUtil;
@@ -24,6 +18,11 @@ import org.springframework.web.servlet.HandlerExceptionResolver;
 
 import java.io.IOException;
 
+/**
+ * Configuration class for the JWT authentication filter. This filter
+ * intercepts requests and checks for a valid JWT token and valid user details.
+ * Throws exceptions if the token is invalid or user details are not found.
+ */
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final HandlerExceptionResolver handlerExceptionResolver;

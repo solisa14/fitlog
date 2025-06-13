@@ -1,6 +1,3 @@
-/**
- * Controller for handling user authentication and registration using RESTful API endpoints.
- */
 package com.github.solisa14.fitlogbackend.controller;
 
 import com.github.solisa14.fitlogbackend.dto.AuthenticationRequestDto;
@@ -25,6 +22,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
 
+/**
+ * Controller for handling user authentication and registration using RESTful API endpoints.
+ */
 @RestController
 @RequestMapping("/api/v1/auth")
 public class AuthenticationController {

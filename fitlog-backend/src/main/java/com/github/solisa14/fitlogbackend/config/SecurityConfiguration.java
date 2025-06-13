@@ -1,8 +1,3 @@
-/**
- * Configuration class for security settings in the application.
- * Configures the HTTP security, authentication provider, JWT filter, and CORS settings.
- * These are essential for setting up the security layer of the application and ensuring it works properly with JWT authentication.
- */
 package com.github.solisa14.fitlogbackend.config;
 
 import org.springframework.context.annotation.Bean;
@@ -20,6 +15,11 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.List;
 
+/**
+ * Configuration class for security settings in the application.
+ * Configures the HTTP security, authentication provider, JWT filter, and CORS settings.
+ * These are essential for setting up the security layer of the application and ensuring it works properly with JWT authentication.
+ */
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration {

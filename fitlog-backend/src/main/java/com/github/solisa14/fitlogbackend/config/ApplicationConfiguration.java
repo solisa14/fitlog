@@ -1,8 +1,3 @@
-/**
- * Configures the application beans, including user details service, authentication manager,
- * authentication provider, and password encoder.
- * This configuration is essential for setting up Spring Security throughout the application.
- */
 package com.github.solisa14.fitlogbackend.config;
 
 import com.github.solisa14.fitlogbackend.repository.UserRepository;
@@ -17,6 +12,11 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+/**
+ * Configures the application beans, including user details service, authentication manager,
+ * authentication provider, and password encoder.
+ * This configuration is essential for setting up Spring Security throughout the application.
+ */
 @Configuration
 public class ApplicationConfiguration {
     private final UserRepository userRepository;
