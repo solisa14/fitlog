@@ -71,10 +71,4 @@ public class Exercise {
         return String.format("Exercise{id=%d, name=%s, description=%s}",
                 id, name, description);
     }
-
-    // TODO: Implement muscle group and equipment types later
-    // @Column
-    // private MuscleGroup muscleGroup;
-    // @Column
-    // private EquipmentType equipmentType;
 }
