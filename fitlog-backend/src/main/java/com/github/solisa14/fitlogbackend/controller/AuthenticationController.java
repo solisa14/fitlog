@@ -1,3 +1,6 @@
+/**
+ * Controller for handling user authentication and registration using RESTful API endpoints.
+ */
 package com.github.solisa14.fitlogbackend.controller;
 
 import com.github.solisa14.fitlogbackend.dto.AuthenticationRequestDto;
@@ -37,14 +40,21 @@ public class AuthenticationController {
         this.userService = userService;
     }
 
+    /**
+     * Handles user login by authenticating the user's credentials (email and password).
+     *
+     * @param authenticationRequest the authentication request containing email and password
+     * @return ResponseEntity containing the authentication response with JWT token and refresh token
+     */
     @PostMapping("/login")
     public ResponseEntity<AuthenticationResponseDto> login(@Valid @RequestBody AuthenticationRequestDto authenticationRequest) {
+        // Authenticate user credentials using the AuthenticationManager
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(authenticationRequest.getEmail(), authenticationRequest.getPassword())
         );
+        // If authentication is successful, retrieve user details and generate JWT token and refresh token
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         String token = jwtUtil.generateToken(userDetails);
-
         RefreshToken refreshToken = refreshTokenService.createRefreshToken((User) userDetails);
 
         return ResponseEntity.status(HttpStatus.OK).body(
@@ -57,10 +67,16 @@ public class AuthenticationController {
         );
     }
 
+    /**
+     * Handles user registration by creating a new user account.
+     * @param userRegistrationDto the user registration data
+     * @return ResponseEntity containing the authentication response with JWT token and refresh token
+     */
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponseDto> register(@Valid @RequestBody UserRegistrationDto userRegistrationDto) {
         User user = userService.registerUser(userRegistrationDto);
 
+        // Authenticate the newly registered user to generate JWT token and refresh token
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(userRegistrationDto.getEmail(), userRegistrationDto.getPassword())
         );
@@ -78,6 +94,11 @@ public class AuthenticationController {
         );
     }
 
+    /**
+     * Handles user logout by deleting the refresh token associated with the user.
+     * @param request a map containing the refresh token
+     * @return ResponseEntity indicating a successful logout
+     */
     @PostMapping("/logout")
     public ResponseEntity<Void> logout(@RequestBody Map<String, String> request) {
         String refreshToken = request.get("refreshToken");
@@ -87,10 +108,16 @@ public class AuthenticationController {
         return ResponseEntity.ok().build();
     }
 
+    /**
+     * Refreshes the access token using a valid refresh token.
+     * @param request a map containing the refresh token
+     * @return ResponseEntity containing the new authentication response with access token and refresh token
+     */
     @PostMapping("/refresh")
     public ResponseEntity<AuthenticationResponseDto> refresh(@RequestBody Map<String, String> request) {
         String refreshToken = request.get("refreshToken");
 
+        // Look up the refresh token and check if it is valid
         return refreshTokenService.findByToken(refreshToken)
                 .filter(token -> !token.isExpired())
                 .map(token -> {
