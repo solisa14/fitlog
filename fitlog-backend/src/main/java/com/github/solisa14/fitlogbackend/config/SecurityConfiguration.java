@@ -62,13 +62,14 @@ public class SecurityConfiguration {
     /**
      * Configures CORS settings for the application.
      * This is essential for allowing cross-origin requests to the API.
+     *
      * @return CorsConfigurationSource object that defines the CORS rules
      */
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
 
-        configuration.setAllowedOrigins(List.of("*")); // TODO: Replace with specific origins in production
+        configuration.setAllowedOrigins(List.of("http://localhost:5173"));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
         configuration.setAllowedHeaders(List.of("Authorization", "Content-Type"));
 
