@@ -19,7 +19,7 @@ function setRefreshToken(token: string): void {
     sessionStorage.setItem('refreshToken', token);
 }
 
-export function getIsAuthenticated(): boolean {
+export function isAuthenticated(): boolean {
     const token = getAuthToken();
     return token !== null;
 }
