@@ -1,5 +1,7 @@
+import * as React from "react";
 import { useState } from "react";
 import type { Exercise } from "./ExercisePage";
+import styles from "./Exercise.module.css";
 
 interface ExerciseFormProps {
   exercise: Exercise | null;
@@ -27,28 +29,44 @@ export default function ExerciseForm({
   }
 
   return (
-    <div>
+    <>
       <h2>{exercise ? "Edit Exercise" : "Create Exercise"}</h2>
       <form onSubmit={handleSubmit}>
-        <label>Name</label>
-        <input
-          type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
+        <div>
+          <label>Name</label>
+          <input
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Enter exercise name"
+            required
+          />
+        </div>
 
-        <label>Description</label>
-        <input
-          type="text"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-        />
+        <div>
+          <label>Description</label>
+          <input
+            type="text"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            placeholder="Enter exercise description"
+            required
+          />
+        </div>
 
-        <button type="submit">{exercise ? "Update" : "Create"}</button>
-        <button type="button" onClick={onCancel}>
-          Cancel
-        </button>
+        <div className={styles.formActions}>
+          <button type="submit" className={styles.submitButton}>
+            {exercise ? "Update" : "Create"}
+          </button>
+          <button
+            type="button"
+            className={styles.cancelButton}
+            onClick={onCancel}
+          >
+            Cancel
+          </button>
+        </div>
       </form>
-    </div>
+    </>
   );
 }

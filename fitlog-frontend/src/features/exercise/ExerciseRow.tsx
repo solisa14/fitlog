@@ -1,4 +1,5 @@
 import type { Exercise } from "./ExercisePage.tsx";
+import styles from "./Exercise.module.css";
 
 interface ExerciseRowProps {
   exercise: Exercise;
@@ -24,10 +25,14 @@ export default function ExerciseRow({
       <td>{name}</td>
       <td>{description}</td>
       <td>
-        <button onClick={handleEdit}>Edit</button>
-      </td>
-      <td>
-        <button onClick={handleDelete}>Delete</button>
+        <div className={styles.actionButtons}>
+          <button className={styles.editButton} onClick={handleEdit}>
+            Edit
+          </button>
+          <button className={styles.deleteButton} onClick={handleDelete}>
+            Delete
+          </button>
+        </div>
       </td>
     </tr>
   );

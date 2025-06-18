@@ -23,7 +23,7 @@ export default function LoginPage() {
         const response = await login(email, password);
         // Reset fields after login attempt
         if (response.token && response.refreshToken) {
-            navigate('/home');
+            navigate('/exercises'); // TODO: change to home page
         } else {
             alert('Login failed, please try again.');
             console.error('Login failed');

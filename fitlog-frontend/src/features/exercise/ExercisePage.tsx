@@ -7,6 +7,7 @@ import {
 } from "../../services/ExerciseService";
 import ExerciseTable from "./ExerciseTable";
 import ExerciseForm from "./ExerciseForm";
+import styles from "./Exercise.module.css";
 
 export interface Exercise {
   id: string;
@@ -20,6 +21,7 @@ export default function ExercisePage() {
   const [displayExerciseForm, setDisplayExerciseForm] = useState(false);
 
   async function handleCreateExercise(exercise: Exercise) {
+    setDisplayExerciseForm(false);
     const createdExercise = await createExercise({
       id: "",
       name: exercise.name,
@@ -34,6 +36,7 @@ export default function ExercisePage() {
   }
 
   async function handleUpdateExercise(exercise: Exercise) {
+    setDisplayExerciseForm(false);
     const updatedExercise = await updateExercise({
       id: exercise.id,
       name: exercise.name,
@@ -64,24 +67,35 @@ export default function ExercisePage() {
   }, []);
 
   return (
-    <div>
-      <div>
-        <h1>My Exercises</h1>
-        <button onClick={handleToggleExerciseForm}>+ Create Exercise</button>
-      </div>
-      <ExerciseTable
-        exercises={exercises}
-        onEdit={handleEditExercise}
-        onDelete={handleDeleteExercise}
-      />
-      {displayExerciseForm && (
-        <ExerciseForm
-          exercise={exerciseToEdit}
-          onCancel={handleToggleExerciseForm}
-          onCreate={handleCreateExercise}
-          onEdit={handleUpdateExercise}
+    <div className={styles.exercisePageContainer}>
+      <div className={styles.exercisePageContent}>
+        <div className={styles.exercisePageHeader}>
+          <h1>My Exercises</h1>
+          <button
+            className={styles.createButton}
+            onClick={handleToggleExerciseForm}
+          >
+            + Create Exercise
+          </button>
+        </div>
+        <ExerciseTable
+          exercises={exercises}
+          onEdit={handleEditExercise}
+          onDelete={handleDeleteExercise}
         />
-      )}
+        {displayExerciseForm && (
+          <div className={styles.formOverlay}>
+            <div className={styles.formContainer}>
+              <ExerciseForm
+                exercise={exerciseToEdit}
+                onCancel={handleToggleExerciseForm}
+                onCreate={handleCreateExercise}
+                onEdit={handleUpdateExercise}
+              />
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

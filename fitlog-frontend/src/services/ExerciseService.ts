@@ -1,4 +1,4 @@
-import { getAuthToken, isAuthenticated } from "./AuthService.ts";
+import { getAuthToken } from "./AuthService.ts";
 
 export interface ExerciseRequest {
   id: string;
@@ -15,25 +15,25 @@ export interface ExerciseResponse {
 const BASE_URL: string = "http://localhost:8080/api/v1/exercises";
 
 export async function createExercise(
-    exerciseRequest: ExerciseRequest
-  ): Promise<ExerciseResponse> {
-    const token = getAuthTokenAndValidate();
-  
-    const response = await fetch(BASE_URL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(exerciseRequest),
-    });
-  
-    if (!response.ok) {
-      throw new Error("Failed to create exercise");
-    }
-  
-    return await response.json();
+  exerciseRequest: ExerciseRequest
+): Promise<ExerciseResponse> {
+  const token = getAuthTokenAndValidate();
+
+  const response = await fetch(BASE_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(exerciseRequest),
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to create exercise");
   }
+
+  return await response.json();
+}
 
 export async function getExercises(): Promise<ExerciseResponse[]> {
   const token = getAuthTokenAndValidate();
@@ -64,9 +64,11 @@ export async function updateExercise(
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
+    body: JSON.stringify(exerciseRequest),
   });
 
   if (!response.ok) {
+    console.log(response);
     throw new Error("Failed to update exercise");
   }
 
@@ -74,19 +76,18 @@ export async function updateExercise(
 }
 
 export async function deleteExercise(id: string) {
-  if (!isAuthenticated()) {
-    throw new Error("Not authenticated");
-  }
+  const token = getAuthTokenAndValidate();
 
   const response = await fetch(`${BASE_URL}/${id}`, {
     method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
   });
 
   if (!response.ok) {
     throw new Error("Failed to delete exercise");
   }
-
-  return await response.json();
 }
 
 function getAuthTokenAndValidate(): string {

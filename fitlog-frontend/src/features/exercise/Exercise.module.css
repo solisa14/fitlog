@@ -1,0 +1,383 @@
+/* Exercise Page Container */
+.exercisePageContainer {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+    "Helvetica Neue", Arial, sans-serif;
+  padding: 2rem;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.exercisePageContent {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.exercisePageHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding: 0 1rem;
+}
+
+.exercisePageHeader h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #1d1d1f;
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+/* Create Exercise Button */
+.createButton {
+  padding: 1rem 2rem;
+  background: #007aff;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 8px rgba(0, 122, 255, 0.2);
+}
+
+.createButton:hover {
+  background: #0056cc;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0, 122, 255, 0.3);
+}
+
+.createButton:active {
+  transform: translateY(0);
+}
+
+/* Exercise Table */
+.exerciseTable {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  border-collapse: collapse;
+  overflow: hidden;
+  margin-bottom: 2rem;
+}
+
+.exerciseTable thead {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.exerciseTable th {
+  padding: 1.5rem;
+  text-align: left;
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #1d1d1f;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+  letter-spacing: -0.01em;
+}
+
+.exerciseTable th:last-child {
+  text-align: center;
+}
+
+.exerciseTable td {
+  padding: 1rem 1.5rem;
+  color: #1d1d1f;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  vertical-align: middle;
+}
+
+.exerciseTable td:last-child {
+  text-align: center;
+}
+
+.exerciseTable tbody tr {
+  transition: background-color 0.3s ease;
+}
+
+.exerciseTable tbody tr:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.exerciseTable tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Action Buttons */
+.actionButtons {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.editButton {
+  padding: 0.5rem 1rem;
+  background: rgba(245, 245, 247, 0.8);
+  color: #1d1d1f;
+  border: 1px solid #e5e5e7;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.editButton:hover {
+  background: rgba(235, 235, 237, 0.9);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.deleteButton {
+  padding: 0.5rem 1rem;
+  background: rgba(255, 59, 48, 0.1);
+  color: #ff3b30;
+  border: 1px solid rgba(255, 59, 48, 0.2);
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.deleteButton:hover {
+  background: rgba(255, 59, 48, 0.2);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(255, 59, 48, 0.2);
+}
+
+.editButton:active,
+.deleteButton:active {
+  transform: translateY(0);
+}
+
+/* Modal Overlay */
+.formOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 2rem;
+  box-sizing: border-box;
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Form Container */
+.formContainer {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 16px;
+  padding: 3rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  width: 100%;
+  max-width: 300px;
+  animation: slideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.formContainer h2 {
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: #1d1d1f;
+  margin: 0 0 2rem 0;
+  text-align: center;
+  letter-spacing: -0.02em;
+}
+
+.formContainer form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.formContainer label {
+  display: block;
+  font-weight: 500;
+  color: #1d1d1f;
+  margin-bottom: 0.5rem;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.formContainer input {
+  padding: 1rem 1.25rem;
+  border: 2px solid #e5e5e7;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-family: inherit;
+  background: #ffffff;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  outline: none;
+  color: #1d1d1f;
+}
+
+.formContainer input:focus {
+  border-color: #007aff;
+  box-shadow: 0 0 0 4px rgba(0, 122, 255, 0.1);
+  transform: translateY(-1px);
+}
+
+.formContainer input::placeholder {
+  color: #86868b;
+  font-weight: 400;
+}
+
+/* Form Action Buttons */
+.formActions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.formActions button {
+  flex: 1;
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.submitButton {
+  background: #007aff;
+  color: white;
+}
+
+.submitButton:hover {
+  background: #0056cc;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0, 122, 255, 0.3);
+}
+
+.cancelButton {
+  background: rgba(142, 142, 147, 0.1);
+  color: #8e8e93;
+  border: 1px solid rgba(142, 142, 147, 0.2);
+}
+
+.cancelButton:hover {
+  background: rgba(142, 142, 147, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(142, 142, 147, 0.2);
+}
+
+.submitButton:active,
+.cancelButton:active {
+  transform: translateY(0);
+}
+
+/* Empty State */
+.emptyState {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: #86868b;
+  font-size: 1.1rem;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .exercisePageContainer {
+    padding: 1rem;
+  }
+
+  .exercisePageHeader {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: stretch;
+  }
+
+  .exercisePageHeader h1 {
+    font-size: 2rem;
+    text-align: center;
+  }
+
+  .exerciseTable {
+    font-size: 0.875rem;
+  }
+
+  .exerciseTable th,
+  .exerciseTable td {
+    padding: 0.75rem;
+  }
+
+  .actionButtons {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .formContainer {
+    padding: 2rem;
+    margin: 1rem;
+  }
+
+  .formActions {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 480px) {
+  .exercisePageHeader h1 {
+    font-size: 1.5rem;
+  }
+
+  .exerciseTable th,
+  .exerciseTable td {
+    padding: 0.5rem;
+  }
+
+  .formContainer {
+    padding: 1.5rem;
+  }
+}
