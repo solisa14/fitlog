@@ -1,6 +1,6 @@
 import * as React from "react";
 import {useState} from "react";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {register} from "../../../services/AuthService.ts";
 import styles from './RegisterPage.module.css';
 
@@ -44,7 +44,8 @@ export default function RegisterPage() {
                        value={password} onChange={handlePasswordChange}/>
                 <button type="submit">Register</button>
             </form>
-            <a href="/login">Already have an account? Login</a>
+            <Link to="/login" className={styles.loginLink}>Already have an
+                account? Login</Link>
         </div>
     );
 }

@@ -1,7 +1,7 @@
 import * as React from "react";
 import {useState} from "react";
 import {login} from "../../../services/AuthService.ts";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import styles from './LoginPage.module.css';
 
 
@@ -43,7 +43,8 @@ export default function LoginPage() {
                        value={password || ''} onChange={handlePasswordChange}/>
                 <button type="submit">Login</button>
             </form>
-            <a href="/register">Don't have an account? Register</a>
+            <Link to="/register" className={styles.registerLink}>Don't have an
+                account? Register</Link>
         </div>
     )
 }
