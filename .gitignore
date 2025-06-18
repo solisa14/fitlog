@@ -1,3 +1,6 @@
+# Docker Compose (security reasons, will be removed later)
+docker-compose.yaml
+
 # Dependencies
 node_modules/
 npm-debug.log*
