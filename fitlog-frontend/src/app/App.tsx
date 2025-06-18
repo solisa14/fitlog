@@ -4,6 +4,7 @@ import RegisterPage from "../features/auth/register/RegisterPage.tsx";
 import HomePage from "../features/home/HomePage.tsx";
 import PrivateRoutes from "./PrivateRoutes.tsx";
 import styles from './App.module.css';
+import ExercisePage from "../features/exercise/ExercisePage.tsx";
 
 function App() {
     return (
@@ -20,6 +21,7 @@ function App() {
                     <Route element={<PrivateRoutes/>}>
                         <Route path="/home" element={<HomePage/>}/>
                         <Route path="/dashboard" element={<HomePage/>}/>
+                        <Route path="/exercises" element={<ExercisePage/>}/>
                         <Route path="/workouts" element={<p>Workouts Page</p>}/>
                         <Route path="/profile" element={<p>Profile Page</p>}/>
                     </Route>
