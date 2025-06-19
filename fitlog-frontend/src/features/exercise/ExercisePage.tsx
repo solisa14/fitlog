@@ -4,7 +4,7 @@ import {
   deleteExercise,
   getExercises,
   updateExercise,
-} from "../../services/ExerciseService";
+} from "../../services/exercise-service";
 import ExerciseTable from "./ExerciseTable";
 import ExerciseForm from "./ExerciseForm";
 import styles from "./Exercise.module.css";

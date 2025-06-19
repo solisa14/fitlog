@@ -1,4 +1,4 @@
-import { getAuthToken } from "./AuthService.ts";
+import { getAuthToken } from "./auth-service.ts";
 
 export interface ExerciseRequest {
   id: string;

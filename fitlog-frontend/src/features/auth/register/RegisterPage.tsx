@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { register } from "../../../services/AuthService.ts";
+import { register } from "../../../services/auth-service.ts";
 import styles from "./RegisterPage.module.css";
 
 export default function RegisterPage() {
