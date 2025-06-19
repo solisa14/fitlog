@@ -1,17 +1,16 @@
 package com.github.solisa14.fitlogbackend.service;
 
+import java.util.List;
+import java.util.Optional;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Service;
 import com.github.solisa14.fitlogbackend.model.Exercise;
 import com.github.solisa14.fitlogbackend.model.User;
 import com.github.solisa14.fitlogbackend.repository.ExerciseRepository;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Optional;
 
 /**
- * Service class for managing exercises.
- * It handles CRUD operations for exercises, ensuring that operations are performed for the currently authenticated user.
+ * Service class for managing exercises. It handles CRUD operations for exercises, ensuring that
+ * operations are performed for the currently authenticated user.
  */
 @Service
 public class ExerciseService {
@@ -33,6 +32,7 @@ public class ExerciseService {
 
     /**
      * Retrieves a specific exercise by its ID, for the currently authenticated user.
+     * 
      * @param id The ID of the exercise to retrieve.
      * @return An Optional containing the Exercise if found, otherwise empty.
      */
@@ -41,24 +41,25 @@ public class ExerciseService {
     }
 
     /**
-     * Updates an existing exercise for the currently authenticated user.
-     * It finds the exercise by ID and user, then updates its name and description.
+     * Updates an existing exercise for the currently authenticated user. It finds the exercise by
+     * ID and user, then updates its name and description.
+     * 
      * @param id The ID of the exercise to update.
      * @param updatedExercise The Exercise entity with updated information.
      * @return An Optional containing the updated Exercise if successful, otherwise empty.
      */
     public Optional<Exercise> updateExercise(Long id, Exercise updatedExercise) {
         // Find the exercise by ID and current user before updating
-        return exerciseRepository.findByIdAndUser(id, getCurrentUser())
-                .map(exercise -> {
-                    exercise.setName(updatedExercise.getName());
-                    exercise.setDescription(updatedExercise.getDescription());
-                    return exerciseRepository.save(exercise); // Persist changes
-                });
+        return exerciseRepository.findByIdAndUser(id, getCurrentUser()).map(exercise -> {
+            exercise.setName(updatedExercise.getName());
+            exercise.setDescription(updatedExercise.getDescription());
+            return exerciseRepository.save(exercise); // Persist changes
+        });
     }
 
     /**
      * Saves a new exercise, associating it with the currently authenticated user.
+     * 
      * @param newExercise The Exercise entity to save.
      * @return The saved Exercise entity.
      */
@@ -69,6 +70,7 @@ public class ExerciseService {
 
     /**
      * Deletes an exercise by its ID, for the currently authenticated user.
+     * 
      * @param id The ID of the exercise to delete.
      */
     public void deleteExercise(Long id) {
@@ -77,6 +79,7 @@ public class ExerciseService {
 
     /**
      * Retrieves the currently authenticated user from the security context.
+     * 
      * @return The User entity representing the current user.
      */
     private User getCurrentUser() {

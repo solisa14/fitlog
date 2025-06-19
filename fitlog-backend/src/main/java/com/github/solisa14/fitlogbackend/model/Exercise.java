@@ -1,10 +1,17 @@
 package com.github.solisa14.fitlogbackend.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 /**
- * Represents an exercise entity in the application.
- * Each exercise is associated with a user and has a name and description.
+ * Represents an exercise entity in the application. Each exercise is associated with a user and has
+ * a name and description.
  */
 @Entity(name = "exercise")
 @Table(name = "exercises")
@@ -25,8 +32,7 @@ public class Exercise {
     // Specifies the foreign key column in the exercises table
     private User user;
 
-    public Exercise() {
-    }
+    public Exercise() {}
 
     public Exercise(String name, String description, User user) {
         this.name = name;
@@ -68,7 +74,6 @@ public class Exercise {
 
     @Override
     public String toString() {
-        return String.format("Exercise{id=%d, name=%s, description=%s}",
-                id, name, description);
+        return String.format("Exercise{id=%d, name=%s, description=%s}", id, name, description);
     }
 }

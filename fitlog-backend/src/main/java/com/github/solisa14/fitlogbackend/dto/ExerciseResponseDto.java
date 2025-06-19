@@ -10,8 +10,7 @@ public class ExerciseResponseDto {
     private String name;
     private String description;
 
-    public ExerciseResponseDto() {
-    }
+    public ExerciseResponseDto() {}
 
     public ExerciseResponseDto(Exercise exercise) {
         id = exercise.getId();
@@ -45,8 +44,7 @@ public class ExerciseResponseDto {
 
     @Override
     public String toString() {
-        return String.format("Exercise{name=%s, description=%s}",
-                name, description);
+        return String.format("Exercise{name=%s, description=%s}", name, description);
     }
 
 }

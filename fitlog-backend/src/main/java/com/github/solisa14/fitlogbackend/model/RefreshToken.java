@@ -1,12 +1,18 @@
 package com.github.solisa14.fitlogbackend.model;
 
-import jakarta.persistence.*;
-
 import java.time.LocalDateTime;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 /**
- * Represents a refresh token entity used for maintaining user authentication sessions.
- * Each token is associated with a user and has an expiry date.
+ * Represents a refresh token entity used for maintaining user authentication sessions. Each token
+ * is associated with a user and has an expiry date.
  */
 @Entity
 @Table(name = "refresh_tokens")
@@ -27,8 +33,7 @@ public class RefreshToken {
     private User user;
 
     // Constructors
-    public RefreshToken() {
-    }
+    public RefreshToken() {}
 
     public RefreshToken(String token, LocalDateTime expiryDate, User user) {
         this.token = token;

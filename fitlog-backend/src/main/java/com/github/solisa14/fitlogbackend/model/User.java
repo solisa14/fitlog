@@ -1,15 +1,21 @@
 package com.github.solisa14.fitlogbackend.model;
 
-import jakarta.persistence.*;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
 import java.util.Collection;
 import java.util.List;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
 /**
- * Represents a user in the application.
- * Implements UserDetails for Spring Security integration, providing core user information.
+ * Represents a user in the application. Implements UserDetails for Spring Security integration,
+ * providing core user information.
  */
 @Entity(name = "app_user")
 @Table(name = "users")
@@ -27,8 +33,7 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Exercise> exercises;
 
-    public User() {
-    }
+    public User() {}
 
     public User(String email, String password) {
         this.email = email;

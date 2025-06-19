@@ -1,14 +1,14 @@
 package com.github.solisa14.fitlogbackend.service;
 
-import com.github.solisa14.fitlogbackend.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import com.github.solisa14.fitlogbackend.repository.UserRepository;
 
 /**
- * Implementation of Spring Security's UserDetailsService.
- * This service is responsible for loading user-specific data by username (email in this case).
+ * Implementation of Spring Security's UserDetailsService. This service is responsible for loading
+ * user-specific data by username (email in this case).
  */
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
@@ -28,7 +28,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
      */
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        return userRepository.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email)); // Throw exception if user not found
+        return userRepository.findByEmail(email).orElseThrow(
+                () -> new UsernameNotFoundException("User not found with email: " + email)); // Throw
+                                                                                             // exception
+                                                                                             // if
+                                                                                             // user
+                                                                                             // not
+                                                                                             // found
     }
 }

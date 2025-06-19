@@ -13,7 +13,8 @@ public class UserRegistrationDto {
     private String email;
 
     @NotBlank(message = "Password should not be blank")
-    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&#+\\-_=])[A-Za-z\\d@$!%*?&#+\\-_=]{12,128}$",
+    @Pattern(
+            regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&#+\\-_=])[A-Za-z\\d@$!%*?&#+\\-_=]{12,128}$",
             message = "Password should be a minimum of 12 characters with at least one lowercase, uppercase, digit, and special character")
     private String password;
 
@@ -22,8 +23,7 @@ public class UserRegistrationDto {
         this.password = password;
     }
 
-    public UserRegistrationDto() {
-    }
+    public UserRegistrationDto() {}
 
     public String getPassword() {
         return password;

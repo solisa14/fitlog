@@ -9,10 +9,10 @@ public class AuthenticationResponseDto {
     private long expirationTime;
     private String refreshToken;
 
-    public AuthenticationResponseDto() {
-    }
+    public AuthenticationResponseDto() {}
 
-    public AuthenticationResponseDto(String username, String token, long expirationTime, String refreshToken) {
+    public AuthenticationResponseDto(String username, String token, long expirationTime,
+            String refreshToken) {
         this.username = username;
         this.token = token;
         this.expirationTime = expirationTime;
