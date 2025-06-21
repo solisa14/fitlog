@@ -1,5 +1,4 @@
-import * as React from "react";
-import {useState} from "react";
+import {type ChangeEvent, type FormEvent, useState} from "react";
 import {login} from "../../../services/auth-service.ts";
 import {Link, useNavigate} from "react-router-dom";
 import styles from "./LoginPage.module.css";
@@ -7,30 +6,24 @@ import ErrorMessage from "../../../components/ErrorMessage.tsx";
 
 export default function LoginPage() {
     const navigate = useNavigate();
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const [form, setForm] = useState({email: "", password: ""});
     const [errorMessage, setErrorMessage] = useState("");
 
-    const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setEmail(e.target.value);
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+        const {name, value} = e.target;
+        setForm(prev => ({...prev, [name]: value}));
     };
 
-    const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setPassword(e.target.value);
-    };
-
-    const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+    const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
-            const response = await login(email, password);
-            // Reset fields after login attempt
+            const response = await login(form.email, form.password);
             if (response.token && response.refreshToken) {
                 navigate("/exercises"); // TODO: change to home page
             } else {
                 setErrorMessage("Login failed, please try again.");
             }
-            setEmail("");
-            setPassword("");
+            setForm({email: "", password: ""});
         } catch (error) {
             if (error instanceof Error) {
                 setErrorMessage(error.message);
@@ -44,23 +37,25 @@ export default function LoginPage() {
             <form onSubmit={handleLogin}>
                 <input
                     type="email"
+                    name="email"
                     placeholder="Email"
                     required
-                    value={email || ""}
-                    onChange={handleEmailChange}
+                    value={form.email}
+                    onChange={handleChange}
                 />
                 <input
                     type="password"
+                    name="password"
                     placeholder="Password"
                     required
-                    value={password || ""}
-                    onChange={handlePasswordChange}
+                    value={form.password}
+                    onChange={handleChange}
                 />
                 {errorMessage && <ErrorMessage message={errorMessage}/>}
                 <button type="submit">Login</button>
             </form>
             <Link to="/register" className={styles.registerLink}>
-                Don't have an account? Register
+                Don&apos;t have an account? Register
             </Link>
         </div>
     );

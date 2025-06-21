@@ -1,4 +1,4 @@
-interface AuthResponse {
+export interface AuthResponse {
     email: string;
     password: string;
     token: string;
@@ -52,6 +52,8 @@ export async function login(email: string, password: string): Promise<AuthRespon
                 throw new Error((data as ErrorResponse).detail || 'Invalid email format');
             case 401:
                 throw new Error((data as ErrorResponse).detail || 'Unauthorized: Invalid credentials');
+            case 409:
+                throw new Error((data as ErrorResponse).detail || 'Email already exists');
             case 500:
                 throw new Error((data as ErrorResponse).detail || 'Internal server error');
             default:
@@ -59,7 +61,6 @@ export async function login(email: string, password: string): Promise<AuthRespon
         }
     }
 
-    // success path
     setAuthToken((data as AuthResponse).token);
     setRefreshToken((data as AuthResponse).refreshToken);
     return data as AuthResponse;
@@ -74,13 +75,26 @@ export async function register(email: string, password: string): Promise<AuthRes
         body: JSON.stringify({email, password}),
     });
 
-    if (!response.ok) {
-        throw new Error('Registration failed');
+    let data: AuthResponse | ErrorResponse;
+    try {
+        data = await response.json();
+    } catch (error) {
+        throw new Error('Failed to parse response from server. ')
     }
-    const data = await response.json();
 
-    setAuthToken(data.token);
-    setRefreshToken(data.refreshToken);
+    if (!response.ok) {
+        switch (response.status) {
+            case 400:
+                throw new Error((data as ErrorResponse).detail || 'Invalid email format');
+            case 500:
+                throw new Error((data as ErrorResponse).detail || 'Internal server error');
+            default:
+                throw new Error((data as ErrorResponse).detail || 'An unexpected error occurred');
+        }
+    }
 
-    return data;
+    setAuthToken((data as AuthResponse).token);
+    setRefreshToken((data as AuthResponse).refreshToken);
+
+    return data as AuthResponse;
 }
