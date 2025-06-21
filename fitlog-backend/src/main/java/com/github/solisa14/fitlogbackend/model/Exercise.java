@@ -1,13 +1,8 @@
 package com.github.solisa14.fitlogbackend.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
+import java.util.Set;
 
 /**
  * Represents an exercise entity in the application. Each exercise is associated with a user and has
@@ -24,19 +19,24 @@ public class Exercise {
     @Column
     private String name;
 
-    @Column
-    private String description;
+    @ElementCollection
+    @Enumerated(EnumType.STRING)
+    @CollectionTable(name = "exercise_muscle_groups")
+    private Set<MuscleGroup> muscleGroups;
+
+    @Enumerated(EnumType.STRING)
+    private TrackingType trackingType;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    // Specifies the foreign key column in the exercises table
+    // Specifies the foreign key column in the exercise table
     private User user;
 
-    public Exercise() {}
+    public Exercise() {
+    }
 
     public Exercise(String name, String description, User user) {
         this.name = name;
-        this.description = description;
         this.user = user;
     }
 
@@ -44,24 +44,16 @@ public class Exercise {
         return id;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
     public void setId(Long id) {
         this.id = id;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getName() {
+        return name;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public User getUser() {
@@ -72,8 +64,29 @@ public class Exercise {
         this.user = user;
     }
 
+    public Set<MuscleGroup> getMuscleGroups() {
+        return muscleGroups;
+    }
+
+    public void setMuscleGroups(Set<MuscleGroup> muscleGroups) {
+        this.muscleGroups = muscleGroups;
+    }
+
+    public TrackingType getTrackingType() {
+        return trackingType;
+    }
+
+    public void setTrackingType(TrackingType trackingType) {
+        this.trackingType = trackingType;
+    }
+
     @Override
     public String toString() {
-        return String.format("Exercise{id=%d, name=%s, description=%s}", id, name, description);
+        return String.format("Exercise{" +
+                "id=%d, " +
+                "name=%s, " +
+                "muscleGroups=%s" +
+                "trackingType=%s" +
+                "}", id, name, muscleGroups.toString(), trackingType);
     }
 }
