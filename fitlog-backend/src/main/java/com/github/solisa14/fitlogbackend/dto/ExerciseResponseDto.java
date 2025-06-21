@@ -1,6 +1,10 @@
 package com.github.solisa14.fitlogbackend.dto;
 
 import com.github.solisa14.fitlogbackend.model.Exercise;
+import com.github.solisa14.fitlogbackend.model.MuscleGroup;
+import com.github.solisa14.fitlogbackend.model.TrackingType;
+
+import java.util.Set;
 
 /**
  * Data Transfer Object for exercise responses.
@@ -8,22 +12,17 @@ import com.github.solisa14.fitlogbackend.model.Exercise;
 public class ExerciseResponseDto {
     private Long id;
     private String name;
-    private String description;
+    private Set<MuscleGroup> muscleGroups;
+    private TrackingType trackingType;
 
-    public ExerciseResponseDto() {}
+    public ExerciseResponseDto() {
+    }
 
     public ExerciseResponseDto(Exercise exercise) {
         id = exercise.getId();
         name = exercise.getName();
-        description = exercise.getDescription();
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
+        muscleGroups = exercise.getMuscleGroups();
+        trackingType = exercise.getTrackingType();
     }
 
     public Long getId() {
@@ -42,9 +41,29 @@ public class ExerciseResponseDto {
         this.name = name;
     }
 
+    public Set<MuscleGroup> getMuscleGroups() {
+        return muscleGroups;
+    }
+
+    public void setMuscleGroups(Set<MuscleGroup> muscleGroups) {
+        this.muscleGroups = muscleGroups;
+    }
+
+    public TrackingType getTrackingType() {
+        return trackingType;
+    }
+
+    public void setTrackingType(TrackingType trackingType) {
+        this.trackingType = trackingType;
+    }
+
     @Override
     public String toString() {
-        return String.format("Exercise{name=%s, description=%s}", name, description);
+        return String.format("Exercise{" +
+                "name=%s, " +
+                "muscleGroups=%s" +
+                "trackingType=%s" +
+                "}", name, muscleGroups.toString(), trackingType.toString());
     }
 
 }

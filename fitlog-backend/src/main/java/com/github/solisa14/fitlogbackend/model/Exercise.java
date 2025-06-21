@@ -6,7 +6,7 @@ import java.util.Set;
 
 /**
  * Represents an exercise entity in the application. Each exercise is associated with a user and has
- * a name and description.
+ * a name set of muscle groups and a tracking type to be used for dynamically tracking each set.
  */
 @Entity(name = "exercise")
 @Table(name = "exercises")
@@ -35,8 +35,10 @@ public class Exercise {
     public Exercise() {
     }
 
-    public Exercise(String name, String description, User user) {
+    public Exercise(String name, Set<MuscleGroup> muscleGroups, TrackingType trackingType, User user) {
         this.name = name;
+        this.muscleGroups = muscleGroups;
+        this.trackingType = trackingType;
         this.user = user;
     }
 
@@ -87,6 +89,6 @@ public class Exercise {
                 "name=%s, " +
                 "muscleGroups=%s" +
                 "trackingType=%s" +
-                "}", id, name, muscleGroups.toString(), trackingType);
+                "}", id, name, muscleGroups.toString(), trackingType.toString());
     }
 }

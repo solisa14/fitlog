@@ -1,12 +1,13 @@
 package com.github.solisa14.fitlogbackend.dto;
 
-import org.springframework.security.core.context.SecurityContextHolder;
 import com.github.solisa14.fitlogbackend.model.Exercise;
+import com.github.solisa14.fitlogbackend.model.MuscleGroup;
+import com.github.solisa14.fitlogbackend.model.TrackingType;
 import com.github.solisa14.fitlogbackend.model.User;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
+import org.springframework.security.core.context.SecurityContextHolder;
+
+import java.util.Set;
 
 /**
  * Data Transfer Object for exercise creation and update requests.
@@ -18,30 +19,26 @@ public class ExerciseRequestDto {
             message = "Exercise name should contain only letters, numbers, spaces, hyphens and underscores")
     private String name;
 
-    @NotNull(message = "Exercise description should not be null")
-    @Size(max = 500, message = "Exercise description should not exceed 500 characters")
-    private String description;
+    @NotEmpty(message = "There should be at least one or more muscle group for this exercise.")
+    private Set<MuscleGroup> muscleGroups;
+
+    @NotNull(message = "Exercise must have a tracking type.")
+    private TrackingType trackingType;
 
 
-    public ExerciseRequestDto() {}
+    public ExerciseRequestDto() {
+    }
 
     public ExerciseRequestDto(Exercise exercise) {
         name = exercise.getName();
-        description = exercise.getDescription();
+        muscleGroups = exercise.getMuscleGroups();
+        trackingType = exercise.getTrackingType();
     }
 
     public Exercise convertToExercise() {
         User currentUser =
                 (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return new Exercise(name, description, currentUser);
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
+        return new Exercise(name, muscleGroups, trackingType, currentUser);
     }
 
     public String getName() {
@@ -52,9 +49,19 @@ public class ExerciseRequestDto {
         this.name = name;
     }
 
-    @Override
-    public String toString() {
-        return String.format("Exercise{name=%s, description=%s}", name, description);
+    public Set<MuscleGroup> getMuscleGroups() {
+        return muscleGroups;
     }
 
+    public void setMuscleGroups(Set<MuscleGroup> muscleGroups) {
+        this.muscleGroups = muscleGroups;
+    }
+
+    public TrackingType getTrackingType() {
+        return trackingType;
+    }
+
+    public void setTrackingType(TrackingType trackingType) {
+        this.trackingType = trackingType;
+    }
 }
