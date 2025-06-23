@@ -1,6 +1,7 @@
 package com.github.solisa14.fitlogbackend.exception;
 
-import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
@@ -12,12 +13,16 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.util.List;
+
 /**
  * Global exception handler for the application. This class uses @RestControllerAdvice to provide
  * centralized exception handling across all @RequestMapping methods.
  */
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+    private static final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
+
     /**
      * Handles MethodArgumentNotValidException, typically thrown when validation on an argument
      * annotated with @Valid fails.
@@ -35,7 +40,7 @@ public class GlobalExceptionHandler {
         ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST.value());
         problemDetail.setTitle("Bad Request");
         problemDetail.setDetail(errorMessages.toString()); // Provides detailed validation error
-                                                           // messages
+        // messages
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(problemDetail);
     }
 
@@ -49,8 +54,8 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(com.github.solisa14.fitlogbackend.exception.EmailAlreadyExistsException.class)
     public ResponseEntity<ProblemDetail> handleEmailAlreadyExistsException(
             com.github.solisa14.fitlogbackend.exception.EmailAlreadyExistsException e) { // Changed
-                                                                                         // parameter
-                                                                                         // type
+        // parameter
+        // type
         ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.CONFLICT.value());
         problemDetail.setTitle("Email Already Exists");
         problemDetail.setDetail(e.getMessage()); // Uses the message from the custom exception
@@ -86,7 +91,7 @@ public class GlobalExceptionHandler {
         ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.NOT_FOUND.value());
         problemDetail.setTitle("User Not Found");
         problemDetail.setDetail(e.getMessage()); // Uses the message from the Spring Security
-                                                 // exception
+        // exception
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(problemDetail);
     }
 
@@ -102,7 +107,7 @@ public class GlobalExceptionHandler {
         ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.UNAUTHORIZED.value());
         problemDetail.setTitle("Invalid Credentials");
         problemDetail.setDetail("Email or password is incorrect"); // Provides a generic message for
-                                                                   // security reasons
+        // security reasons
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(problemDetail);
     }
 
@@ -118,8 +123,8 @@ public class GlobalExceptionHandler {
         ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.FORBIDDEN.value());
         problemDetail.setTitle("Forbidden");
         problemDetail.setDetail("You do not have permission to access this resource."); // Provides
-                                                                                        // a clear
-                                                                                        // message
+        // a clear
+        // message
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(problemDetail);
     }
 
@@ -132,6 +137,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ProblemDetail> handleGlobalException(Exception e) {
+        log.error("Unhandled exception occurred: ", e);
         ProblemDetail problemDetail =
                 ProblemDetail.forStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
         problemDetail.setTitle("Internal Server Error");

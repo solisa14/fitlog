@@ -27,14 +27,15 @@ export default function ExerciseTable({
             <thead>
             <tr>
                 <th>Name</th>
-                <th>Description</th>
+                <th>Muscle Groups</th>
+                <th>Tracking Type</th>
                 <th>Actions</th>
             </tr>
             </thead>
             <tbody>
-            {exercises.map((exercise: Exercise) => (
+            {exercises.map((exercise: Exercise, index: number) => (
                 <ExerciseRow
-                    key={exercise.id}
+                    key={index}
                     exercise={exercise}
                     onEdit={onEdit}
                     onDelete={onDelete}

@@ -2,6 +2,7 @@ import {useEffect, useState} from "react";
 import {
     createExercise,
     deleteExercise,
+    type ExerciseResponse,
     getExercises,
     updateExercise,
 } from "../../services/exercise-service";
@@ -10,7 +11,7 @@ import ExerciseForm from "./ExerciseForm";
 import styles from "./Exercise.module.css";
 
 export interface Exercise {
-    id: number | string;
+    id: string;
     name: string;
     muscleGroups: MuscleGroup[];
     trackingType: TrackingType;
@@ -49,20 +50,15 @@ export default function ExercisePage() {
     }
 
     async function fetchExercises() {
-        const fetchedExercises = await getExercises();
-        setExercises(fetchedExercises);
+        const fetchedExercises: ExerciseResponse[] = await getExercises();
+        setExercises(fetchedExercises.map((exerciseResponse: ExerciseResponse): Exercise => exerciseResponse as Exercise));
     }
 
     async function handleUpdateExercise(exercise: Exercise) {
         setDisplayExerciseForm(false);
-        const updatedExercise = await updateExercise({
-            id: "",
-            name: exercise.name,
-            muscleGroups: exercise.muscleGroups,
-            trackingType: exercise.trackingType
-        });
+        const updatedExercise = await updateExercise(exercise);
         setExercises(
-            exercises.map((e) => (e.id === exercise.id ? updatedExercise : e))
+            exercises.map((e: Exercise): Exercise => (e.id === exercise.id ? updatedExercise : e))
         );
     }
 
@@ -83,7 +79,11 @@ export default function ExercisePage() {
 
     useEffect(() => {
         fetchExercises().catch((error) => {
-            console.log(`Failed to fetch exercises ${error}`);
+            if (error instanceof Error) {
+                console.error(error.message);
+            } else {
+                console.error("Unexpected error occurred");
+            }
         });
     }, []);
 

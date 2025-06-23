@@ -5,14 +5,14 @@ import type {
 } from "../features/exercise/ExercisePage.tsx";
 
 export interface ExerciseRequest {
-    id: number | string;
+    id: string;
     name: string;
     muscleGroups: MuscleGroup[];
     trackingType: TrackingType;
 }
 
 export interface ExerciseResponse {
-    id: number | string;
+    id: string;
     name: string;
     muscleGroups: MuscleGroup[];
     trackingType: TrackingType;
@@ -25,38 +25,41 @@ export async function createExercise(
 ): Promise<ExerciseResponse> {
     const token = getAuthTokenAndValidate();
 
-    const response = await fetch(BASE_URL, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(exerciseRequest),
-    });
-
-    if (!response.ok) {
-        throw new Error("Failed to create exercise");
+    try {
+        const response = await fetch(BASE_URL, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(exerciseRequest),
+        });
+        return await response.json();
+    } catch (error) {
+        if (error instanceof Error) {
+            throw new Error(error.message || "Failed to create exercise");
+        }
+        throw new Error("Unexpected error occurred");
     }
-
-    return await response.json();
 }
 
 export async function getExercises(): Promise<ExerciseResponse[]> {
     const token = getAuthTokenAndValidate();
-
-    const response = await fetch(BASE_URL, {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-        },
-    });
-
-    if (!response.ok) {
-        throw new Error("Failed to get exercises");
+    try {
+        const response = await fetch(BASE_URL, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        return await response.json();
+    } catch (error) {
+        if (error instanceof Error) {
+            throw new Error(error.message || "Failed to fetch exercises");
+        }
+        throw new Error("Unexpected error occurred");
     }
-
-    return await response.json();
 }
 
 export async function updateExercise(
@@ -64,21 +67,23 @@ export async function updateExercise(
 ): Promise<ExerciseResponse> {
     const token = getAuthTokenAndValidate();
 
-    const response = await fetch(`${BASE_URL}/${exerciseRequest.id}`, {
-        method: "PUT",
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(exerciseRequest),
-    });
+    try {
+        const response = await fetch(`${BASE_URL}/${exerciseRequest.id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(exerciseRequest),
+        });
 
-    if (!response.ok) {
-        console.log(response);
-        throw new Error("Failed to update exercise");
+        return await response.json();
+    } catch (error) {
+        if (error instanceof Error) {
+            throw new Error(error.message || "Failed to update exercise");
+        }
+        throw new Error("Unexpected error occurred");
     }
-
-    return await response.json();
 }
 
 export async function deleteExercise(id: string) {

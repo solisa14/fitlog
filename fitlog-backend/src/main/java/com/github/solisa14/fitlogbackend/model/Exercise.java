@@ -19,7 +19,7 @@ public class Exercise {
     @Column
     private String name;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
     @CollectionTable(name = "exercise_muscle_groups")
     private Set<MuscleGroup> muscleGroups;
@@ -86,9 +86,9 @@ public class Exercise {
     public String toString() {
         return String.format("Exercise{" +
                 "id=%d, " +
-                "name=%s, " +
-                "muscleGroups=%s" +
+                "name='%s', " +
+                "muscleGroups=%s, " +
                 "trackingType=%s" +
-                "}", id, name, muscleGroups.toString(), trackingType.toString());
+                "}", id, name, muscleGroups, trackingType);
     }
 }
