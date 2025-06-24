@@ -1,22 +1,5 @@
 import {getAuthToken} from "./auth-service.ts";
-import type {
-    MuscleGroup,
-    TrackingType
-} from "../features/exercise/ExercisePage.tsx";
-
-export interface ExerciseRequest {
-    id: string;
-    name: string;
-    muscleGroups: MuscleGroup[];
-    trackingType: TrackingType;
-}
-
-export interface ExerciseResponse {
-    id: string;
-    name: string;
-    muscleGroups: MuscleGroup[];
-    trackingType: TrackingType;
-}
+import type {ExerciseRequest, ExerciseResponse} from '../types';
 
 const BASE_URL: string = "http://localhost:8080/api/v1/exercises";
 

@@ -1,7 +1,8 @@
 import * as React from "react";
 import {type ChangeEvent, useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
-import {type AuthResponse, register} from "../../../services/auth-service.ts";
+import {register} from "../../../services/auth-service.ts";
+import type {AuthResponse} from "../../../types";
 import styles from "./RegisterPage.module.css";
 import ErrorMessage from "../../../components/ErrorMessage.tsx";
 

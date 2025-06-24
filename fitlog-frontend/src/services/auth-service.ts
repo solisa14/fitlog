@@ -1,17 +1,4 @@
-export interface AuthResponse {
-    email: string;
-    password: string;
-    token: string;
-    refreshToken: string;
-}
-
-interface ErrorResponse {
-    type: string;
-    detail: string;
-    status: number;
-    title: string;
-    instance: string;
-}
+import type {AuthResponse, ErrorResponse} from '../types';
 
 const BASE_URL: string = 'http://localhost:8080/api/v1/auth'
 

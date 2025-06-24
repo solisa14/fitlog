@@ -2,36 +2,13 @@ import {useEffect, useState} from "react";
 import {
     createExercise,
     deleteExercise,
-    type ExerciseResponse,
     getExercises,
     updateExercise,
 } from "../../services/exercise-service";
+import type {Exercise, ExerciseResponse} from "../../types";
 import ExerciseTable from "./ExerciseTable";
 import ExerciseForm from "./ExerciseForm";
 import styles from "./Exercise.module.css";
-
-export interface Exercise {
-    id: string;
-    name: string;
-    muscleGroups: MuscleGroup[];
-    trackingType: TrackingType;
-}
-
-export type MuscleGroup =
-    | "CHEST"
-    | "BACK"
-    | "SHOULDERS"
-    | "ARMS"
-    | "LEGS"
-    | "CORE"
-    | "GLUTES"
-    | "FULL_BODY";
-
-export type TrackingType =
-    | "REPS_AND_WEIGHT"
-    | "TIME_BASED"
-    | "REPS_ONLY"
-    | "DISTANCE_AND_DURATION";
 
 export default function ExercisePage() {
     const [exercises, setExercises] = useState<Exercise[]>([]);

@@ -1,4 +1,4 @@
-import type {Exercise} from "./ExercisePage.tsx";
+import type {Exercise} from "../../types";
 import styles from "./Exercise.module.css";
 
 interface ExerciseRowProps {

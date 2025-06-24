@@ -1,6 +1,6 @@
 import * as React from "react";
 import {useState} from "react";
-import type {Exercise, MuscleGroup, TrackingType} from "./ExercisePage";
+import type {Exercise, MuscleGroup, TrackingType} from "../../types";
 import styles from "./Exercise.module.css";
 
 interface ExerciseFormProps {
