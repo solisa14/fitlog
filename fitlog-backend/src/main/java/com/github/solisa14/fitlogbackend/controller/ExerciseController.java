@@ -1,22 +1,16 @@
 package com.github.solisa14.fitlogbackend.controller;
 
-import java.util.List;
-import java.util.Optional;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import com.github.solisa14.fitlogbackend.dto.ExerciseRequestDto;
 import com.github.solisa14.fitlogbackend.dto.ExerciseResponseDto;
 import com.github.solisa14.fitlogbackend.model.Exercise;
 import com.github.solisa14.fitlogbackend.service.ExerciseService;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
 
 /**
  * Controller for handling exercise-related operations using RESTful API endpoints.
@@ -35,7 +29,7 @@ public class ExerciseController {
      * Retrieves all exercises from the database.
      *
      * @return ResponseEntity containing a list of ExerciseResponseDto objects or a NO_CONTENT
-     *         status if no exercises are found.
+     * status if no exercises are found.
      */
     @GetMapping
     public ResponseEntity<List<ExerciseResponseDto>> getAllExercises() {
@@ -53,7 +47,7 @@ public class ExerciseController {
      *
      * @param id the ID of the exercise to retrieve
      * @return ResponseEntity containing the ExerciseResponseDto if found, or NOT_FOUND status if
-     *         not found
+     * not found
      */
     @GetMapping("{id}")
     public ResponseEntity<ExerciseResponseDto> getExerciseById(@PathVariable Long id) {
@@ -80,15 +74,15 @@ public class ExerciseController {
     /**
      * Updates an existing exercise by its ID.
      *
-     * @param id the ID of the exercise to update
+     * @param id                     the ID of the exercise to update
      * @param updatedExerciseRequest the ExerciseRequestDto containing the updated details of the
-     *        exercise
+     *                               exercise
      * @return ResponseEntity containing the updated ExerciseResponseDto if found, or NOT_FOUND
-     *         status if not found
+     * status if not found
      */
     @PutMapping("/{id}")
     public ResponseEntity<ExerciseResponseDto> updateExercise(@PathVariable Long id,
-            @Valid @RequestBody ExerciseRequestDto updatedExerciseRequest) {
+                                                              @Valid @RequestBody ExerciseRequestDto updatedExerciseRequest) {
         Exercise updatedExercise = updatedExerciseRequest.convertToExercise();
         Optional<Exercise> savedExercise = exerciseService.updateExercise(id, updatedExercise);
         return savedExercise

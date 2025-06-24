@@ -19,7 +19,8 @@ public class UserUpdateDto {
             message = "Password should be a minimum of 12 characters with at least one lowercase, uppercase, digit, and special character")
     private String password;
 
-    public UserUpdateDto() {}
+    public UserUpdateDto() {
+    }
 
     public UserUpdateDto(Long id, String email, String password) {
         this.email = email;

@@ -18,7 +18,8 @@ public class AuthenticationRequestDto {
             message = "Password should be a minimum of 12 characters with at least one lowercase, uppercase, digit, and special character")
     private String password;
 
-    public AuthenticationRequestDto() {}
+    public AuthenticationRequestDto() {
+    }
 
     public AuthenticationRequestDto(String email, String password) {
         this.email = email;

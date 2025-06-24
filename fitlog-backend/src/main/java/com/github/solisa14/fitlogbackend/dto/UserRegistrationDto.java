@@ -23,7 +23,8 @@ public class UserRegistrationDto {
         this.password = password;
     }
 
-    public UserRegistrationDto() {}
+    public UserRegistrationDto() {
+    }
 
     public String getPassword() {
         return password;

@@ -1,14 +1,15 @@
 package com.github.solisa14.fitlogbackend.service;
 
-import java.util.Optional;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
 import com.github.solisa14.fitlogbackend.dto.UserRegistrationDto;
 import com.github.solisa14.fitlogbackend.dto.UserUpdateDto;
 import com.github.solisa14.fitlogbackend.exception.EmailAlreadyExistsException;
 import com.github.solisa14.fitlogbackend.exception.ResourceNotFoundException;
 import com.github.solisa14.fitlogbackend.model.User;
 import com.github.solisa14.fitlogbackend.repository.UserRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 /**
  * Service class for user-related operations such as registration, updates, and deletion. It
@@ -42,7 +43,7 @@ public class UserService {
         }
         User newUser = new User(registrationDto.getEmail(),
                 passwordEncoder.encode(registrationDto.getPassword()) // Securely encode the
-                                                                      // password
+                // password
         );
         return userRepository.save(newUser);
     }
@@ -50,8 +51,8 @@ public class UserService {
     /**
      * Updates an existing user's information. It finds the user by ID, updates email and password
      * (encoded).
-     * 
-     * @param id The ID of the user to update.
+     *
+     * @param id        The ID of the user to update.
      * @param updateDto DTO containing user update data.
      * @return The updated User entity.
      * @throws ResourceNotFoundException if the user with the given ID is not found.
@@ -65,13 +66,13 @@ public class UserService {
         User updatedUser = possibleUser.get();
         updatedUser.setEmail(updateDto.getEmail());
         updatedUser.setPassword(passwordEncoder.encode(updateDto.getPassword())); // Encode the new
-                                                                                  // password
+        // password
         return userRepository.save(updatedUser);
     }
 
     /**
      * Deletes a user by their ID.
-     * 
+     *
      * @param id The ID of the user to be deleted.
      */
     public void deleteUser(Long id) {

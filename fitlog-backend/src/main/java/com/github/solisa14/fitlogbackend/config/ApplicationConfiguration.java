@@ -1,5 +1,6 @@
 package com.github.solisa14.fitlogbackend.config;
 
+import com.github.solisa14.fitlogbackend.repository.UserRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -10,7 +11,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import com.github.solisa14.fitlogbackend.repository.UserRepository;
 
 /**
  * Configures the application beans, including user details service, authentication manager,

@@ -1,13 +1,14 @@
 package com.github.solisa14.fitlogbackend.service;
 
-import java.time.LocalDateTime;
-import java.util.Optional;
-import java.util.UUID;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import com.github.solisa14.fitlogbackend.model.RefreshToken;
 import com.github.solisa14.fitlogbackend.model.User;
 import com.github.solisa14.fitlogbackend.repository.RefreshTokenRepository;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
+import java.util.Optional;
+import java.util.UUID;
 
 /**
  * Service class for managing refresh tokens. It handles the creation, retrieval, and deletion of
@@ -30,8 +31,8 @@ public class RefreshTokenService {
      */
     public RefreshToken createRefreshToken(User user) {
         RefreshToken refreshToken = new RefreshToken(UUID.randomUUID().toString(), // Generate a
-                                                                                   // unique token
-                                                                                   // string
+                // unique token
+                // string
                 LocalDateTime.now().plusDays(7), // Set expiry to 7 days from now
                 user);
         return refreshTokenRepository.save(refreshToken);
@@ -39,7 +40,7 @@ public class RefreshTokenService {
 
     /**
      * Finds a refresh token by its token string.
-     * 
+     *
      * @param token The token string to search for.
      * @return An Optional containing the RefreshToken if found, otherwise empty.
      */
@@ -49,7 +50,7 @@ public class RefreshTokenService {
 
     /**
      * Deletes all refresh tokens associated with a specific user. This operation is transactional.
-     * 
+     *
      * @param user The User entity whose refresh tokens are to be deleted.
      */
     @Transactional
@@ -59,7 +60,7 @@ public class RefreshTokenService {
 
     /**
      * Deletes a refresh token by its token string. This operation is transactional.
-     * 
+     *
      * @param token The token string of the refresh token to be deleted.
      */
     @Transactional
