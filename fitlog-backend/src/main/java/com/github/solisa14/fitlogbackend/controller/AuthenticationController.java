@@ -86,18 +86,11 @@ public class AuthenticationController {
     public ResponseEntity<AuthenticationResponseDto> register(
             @Valid @RequestBody UserRegistrationDto userRegistrationDto) {
         User user = userService.registerUser(userRegistrationDto);
-
-        // Authenticate the newly registered user to generate JWT token and refresh token
-        Authentication authentication = authenticationManager
-                .authenticate(new UsernamePasswordAuthenticationToken(
-                        userRegistrationDto.getEmail(),
-                        userRegistrationDto.getPassword()));
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        String token = jwtUtil.generateToken(userDetails);
+        String token = jwtUtil.generateToken(user);
         RefreshToken refreshToken = refreshTokenService.createRefreshToken(user);
 
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(new AuthenticationResponseDto(userDetails.getUsername(),
+                .body(new AuthenticationResponseDto(user.getUsername(),
                         token, jwtUtil.getExpirationTime(),
                         refreshToken.getToken()));
     }
