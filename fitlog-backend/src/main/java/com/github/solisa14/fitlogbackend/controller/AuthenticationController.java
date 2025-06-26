@@ -1,8 +1,6 @@
 package com.github.solisa14.fitlogbackend.controller;
 
-import com.github.solisa14.fitlogbackend.dto.AuthenticationRequestDto;
-import com.github.solisa14.fitlogbackend.dto.AuthenticationResponseDto;
-import com.github.solisa14.fitlogbackend.dto.UserRegistrationDto;
+import com.github.solisa14.fitlogbackend.dto.*;
 import com.github.solisa14.fitlogbackend.model.RefreshToken;
 import com.github.solisa14.fitlogbackend.model.User;
 import com.github.solisa14.fitlogbackend.service.RefreshTokenService;
@@ -19,8 +17,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.Map;
 
 /**
  * Controller for handling user authentication and registration using RESTful
@@ -99,12 +95,12 @@ public class AuthenticationController {
      * Handles user logout by deleting the refresh token associated with the
      * user.
      *
-     * @param request a map containing the refresh token
+     * @param logoutRequest the logout request containing the refresh token
      * @return ResponseEntity indicating a successful logout
      */
     @PostMapping("/logout")
-    public ResponseEntity<Void> logout(@RequestBody Map<String, String> request) {
-        String refreshToken = request.get("refreshToken");
+    public ResponseEntity<Void> logout(@Valid @RequestBody LogoutRequestDto logoutRequest) {
+        String refreshToken = logoutRequest.getRefreshToken();
         if (refreshToken != null) {
             refreshTokenService.deleteByToken(refreshToken);
         }
@@ -114,14 +110,14 @@ public class AuthenticationController {
     /**
      * Refreshes the access token using a valid refresh token.
      *
-     * @param request a map containing the refresh token
+     * @param refreshRequest the refresh request containing the refresh token
      * @return ResponseEntity containing the new authentication response with
      * access token and refresh token
      */
     @PostMapping("/refresh")
     public ResponseEntity<AuthenticationResponseDto> refresh(
-            @RequestBody Map<String, String> request) {
-        String refreshToken = request.get("refreshToken");
+            @Valid @RequestBody RefreshTokenRequestDto refreshRequest) {
+        String refreshToken = refreshRequest.getRefreshToken();
 
         // Look up the refresh token and check if it is valid
         return refreshTokenService.findByToken(refreshToken)
