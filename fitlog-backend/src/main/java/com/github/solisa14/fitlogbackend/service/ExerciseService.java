@@ -1,13 +1,13 @@
 package com.github.solisa14.fitlogbackend.service;
 
 import com.github.solisa14.fitlogbackend.model.Exercise;
-import com.github.solisa14.fitlogbackend.model.User;
 import com.github.solisa14.fitlogbackend.repository.ExerciseRepository;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+
+import static com.github.solisa14.fitlogbackend.util.SecurityUtil.getCurrentUser;
 
 /**
  * Service class for managing exercises. It handles CRUD operations for exercises, ensuring that
@@ -77,14 +77,5 @@ public class ExerciseService {
      */
     public void deleteExercise(Long id) {
         exerciseRepository.deleteByIdAndUser(id, getCurrentUser());
-    }
-
-    /**
-     * Retrieves the currently authenticated user from the security context.
-     *
-     * @return The User entity representing the current user.
-     */
-    private User getCurrentUser() {
-        return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 }

@@ -3,16 +3,16 @@ package com.github.solisa14.fitlogbackend.controller;
 import com.github.solisa14.fitlogbackend.dto.ExerciseRequestDto;
 import com.github.solisa14.fitlogbackend.dto.ExerciseResponseDto;
 import com.github.solisa14.fitlogbackend.model.Exercise;
-import com.github.solisa14.fitlogbackend.model.User;
 import com.github.solisa14.fitlogbackend.service.ExerciseService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+
+import static com.github.solisa14.fitlogbackend.util.SecurityUtil.getCurrentUser;
 
 /**
  * Controller for handling exercise-related operations using RESTful API endpoints.
@@ -72,7 +72,7 @@ public class ExerciseController {
                 new Exercise(newExercise.getName(),
                         newExercise.getMuscleGroups(),
                         newExercise.getTrackingType(),
-                        (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()
+                        getCurrentUser()
                 ));
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(new ExerciseResponseDto(savedExercise));
@@ -93,7 +93,7 @@ public class ExerciseController {
         Exercise updatedExercise = new Exercise(updatedExerciseRequest.getName(),
                 updatedExerciseRequest.getMuscleGroups(),
                 updatedExerciseRequest.getTrackingType(),
-                (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()
+                getCurrentUser()
         );
         Optional<Exercise> savedExercise = exerciseService.updateExercise(id, updatedExercise);
         return savedExercise
