@@ -3,10 +3,12 @@ package com.github.solisa14.fitlogbackend.controller;
 import com.github.solisa14.fitlogbackend.dto.ExerciseRequestDto;
 import com.github.solisa14.fitlogbackend.dto.ExerciseResponseDto;
 import com.github.solisa14.fitlogbackend.model.Exercise;
+import com.github.solisa14.fitlogbackend.model.User;
 import com.github.solisa14.fitlogbackend.service.ExerciseService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -66,7 +68,12 @@ public class ExerciseController {
     @PostMapping
     public ResponseEntity<ExerciseResponseDto> createExercise(
             @Valid @RequestBody ExerciseRequestDto newExercise) {
-        Exercise savedExercise = exerciseService.saveExercise(newExercise.convertToExercise());
+        Exercise savedExercise = exerciseService.saveExercise(
+                new Exercise(newExercise.getName(),
+                        newExercise.getMuscleGroups(),
+                        newExercise.getTrackingType(),
+                        (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()
+                ));
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(new ExerciseResponseDto(savedExercise));
     }
@@ -83,7 +90,11 @@ public class ExerciseController {
     @PutMapping("/{id}")
     public ResponseEntity<ExerciseResponseDto> updateExercise(@PathVariable Long id,
                                                               @Valid @RequestBody ExerciseRequestDto updatedExerciseRequest) {
-        Exercise updatedExercise = updatedExerciseRequest.convertToExercise();
+        Exercise updatedExercise = new Exercise(updatedExerciseRequest.getName(),
+                updatedExerciseRequest.getMuscleGroups(),
+                updatedExerciseRequest.getTrackingType(),
+                (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()
+        );
         Optional<Exercise> savedExercise = exerciseService.updateExercise(id, updatedExercise);
         return savedExercise
                 .map(exercise -> ResponseEntity.status(HttpStatus.OK)

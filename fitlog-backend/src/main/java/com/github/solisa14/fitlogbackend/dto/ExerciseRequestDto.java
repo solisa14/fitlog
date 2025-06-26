@@ -3,9 +3,7 @@ package com.github.solisa14.fitlogbackend.dto;
 import com.github.solisa14.fitlogbackend.model.Exercise;
 import com.github.solisa14.fitlogbackend.model.MuscleGroup;
 import com.github.solisa14.fitlogbackend.model.TrackingType;
-import com.github.solisa14.fitlogbackend.model.User;
 import jakarta.validation.constraints.*;
-import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.Set;
 
@@ -33,12 +31,6 @@ public class ExerciseRequestDto {
         name = exercise.getName();
         muscleGroups = exercise.getMuscleGroups();
         trackingType = exercise.getTrackingType();
-    }
-
-    public Exercise convertToExercise() {
-        User currentUser =
-                (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return new Exercise(name, muscleGroups, trackingType, currentUser);
     }
 
     public String getName() {
