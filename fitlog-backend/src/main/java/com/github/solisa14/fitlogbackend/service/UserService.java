@@ -1,15 +1,11 @@
 package com.github.solisa14.fitlogbackend.service;
 
 import com.github.solisa14.fitlogbackend.dto.UserRegistrationDto;
-import com.github.solisa14.fitlogbackend.dto.UserUpdateDto;
 import com.github.solisa14.fitlogbackend.exception.EmailAlreadyExistsException;
-import com.github.solisa14.fitlogbackend.exception.ResourceNotFoundException;
 import com.github.solisa14.fitlogbackend.model.User;
 import com.github.solisa14.fitlogbackend.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 /**
  * Service class for user-related operations such as registration, updates, and deletion. It
@@ -42,32 +38,9 @@ public class UserService {
                     "Email is already associated with an existing user");
         }
         User newUser = new User(registrationDto.getEmail(),
-                passwordEncoder.encode(registrationDto.getPassword()) // Securely encode the
-                // password
+                passwordEncoder.encode(registrationDto.getPassword())
         );
         return userRepository.save(newUser);
-    }
-
-    /**
-     * Updates an existing user's information. It finds the user by ID, updates email and password
-     * (encoded).
-     *
-     * @param id        The ID of the user to update.
-     * @param updateDto DTO containing user update data.
-     * @return The updated User entity.
-     * @throws ResourceNotFoundException if the user with the given ID is not found.
-     */
-    public User updateUser(Long id, UserUpdateDto updateDto) throws ResourceNotFoundException {
-        // Find the user or throw an exception if not found
-        Optional<User> possibleUser = userRepository.findById(id);
-        if (possibleUser.isEmpty()) {
-            throw new ResourceNotFoundException("User not found with ID: " + id);
-        }
-        User updatedUser = possibleUser.get();
-        updatedUser.setEmail(updateDto.getEmail());
-        updatedUser.setPassword(passwordEncoder.encode(updateDto.getPassword())); // Encode the new
-        // password
-        return userRepository.save(updatedUser);
     }
 
     /**
