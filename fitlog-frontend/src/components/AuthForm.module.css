@@ -1,4 +1,4 @@
-.loginPage {
+.authPage {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -10,7 +10,7 @@
     box-sizing: border-box;
 }
 
-.loginPage h1 {
+.authPage h1 {
     font-size: 2.5rem;
     font-weight: 700;
     color: #1d1d1f;
@@ -19,7 +19,7 @@
     letter-spacing: -0.02em;
 }
 
-.loginPage form {
+.authForm {
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
@@ -34,7 +34,7 @@
     gap: 1.5rem;
 }
 
-.loginPage input {
+.authInput {
     padding: 1rem 1.25rem;
     border: 2px solid #e5e5e7;
     border-radius: 12px;
@@ -46,18 +46,18 @@
     color: #1d1d1f;
 }
 
-.loginPage input:focus {
+.authInput:focus {
     border-color: #007aff;
     box-shadow: 0 0 0 4px rgba(0, 122, 255, 0.1);
     transform: translateY(-1px);
 }
 
-.loginPage input::placeholder {
+.authInput::placeholder {
     color: #86868b;
     font-weight: 400;
 }
 
-.loginPage button {
+.authButton {
     padding: 1rem 2rem;
     background: #007aff;
     color: white;
@@ -71,17 +71,24 @@
     margin-top: 0.5rem;
 }
 
-.loginPage button:hover {
+.authButton:hover {
     background: #0056cc;
     transform: translateY(-2px);
     box-shadow: 0 4px 16px rgba(0, 122, 255, 0.3);
 }
 
-.loginPage button:active {
+.authButton:active {
     transform: translateY(0);
 }
 
-.loginPage a {
+.authButton:disabled {
+    background: #86868b;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.authLink {
     color: #007aff;
     text-decoration: none;
     font-weight: 500;
@@ -90,22 +97,22 @@
     transition: color 0.3s ease;
 }
 
-.loginPage a:hover {
+.authLink:hover {
     color: #0056cc;
     text-decoration: underline;
 }
 
 @media (max-width: 480px) {
-    .loginPage {
+    .authPage {
         padding: 1rem;
     }
 
-    .loginPage h1 {
+    .authPage h1 {
         font-size: 2rem;
         margin-bottom: 2rem;
     }
 
-    .loginPage form {
+    .authForm {
         padding: 2rem;
     }
 } 

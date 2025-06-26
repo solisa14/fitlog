@@ -1,5 +1,6 @@
 import {getAuthToken} from "./auth-service.ts";
 import type {ExerciseRequest, ExerciseResponse} from '../types';
+import {makeAuthenticatedRequest, processApiResponse} from './api-helpers';
 
 const BASE_URL: string = "http://localhost:8080/api/v1/exercises";
 
@@ -8,41 +9,22 @@ export async function createExercise(
 ): Promise<ExerciseResponse> {
     const token = getAuthTokenAndValidate();
 
-    try {
-        const response = await fetch(BASE_URL, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify(exerciseRequest),
-        });
-        return await response.json();
-    } catch (error) {
-        if (error instanceof Error) {
-            throw new Error(error.message || "Failed to create exercise");
-        }
-        throw new Error("Unexpected error occurred");
-    }
+    const response = await makeAuthenticatedRequest(BASE_URL, {
+        method: "POST",
+        body: JSON.stringify(exerciseRequest),
+    }, token);
+
+    return processApiResponse<ExerciseResponse>(response);
 }
 
 export async function getExercises(): Promise<ExerciseResponse[]> {
     const token = getAuthTokenAndValidate();
-    try {
-        const response = await fetch(BASE_URL, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
-            },
-        });
-        return await response.json();
-    } catch (error) {
-        if (error instanceof Error) {
-            throw new Error(error.message || "Failed to fetch exercises");
-        }
-        throw new Error("Unexpected error occurred");
-    }
+
+    const response = await makeAuthenticatedRequest(BASE_URL, {
+        method: "GET",
+    }, token);
+
+    return processApiResponse<ExerciseResponse[]>(response);
 }
 
 export async function updateExercise(
@@ -50,34 +32,23 @@ export async function updateExercise(
 ): Promise<ExerciseResponse> {
     const token = getAuthTokenAndValidate();
 
-    try {
-        const response = await fetch(`${BASE_URL}/${exerciseRequest.id}`, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify(exerciseRequest),
-        });
+    const response = await makeAuthenticatedRequest(`${BASE_URL}/${exerciseRequest.id}`, {
+        method: "PUT",
+        body: JSON.stringify(exerciseRequest),
+    }, token);
 
-        return await response.json();
-    } catch (error) {
-        if (error instanceof Error) {
-            throw new Error(error.message || "Failed to update exercise");
-        }
-        throw new Error("Unexpected error occurred");
-    }
+    return processApiResponse<ExerciseResponse>(response);
 }
 
-export async function deleteExercise(id: string) {
+export async function deleteExercise(id: string): Promise<void> {
     const token = getAuthTokenAndValidate();
 
-    const response = await fetch(`${BASE_URL}/${id}`, {
+    const response = await makeAuthenticatedRequest(`${BASE_URL}/${id}`, {
         method: "DELETE",
         headers: {
-            Authorization: `Bearer ${token}`,
+            'Authorization': `Bearer ${token}`,
         },
-    });
+    }, token);
 
     if (!response.ok) {
         throw new Error("Failed to delete exercise");

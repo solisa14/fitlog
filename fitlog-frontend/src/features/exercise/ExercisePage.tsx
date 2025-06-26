@@ -1,68 +1,22 @@
-import {useEffect, useState} from "react";
-import {
-    createExercise,
-    deleteExercise,
-    getExercises,
-    updateExercise,
-} from "../../services/exercise-service";
-import type {Exercise, ExerciseResponse} from "../../types";
 import ExerciseTable from "./ExerciseTable";
 import ExerciseForm from "./ExerciseForm";
+import ErrorMessage from "../../components/ErrorMessage";
+import {useExercises} from "../../hooks/useExercises";
 import styles from "./Exercise.module.css";
 
 export default function ExercisePage() {
-    const [exercises, setExercises] = useState<Exercise[]>([]);
-    const [exerciseToEdit, setExerciseToEdit] = useState<Exercise | null>(null);
-    const [displayExerciseForm, setDisplayExerciseForm] = useState(false);
-
-    async function handleCreateExercise(exercise: Exercise) {
-        setDisplayExerciseForm(false);
-        const createdExercise = await createExercise({
-            id: "",
-            name: exercise.name,
-            muscleGroups: exercise.muscleGroups,
-            trackingType: exercise.trackingType
-        });
-        setExercises([...exercises, createdExercise]);
-    }
-
-    async function fetchExercises() {
-        const fetchedExercises: ExerciseResponse[] = await getExercises();
-        setExercises(fetchedExercises.map((exerciseResponse: ExerciseResponse): Exercise => exerciseResponse as Exercise));
-    }
-
-    async function handleUpdateExercise(exercise: Exercise) {
-        setDisplayExerciseForm(false);
-        const updatedExercise = await updateExercise(exercise);
-        setExercises(
-            exercises.map((e: Exercise): Exercise => (e.id === exercise.id ? updatedExercise : e))
-        );
-    }
-
-    async function handleDeleteExercise(id: string) {
-        await deleteExercise(id);
-        setExercises(exercises.filter((e) => e.id !== id));
-    }
-
-    function handleEditExercise(exercise: Exercise) {
-        setExerciseToEdit(exercise);
-        setDisplayExerciseForm(true);
-    }
-
-    function handleToggleExerciseForm() {
-        setDisplayExerciseForm(!displayExerciseForm);
-        setExerciseToEdit(null);
-    }
-
-    useEffect(() => {
-        fetchExercises().catch((error) => {
-            if (error instanceof Error) {
-                console.error(error.message);
-            } else {
-                console.error("Unexpected error occurred");
-            }
-        });
-    }, []);
+    const {
+        exercises,
+        exerciseToEdit,
+        displayExerciseForm,
+        isLoading,
+        error,
+        handleCreateExercise,
+        handleUpdateExercise,
+        handleDeleteExercise,
+        handleEditExercise,
+        handleToggleExerciseForm,
+    } = useExercises();
 
     return (
         <div className={styles.exercisePageContainer}>
@@ -72,15 +26,22 @@ export default function ExercisePage() {
                     <button
                         className={styles.createButton}
                         onClick={handleToggleExerciseForm}
+                        disabled={isLoading}
                     >
                         + Create Exercise
                     </button>
                 </div>
+
+                {error && (
+                    <ErrorMessage message={error}/>
+                )}
+
                 <ExerciseTable
                     exercises={exercises}
                     onEdit={handleEditExercise}
                     onDelete={handleDeleteExercise}
                 />
+
                 {displayExerciseForm && (
                     <div className={styles.formOverlay}>
                         <div className={styles.formContainer}>

@@ -1,4 +1,5 @@
-import type {AuthResponse, ErrorResponse} from '../types';
+import type {AuthResponse} from '../types';
+import {processApiResponse} from './api-helpers';
 
 const BASE_URL: string = 'http://localhost:8080/api/v1/auth'
 
@@ -26,31 +27,11 @@ export async function login(email: string, password: string): Promise<AuthRespon
         body: JSON.stringify({email, password}),
     });
 
-    let data: AuthResponse | ErrorResponse;
-    try {
-        data = await response.json();
-    } catch (error) {
-        throw new Error('Failed to parse response from server');
-    }
+    const data = await processApiResponse<AuthResponse>(response);
 
-    if (!response.ok) {
-        switch (response.status) {
-            case 400:
-                throw new Error((data as ErrorResponse).detail || 'Invalid email format');
-            case 401:
-                throw new Error((data as ErrorResponse).detail || 'Unauthorized: Invalid credentials');
-            case 409:
-                throw new Error((data as ErrorResponse).detail || 'Email already exists');
-            case 500:
-                throw new Error((data as ErrorResponse).detail || 'Internal server error');
-            default:
-                throw new Error((data as ErrorResponse).detail || 'An unexpected error occurred');
-        }
-    }
-
-    setAuthToken((data as AuthResponse).token);
-    setRefreshToken((data as AuthResponse).refreshToken);
-    return data as AuthResponse;
+    setAuthToken(data.token);
+    setRefreshToken(data.refreshToken);
+    return data;
 }
 
 export async function register(email: string, password: string): Promise<AuthResponse> {
@@ -62,26 +43,9 @@ export async function register(email: string, password: string): Promise<AuthRes
         body: JSON.stringify({email, password}),
     });
 
-    let data: AuthResponse | ErrorResponse;
-    try {
-        data = await response.json();
-    } catch (error) {
-        throw new Error('Failed to parse response from server. ')
-    }
+    const data = await processApiResponse<AuthResponse>(response);
 
-    if (!response.ok) {
-        switch (response.status) {
-            case 400:
-                throw new Error((data as ErrorResponse).detail || 'Invalid email format');
-            case 500:
-                throw new Error((data as ErrorResponse).detail || 'Internal server error');
-            default:
-                throw new Error((data as ErrorResponse).detail || 'An unexpected error occurred');
-        }
-    }
-
-    setAuthToken((data as AuthResponse).token);
-    setRefreshToken((data as AuthResponse).refreshToken);
-
-    return data as AuthResponse;
+    setAuthToken(data.token);
+    setRefreshToken(data.refreshToken);
+    return data;
 }

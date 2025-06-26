@@ -21,16 +21,6 @@ export interface Exercise {
     trackingType: TrackingType;
 }
 
-export interface ExerciseRequest {
-    id: string;
-    name: string;
-    muscleGroups: MuscleGroup[];
-    trackingType: TrackingType;
-}
-
-export interface ExerciseResponse {
-    id: string;
-    name: string;
-    muscleGroups: MuscleGroup[];
-    trackingType: TrackingType;
-} 
+// Type aliases for API consistency
+export type ExerciseRequest = Exercise;
+export type ExerciseResponse = Exercise; 
