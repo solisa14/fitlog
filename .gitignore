@@ -172,3 +172,5 @@ logs/
 # Temporary files
 *.tmp
 *.temp
+
+fitlog-backend/src/main/resources/secret.properties
