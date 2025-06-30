@@ -1,4 +1,4 @@
-import type {ErrorResponse} from '../types';
+import type {ErrorResponse} from '../types/auth.ts';
 
 /**
  * Centralized function to process API responses and handle errors consistently
@@ -9,6 +9,7 @@ export async function processApiResponse<T>(response: Response): Promise<T> {
     try {
         data = await response.json();
     } catch (error) {
+        console.error(error);
         throw new Error('Failed to parse response from server');
     }
 

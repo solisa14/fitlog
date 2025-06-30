@@ -36,9 +36,6 @@ public class ExerciseController {
     @GetMapping
     public ResponseEntity<List<ExerciseResponseDto>> getAllExercises() {
         List<Exercise> foundExercises = exerciseService.getAllExercises();
-        if (foundExercises.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-        }
         List<ExerciseResponseDto> exercises =
                 foundExercises.stream().map(ExerciseResponseDto::new).toList();
         return ResponseEntity.status(HttpStatus.OK).body(exercises);

@@ -1,5 +1,5 @@
 import {getAuthToken} from "./auth-service.ts";
-import type {ExerciseRequest, ExerciseResponse} from '../types';
+import type {ExerciseRequest, ExerciseResponse} from '../types/exercise.ts';
 import {makeAuthenticatedRequest, processApiResponse} from './api-helpers';
 
 const BASE_URL: string = "http://localhost:8080/api/v1/exercises";
@@ -45,13 +45,15 @@ export async function deleteExercise(id: string): Promise<void> {
 
     const response = await makeAuthenticatedRequest(`${BASE_URL}/${id}`, {
         method: "DELETE",
-        headers: {
-            'Authorization': `Bearer ${token}`,
-        },
     }, token);
 
     if (!response.ok) {
-        throw new Error("Failed to delete exercise");
+        try {
+            const errorData = await response.json();
+            throw new Error(errorData.detail || "Failed to delete exercise");
+        } catch {
+            throw new Error("Failed to delete exercise");
+        }
     }
 }
 

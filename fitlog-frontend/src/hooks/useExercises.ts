@@ -26,7 +26,7 @@ export function useExercises() {
                 muscleGroups: exercise.muscleGroups,
                 trackingType: exercise.trackingType
             });
-            setExercises(prev => [...prev, createdExercise]);
+            setExercises(prev => [...prev, createdExercise as Exercise]);
         } catch (error) {
             setError(error instanceof Error ? error.message : "Failed to create exercise");
         } finally {
@@ -40,7 +40,7 @@ export function useExercises() {
             setError(null);
 
             const fetchedExercises = await getExercises();
-            setExercises(fetchedExercises);
+            setExercises(fetchedExercises as Exercise[]);
         } catch (error) {
             setError(error instanceof Error ? error.message : "Failed to fetch exercises");
         } finally {
@@ -55,8 +55,8 @@ export function useExercises() {
             setDisplayExerciseForm(false);
 
             const updatedExercise = await updateExercise(exercise);
-            setExercises(prev =>
-                prev.map(e => (e.id === exercise.id ? updatedExercise : e))
+            setExercises((prev: Exercise[]): Exercise[] =>
+                prev.map((e: Exercise): Exercise => (e.id === exercise.id ? updatedExercise : e) as Exercise)
             );
         } catch (error) {
             setError(error instanceof Error ? error.message : "Failed to update exercise");

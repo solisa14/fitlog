@@ -1,4 +1,4 @@
-import type {AuthResponse} from '../types';
+import type {AuthResponse} from '../types/auth.ts';
 import {processApiResponse} from './api-helpers';
 
 const BASE_URL: string = 'http://localhost:8080/api/v1/auth'
