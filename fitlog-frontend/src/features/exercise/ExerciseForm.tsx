@@ -10,7 +10,7 @@ interface ExerciseFormProps {
     onEdit: (exercise: Exercise) => void;
 }
 
-export const allMuscleGroups: MuscleGroup[] = [
+const allMuscleGroups: MuscleGroup[] = [
     "ARMS",
     "BACK",
     "CHEST",

@@ -42,7 +42,9 @@ export default function ExerciseRow({
                 </div>
             </td>
             <td>
-                {trackingType.toLowerCase().split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
+                {trackingType.toLowerCase()
+                    .replace(/_/g, " ")
+                    .replace(/\b\w/g, (l) => l.toUpperCase())}
             </td>
             <td>
                 <div className={styles.actionButtons}>
