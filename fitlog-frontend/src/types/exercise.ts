@@ -1,18 +1,4 @@
-export type MuscleGroup =
-    | "CHEST"
-    | "BACK"
-    | "SHOULDERS"
-    | "ARMS"
-    | "LEGS"
-    | "CORE"
-    | "GLUTES"
-    | "FULL_BODY";
-
-export type TrackingType =
-    | "REPS_AND_WEIGHT"
-    | "TIME_BASED"
-    | "REPS_ONLY"
-    | "DISTANCE_AND_DURATION";
+import type {MuscleGroup, TrackingType} from './enum';
 
 export interface Exercise {
     id: string;
@@ -21,6 +7,15 @@ export interface Exercise {
     trackingType: TrackingType;
 }
 
-// Type aliases for API consistency
-export type ExerciseRequest = Exercise;
-export type ExerciseResponse = Exercise; 
+export interface ExerciseRequest {
+    id: string;
+    name: string;
+    muscleGroups: MuscleGroup[];
+    trackingType: TrackingType;
+}
+
+export interface ExerciseResponse {
+    id: string;
+    name: string;
+    muscleGroups: MuscleGroup[];
+}

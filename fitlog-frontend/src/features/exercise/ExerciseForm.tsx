@@ -1,7 +1,12 @@
 import * as React from "react";
-import {useState} from "react";
-import type {Exercise, MuscleGroup, TrackingType} from "../../types";
+import {useEffect, useState} from "react";
+import type {MuscleGroup, TrackingType} from "../../types/enum.ts";
 import styles from "./Exercise.module.css";
+import type {Exercise} from "../../types/exercise.ts";
+import {
+    fetchMuscleGroups,
+    fetchTrackingTypes
+} from "../../services/enum-service.ts";
 
 interface ExerciseFormProps {
     exercise: Exercise | null;
@@ -9,24 +14,6 @@ interface ExerciseFormProps {
     onCreate: (exercise: Exercise) => void;
     onEdit: (exercise: Exercise) => void;
 }
-
-const allMuscleGroups: MuscleGroup[] = [
-    "ARMS",
-    "BACK",
-    "CHEST",
-    "CORE",
-    "FULL_BODY",
-    "GLUTES",
-    "LEGS",
-    "SHOULDERS",
-];
-
-const allTrackingTypes: TrackingType[] = [
-    "REPS_AND_WEIGHT",
-    "TIME_BASED",
-    "REPS_ONLY",
-    "DISTANCE_AND_DURATION",
-];
 
 export default function ExerciseForm({
                                          exercise,
@@ -39,8 +26,24 @@ export default function ExerciseForm({
         exercise?.muscleGroups || []
     );
     const [trackingType, setTrackingType] = useState<TrackingType>(
-        exercise?.trackingType || "REPS_AND_WEIGHT"
+        exercise?.trackingType || {
+            name: "None",
+            displayName: "None"
+        }
     );
+
+    const [allMuscleGroups, setAllMuscleGroups] = useState<MuscleGroup[]>([]);
+    const [allTrackingTypes, setAllTrackingTypes] = useState<TrackingType[]>([]);
+
+    useEffect(() => {
+        const loadData = async (): Promise<void> => {
+            const muscleGroupsPromise: MuscleGroup[] = await fetchMuscleGroups();
+            const trackingTypesPromise: TrackingType[] = await fetchTrackingTypes();
+            setAllMuscleGroups(muscleGroupsPromise);
+            setAllTrackingTypes(trackingTypesPromise);
+        };
+        loadData();
+    }, [])
 
     function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
@@ -63,7 +66,10 @@ export default function ExerciseForm({
     }
 
     function handleTrackingTypeChange(e: React.ChangeEvent<HTMLSelectElement>) {
-        setTrackingType(e.target.value as TrackingType);
+        setTrackingType(allTrackingTypes.find((type: TrackingType) => type.name === e.target.value) || {
+            name: "None",
+            displayName: "None"
+        } as TrackingType);
     }
 
     return (
@@ -85,18 +91,18 @@ export default function ExerciseForm({
                     <label>Muscle Groups</label>
                     <div className={styles.checkboxContainer}>
                         {allMuscleGroups.map((muscleGroup) => (
-                            <div key={muscleGroup}
+                            <div key={muscleGroup.name}
                                  className={styles.checkboxItem}>
                                 <input
                                     type="checkbox"
-                                    id={muscleGroup}
+                                    id={muscleGroup.name}
                                     checked={muscleGroups.includes(muscleGroup)}
                                     onChange={(e) =>
                                         handleMuscleGroupChange(muscleGroup, e.target.checked)
                                     }
                                 />
-                                <label htmlFor={muscleGroup}>
-                                    {muscleGroup.toLowerCase().replace("_", " ")}
+                                <label htmlFor={muscleGroup.name}>
+                                    {muscleGroup.displayName}
                                 </label>
                             </div>
                         ))}
@@ -106,16 +112,13 @@ export default function ExerciseForm({
                 <div className={styles.formField}>
                     <label>Tracking Type</label>
                     <select
-                        value={trackingType}
+                        value={trackingType.name}
                         onChange={handleTrackingTypeChange}
                         required
                     >
                         {allTrackingTypes.map((type) => (
-                            <option key={type} value={type}>
-                                {type
-                                    .toLowerCase()
-                                    .replace(/_/g, " ")
-                                    .replace(/\b\w/g, (l) => l.toUpperCase())}
+                            <option key={type.name} value={type.name}>
+                                {type.displayName}
                             </option>
                         ))}
                     </select>

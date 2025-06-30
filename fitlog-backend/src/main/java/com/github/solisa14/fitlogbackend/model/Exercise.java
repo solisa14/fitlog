@@ -1,5 +1,7 @@
 package com.github.solisa14.fitlogbackend.model;
 
+import com.github.solisa14.fitlogbackend.enums.MuscleGroup;
+import com.github.solisa14.fitlogbackend.enums.TrackingType;
 import jakarta.persistence.*;
 
 import java.util.Set;

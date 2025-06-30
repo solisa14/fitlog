@@ -5,7 +5,7 @@ import {
     getExercises,
     updateExercise,
 } from "../services/exercise-service";
-import type {Exercise} from "../types";
+import type {Exercise} from "../types/exercise.ts";
 
 export function useExercises() {
     const [exercises, setExercises] = useState<Exercise[]>([]);
@@ -89,10 +89,6 @@ export function useExercises() {
         setExerciseToEdit(null);
     }
 
-    function clearError() {
-        setError(null);
-    }
-
     useEffect(() => {
         fetchExercises();
     }, []);
@@ -108,7 +104,6 @@ export function useExercises() {
         handleDeleteExercise,
         handleEditExercise,
         handleToggleExerciseForm,
-        clearError,
         refetchExercises: fetchExercises,
     };
 } 

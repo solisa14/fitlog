@@ -1,4 +1,4 @@
-import type {Exercise} from "../../types";
+import type {Exercise} from "../../types/exercise.ts";
 import ExerciseRow from "./ExerciseRow.tsx";
 import styles from "./Exercise.module.css";
 

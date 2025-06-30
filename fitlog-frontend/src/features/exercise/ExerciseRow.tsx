@@ -1,4 +1,4 @@
-import type {Exercise} from "../../types";
+import type {Exercise} from "../../types/exercise.ts";
 import styles from "./Exercise.module.css";
 
 interface ExerciseRowProps {
@@ -32,19 +32,13 @@ export default function ExerciseRow({
                 <div className={styles.muscleGroupContainer}>
                     {muscleGroups ? muscleGroups.map((muscleGroup, index) =>
                         <div key={index} className={styles.muscleGroupTag}>
-                            {muscleGroup.toLowerCase()
-                                .split('_')
-                                .map(word =>
-                                    word.charAt(0).toUpperCase() + word.slice(1))
-                                .join(' ')}
+                            {muscleGroup.displayName}
                         </div>) : "None"
                     }
                 </div>
             </td>
             <td>
-                {trackingType.toLowerCase()
-                    .replace(/_/g, " ")
-                    .replace(/\b\w/g, (l) => l.toUpperCase())}
+                {trackingType.displayName}
             </td>
             <td>
                 <div className={styles.actionButtons}>

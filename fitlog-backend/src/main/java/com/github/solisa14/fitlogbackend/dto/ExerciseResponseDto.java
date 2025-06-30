@@ -1,8 +1,8 @@
 package com.github.solisa14.fitlogbackend.dto;
 
+import com.github.solisa14.fitlogbackend.enums.MuscleGroup;
+import com.github.solisa14.fitlogbackend.enums.TrackingType;
 import com.github.solisa14.fitlogbackend.model.Exercise;
-import com.github.solisa14.fitlogbackend.model.MuscleGroup;
-import com.github.solisa14.fitlogbackend.model.TrackingType;
 
 import java.util.Set;
 
