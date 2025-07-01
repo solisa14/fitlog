@@ -8,7 +8,6 @@ interface AuthFormProps {
     linkText: string;
     linkTo: string;
     onSubmit: (email: string, password: string) => Promise<void>;
-    isLoading?: boolean;
 }
 
 export default function AuthForm({
@@ -17,17 +16,16 @@ export default function AuthForm({
                                      linkText,
                                      linkTo,
                                      onSubmit,
-                                     isLoading = false,
                                  }: AuthFormProps) {
     const [form, setForm] = useState({email: "", password: ""});
     const [errorMessage, setErrorMessage] = useState("");
-
-    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    
+    const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
         const {name, value} = e.target;
-        setForm(prev => ({...prev, [name]: value}));
+        setForm(prevForm => ({...prevForm, [name]: value}));
     };
 
-    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
         e.preventDefault();
         try {
             setErrorMessage("");
@@ -53,7 +51,6 @@ export default function AuthForm({
                     required
                     value={form.email}
                     onChange={handleChange}
-                    disabled={isLoading}
                 />
                 <input
                     type="password"
@@ -62,14 +59,12 @@ export default function AuthForm({
                     required
                     value={form.password}
                     onChange={handleChange}
-                    disabled={isLoading}
                 />
                 {errorMessage && <ErrorMessage message={errorMessage}/>}
                 <button
                     type="submit"
-                    disabled={isLoading}
                 >
-                    {isLoading ? "Loading..." : buttonText}
+                    {buttonText}
                 </button>
             </form>
             <Link to={linkTo}>
@@ -77,4 +72,4 @@ export default function AuthForm({
             </Link>
         </div>
     );
-} 
+}
