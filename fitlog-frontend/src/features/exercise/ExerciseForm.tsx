@@ -53,6 +53,16 @@ export default function ExerciseForm({
     }));
   }
 
+  function handleMuscleGroupChange(muscleGroup: MuscleGroup, checked: boolean) {
+    setFormData((prevData: ExerciseFormData) => ({
+      ...prevData,
+      muscleGroups: checked
+        ? [...prevData.muscleGroups, muscleGroup]
+        : prevData.muscleGroups.filter((mg: MuscleGroup) => mg !== muscleGroup),
+    }));
+  }
+  
+
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (exercise) {
@@ -81,20 +91,21 @@ export default function ExerciseForm({
         <div>
           <label>Muscle Groups</label>
           <div>
-            {formData.muscleGroups.map(
-              (muscleGroup: MuscleGroup, index: number) => (
-                <div key={index}>
-                  <input
-                    type="checkbox"
-                    name="muscleGroups"
-                    id={index.toString()}
-                    checked={Object.values(MuscleGroup).includes(muscleGroup)}
-                    onChange={handleChange}
-                  />
-                  <label>{getMuscleGroupDisplayName(muscleGroup)}</label>
-                </div>
-              )
-            )}
+            {Object.values(MuscleGroup).map((muscleGroup: MuscleGroup) => (
+              <div key={muscleGroup}>
+                <input
+                  type="checkbox"
+                  id={muscleGroup}
+                  checked={formData.muscleGroups.includes(muscleGroup)}
+                  onChange={(e) =>
+                    handleMuscleGroupChange(muscleGroup, e.target.checked)
+                  }
+                />
+                <label htmlFor={muscleGroup}>
+                  {getMuscleGroupDisplayName(muscleGroup)}
+                </label>
+              </div>
+            ))}
           </div>
         </div>
 

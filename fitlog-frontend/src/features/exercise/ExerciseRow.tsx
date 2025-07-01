@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import {
   getMuscleGroupDisplayName,
   getTrackingTypeDisplayName,
@@ -12,10 +13,12 @@ interface ExerciseRowProps {
 }
 
 export default function ExerciseRow({
-  exercise: { id, name, muscleGroups, trackingType },
+  exercise,
   onEdit,
   onDelete,
 }: ExerciseRowProps) {
+  const { id, name, muscleGroups, trackingType } = exercise;
+
   function handleEdit() {
     onEdit({ id, name, muscleGroups, trackingType });
   }
@@ -29,10 +32,12 @@ export default function ExerciseRow({
       <td>{name}</td>
       <td>
         <div>
-          {muscleGroups
-            ? muscleGroups.map((muscleGroup: MuscleGroup) =>
-                getMuscleGroupDisplayName(muscleGroup)
-              )
+          {muscleGroups && muscleGroups.length > 0
+            ? muscleGroups
+                .map((muscleGroup: MuscleGroup) =>
+                  getMuscleGroupDisplayName(muscleGroup)
+                )
+                .join(", ")
             : "None"}
         </div>
       </td>
