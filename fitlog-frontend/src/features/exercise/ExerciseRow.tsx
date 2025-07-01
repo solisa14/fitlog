@@ -1,5 +1,4 @@
 import type {Exercise} from "../../types/exercise.ts";
-import styles from "./Exercise.module.css";
 
 interface ExerciseRowProps {
     exercise: Exercise;
@@ -29,9 +28,9 @@ export default function ExerciseRow({
         <tr id={id}>
             <td>{name}</td>
             <td>
-                <div className={styles.muscleGroupContainer}>
+                <div>
                     {muscleGroups ? muscleGroups.map((muscleGroup, index) =>
-                        <div key={index} className={styles.muscleGroupTag}>
+                        <div key={index}>
                             {muscleGroup.displayName}
                         </div>) : "None"
                     }
@@ -41,12 +40,11 @@ export default function ExerciseRow({
                 {trackingType.displayName}
             </td>
             <td>
-                <div className={styles.actionButtons}>
-                    <button className={styles.editButton} onClick={handleEdit}>
+                <div>
+                    <button onClick={handleEdit}>
                         Edit
                     </button>
-                    <button className={styles.deleteButton}
-                            onClick={handleDelete}>
+                    <button onClick={handleDelete}>
                         Delete
                     </button>
                 </div>

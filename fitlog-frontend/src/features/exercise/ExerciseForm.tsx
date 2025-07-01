@@ -1,7 +1,6 @@
 import * as React from "react";
 import {useEffect, useState} from "react";
 import type {MuscleGroup, TrackingType} from "../../types/enum.ts";
-import styles from "./Exercise.module.css";
 import type {Exercise} from "../../types/exercise.ts";
 import {
     fetchMuscleGroups,
@@ -76,7 +75,7 @@ export default function ExerciseForm({
         <>
             <h2>{exercise ? "Edit Exercise" : "Create Exercise"}</h2>
             <form onSubmit={handleSubmit}>
-                <div className={styles.formField}>
+                <div>
                     <label>Name</label>
                     <input
                         type="text"
@@ -87,12 +86,11 @@ export default function ExerciseForm({
                     />
                 </div>
 
-                <div className={styles.formField}>
+                <div>
                     <label>Muscle Groups</label>
-                    <div className={styles.checkboxContainer}>
+                    <div>
                         {allMuscleGroups.map((muscleGroup) => (
-                            <div key={muscleGroup.name}
-                                 className={styles.checkboxItem}>
+                            <div key={muscleGroup.name}>
                                 <input
                                     type="checkbox"
                                     id={muscleGroup.name}
@@ -109,7 +107,7 @@ export default function ExerciseForm({
                     </div>
                 </div>
 
-                <div className={styles.formField}>
+                <div>
                     <label>Tracking Type</label>
                     <select
                         value={trackingType.name}
@@ -124,13 +122,12 @@ export default function ExerciseForm({
                     </select>
                 </div>
 
-                <div className={styles.formActions}>
-                    <button type="submit" className={styles.submitButton}>
+                <div>
+                    <button type="submit">
                         {exercise ? "Update" : "Create"}
                     </button>
                     <button
                         type="button"
-                        className={styles.cancelButton}
                         onClick={onCancel}
                     >
                         Cancel

@@ -1,6 +1,5 @@
 import type {Exercise} from "../../types/exercise.ts";
 import ExerciseRow from "./ExerciseRow.tsx";
-import styles from "./Exercise.module.css";
 
 interface ExerciseTableProps {
     exercises: Exercise[];
@@ -15,7 +14,7 @@ export default function ExerciseTable({
                                       }: ExerciseTableProps) {
     if (exercises.length === 0) {
         return (
-            <div className={styles.emptyState}>
+            <div>
                 <p>No exercises found. Create your first exercise to get
                     started!</p>
             </div>
@@ -23,7 +22,7 @@ export default function ExerciseTable({
     }
 
     return (
-        <table className={styles.exerciseTable}>
+        <table>
             <thead>
             <tr>
                 <th>Name</th>

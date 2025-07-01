@@ -1,7 +1,6 @@
 import {type ChangeEvent, type FormEvent, useState} from "react";
 import {Link} from "react-router-dom";
 import ErrorMessage from "./ErrorMessage";
-import styles from "./AuthForm.module.css";
 
 interface AuthFormProps {
     title: string;
@@ -44,11 +43,10 @@ export default function AuthForm({
     };
 
     return (
-        <div className={styles.authPage}>
+        <div>
             <h1>{title}</h1>
-            <form className={styles.authForm} onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit}>
                 <input
-                    className={styles.authInput}
                     type="email"
                     name="email"
                     placeholder="Email"
@@ -58,7 +56,6 @@ export default function AuthForm({
                     disabled={isLoading}
                 />
                 <input
-                    className={styles.authInput}
                     type="password"
                     name="password"
                     placeholder="Password"
@@ -69,14 +66,13 @@ export default function AuthForm({
                 />
                 {errorMessage && <ErrorMessage message={errorMessage}/>}
                 <button
-                    className={styles.authButton}
                     type="submit"
                     disabled={isLoading}
                 >
                     {isLoading ? "Loading..." : buttonText}
                 </button>
             </form>
-            <Link to={linkTo} className={styles.authLink}>
+            <Link to={linkTo}>
                 {linkText}
             </Link>
         </div>

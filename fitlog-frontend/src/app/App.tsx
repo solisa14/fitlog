@@ -3,12 +3,11 @@ import LoginPage from "../features/auth/login/LoginPage.tsx";
 import RegisterPage from "../features/auth/register/RegisterPage.tsx";
 import HomePage from "../features/home/HomePage.tsx";
 import PrivateRoutes from "./PrivateRoutes.tsx";
-import styles from './App.module.css';
 import ExercisePage from "../features/exercise/ExercisePage.tsx";
 
 function App() {
     return (
-        <div className={styles.page}>
+        <div>
             <BrowserRouter>
                 <Routes>
                     {/* Public Routes */}

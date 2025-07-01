@@ -2,7 +2,6 @@ import ExerciseTable from "./ExerciseTable";
 import ExerciseForm from "./ExerciseForm";
 import ErrorMessage from "../../components/ErrorMessage";
 import {useExercises} from "../../hooks/useExercises";
-import styles from "./Exercise.module.css";
 
 export default function ExercisePage() {
     const {
@@ -19,12 +18,11 @@ export default function ExercisePage() {
     } = useExercises();
 
     return (
-        <div className={styles.exercisePageContainer}>
-            <div className={styles.exercisePageContent}>
-                <div className={styles.exercisePageHeader}>
+        <div>
+            <div>
+                <div>
                     <h1>My Exercises</h1>
                     <button
-                        className={styles.createButton}
                         onClick={handleToggleExerciseForm}
                         disabled={isLoading}
                     >
@@ -43,8 +41,8 @@ export default function ExercisePage() {
                 />
 
                 {displayExerciseForm && (
-                    <div className={styles.formOverlay}>
-                        <div className={styles.formContainer}>
+                    <div>
+                        <div>
                             <ExerciseForm
                                 exercise={exerciseToEdit}
                                 onCancel={handleToggleExerciseForm}
