@@ -42,12 +42,13 @@ export async function getExercises(): Promise<Exercise[]> {
 }
 
 export async function updateExercise(
-  exerciseRequest: ExerciseRequest
+  exerciseRequest: ExerciseRequest,
+  id: string
 ): Promise<Exercise> {
   try {
     const token = getAuthTokenAndValidate();
     const response: Exercise = await apiRequest<Exercise>(
-      BASE_URL,
+      `${BASE_URL}/${id}`,
       {
         method: "PUT",
         body: JSON.stringify(exerciseRequest),
