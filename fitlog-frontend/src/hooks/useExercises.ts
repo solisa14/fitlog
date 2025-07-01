@@ -16,8 +16,13 @@ export function useExercises() {
 
   async function handleCreateExercise(exercise: Exercise): Promise<void> {
     try {
-      const createdExercise: Exercise = await createExercise(exercise);
+      const createdExercise: Exercise = await createExercise({
+        name: exercise.name,
+        muscleGroups: exercise.muscleGroups,
+        trackingType: exercise.trackingType,
+      });
       setExercises((prevExercises) => [...prevExercises, createdExercise]);
+      setDisplayExerciseForm(false);
     } catch (error) {
       setError(
         error instanceof Error ? error.message : "Failed to create exercise"
@@ -40,7 +45,7 @@ export function useExercises() {
     try {
       setDisplayExerciseForm(false);
 
-      const updatedExercise = await updateExercise(exercise);
+      const updatedExercise = await updateExercise(exercise, exercise.id);
       setExercises((prev: Exercise[]): Exercise[] =>
         prev.map(
           (ex: Exercise): Exercise =>
