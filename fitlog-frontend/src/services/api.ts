@@ -21,23 +21,34 @@ export async function apiRequest<T>(
   authToken?: string
 ): Promise<T> {
   try {
-    // Add auth token to headers if provided
-    if (authToken) {
-      options.headers = {
-        ...options.headers,
-        Authorization: `Bearer ${authToken}`,
-      };
-    }
-    // Make the request
-    const response = await fetch(url, {
-      headers: {
-        "Content-Type": "application/json",
-        ...options.headers,
-      },
-      ...options,
-    });
+    // Set default headers
+    const headers: Record<string, string> = {
+      "Content-Type": "application/json",
+    };
 
-    // Handle the response
+    // Merge custom headers with default headers
+    if (options.headers) {
+      Object.assign(headers, options.headers);
+    }
+
+    // Add auth token if provided
+    if (authToken) {
+      headers.Authorization = `Bearer ${authToken}`;
+    }
+
+    // Create request options with merged headers
+    const requestOptions: RequestInit = {
+      ...options,
+      headers,
+    };
+
+    // Only add body if it exists and method is not GET
+    if (options.body && options.method !== "GET") {
+      requestOptions.body = options.body;
+    }
+
+    const response = await fetch(url, requestOptions);
+
     const status: number = response.status;
     if (status >= 200 && status < 300) {
       return (await response.json()) as T;
