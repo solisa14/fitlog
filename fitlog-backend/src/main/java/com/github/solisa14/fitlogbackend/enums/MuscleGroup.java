@@ -8,34 +8,28 @@ public enum MuscleGroup {
     CHEST("chest"),
     SHOULDERS("shoulders"),
     TRICEPS("triceps"),
-    
     // Pull
     BACK("back"),
     LATS("lats"),
     BICEPS("biceps"),
     REAR_DELTS("rear_delts"),
-    
     // Core
     ABS("abs"),
     OBLIQUES("obliques"),
     LOWER_BACK("lower_back"),
-    
     // Lower
     QUADRICEPS("quadriceps"),
     HAMSTRINGS("hamstrings"),
     GLUTES("glutes"),
     CALVES("calves"),
     HIP_FLEXORS("hip_flexors"),
-    
     // Compound/Full Body
     FULL_BODY("full_body"),
-    
     // Specific Areas
     FOREARMS("forearms"),
     TRAPS("traps"),
     NECK("neck"),
     CARDIO("cardio"),
-    
     // Functional Groups
     HIP_ABDUCTORS("hip_abductors"),
     HIP_ADDUCTORS("hip_adductors"),

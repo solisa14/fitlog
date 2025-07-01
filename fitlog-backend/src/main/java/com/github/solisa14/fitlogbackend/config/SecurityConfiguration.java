@@ -1,5 +1,6 @@
 package com.github.solisa14.fitlogbackend.config;
 
+import java.util.List;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -14,28 +15,29 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import java.util.List;
-
 /**
- * Configuration class for security settings in the application. Configures the HTTP security,
- * authentication provider, JWT filter, and CORS settings. These are essential for setting up the
- * security layer of the application and ensuring it works properly with JWT authentication.
+ * Configuration class for security settings in the application. Configures the
+ * HTTP security, authentication provider, JWT filter, and CORS settings. These
+ * are essential for setting up the security layer of the application and
+ * ensuring it works properly with JWT authentication.
  */
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration {
+
     private final AuthenticationProvider authenticationProvider;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
     public SecurityConfiguration(AuthenticationProvider authenticationProvider,
-                                 JwtAuthenticationFilter jwtAuthenticationFilter) {
+            JwtAuthenticationFilter jwtAuthenticationFilter) {
         this.authenticationProvider = authenticationProvider;
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
     }
 
     /**
-     * Configures the security filter chain for the application, which is essential for securing the
-     * application through authentication and authorization of requests.
+     * Configures the security filter chain for the application, which is
+     * essential for securing the application through authentication and
+     * authorization of requests.
      *
      * @param http the HttpSecurity object to configure
      * @return SecurityFilterChain object that defines the security rules
@@ -49,7 +51,7 @@ public class SecurityConfiguration {
                 // Enable CORS support
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(auth -> auth.requestMatchers("/api/v1/auth/**").permitAll()
-                        .anyRequest().authenticated())
+                .anyRequest().authenticated())
                 .sessionManagement(
                         session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)
@@ -60,8 +62,8 @@ public class SecurityConfiguration {
     }
 
     /**
-     * Configures CORS settings for the application. This is essential for allowing cross-origin
-     * requests to the API.
+     * Configures CORS settings for the application. This is essential for
+     * allowing cross-origin requests to the API.
      *
      * @return CorsConfigurationSource object that defines the CORS rules
      */

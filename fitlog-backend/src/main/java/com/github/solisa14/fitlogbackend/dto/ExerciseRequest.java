@@ -1,16 +1,20 @@
 package com.github.solisa14.fitlogbackend.dto;
 
+import java.util.Set;
 import com.github.solisa14.fitlogbackend.enums.MuscleGroup;
 import com.github.solisa14.fitlogbackend.enums.TrackingType;
 import com.github.solisa14.fitlogbackend.model.Exercise;
-import jakarta.validation.constraints.*;
-
-import java.util.Set;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 /**
  * Data Transfer Object for exercise creation and update requests.
  */
 public class ExerciseRequest {
+
     @NotBlank(message = "Exercise name should not be blank")
     @Size(max = 50, message = "Exercise name should not exceed 50 characters")
     @Pattern(regexp = "^[a-zA-Z0-9\\s\\-_]+$",
@@ -22,7 +26,6 @@ public class ExerciseRequest {
 
     @NotNull(message = "Exercise must have a tracking type.")
     private TrackingType trackingType;
-
 
     public ExerciseRequest() {
     }

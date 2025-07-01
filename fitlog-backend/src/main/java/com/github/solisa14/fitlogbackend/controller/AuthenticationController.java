@@ -1,11 +1,5 @@
 package com.github.solisa14.fitlogbackend.controller;
 
-import com.github.solisa14.fitlogbackend.dto.AuthenticationRequest;
-import com.github.solisa14.fitlogbackend.dto.AuthenticationResponse;
-import com.github.solisa14.fitlogbackend.model.User;
-import com.github.solisa14.fitlogbackend.service.UserService;
-import com.github.solisa14.fitlogbackend.util.JwtUtil;
-import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -16,6 +10,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import com.github.solisa14.fitlogbackend.dto.AuthenticationRequest;
+import com.github.solisa14.fitlogbackend.dto.AuthenticationResponse;
+import com.github.solisa14.fitlogbackend.model.User;
+import com.github.solisa14.fitlogbackend.service.UserService;
+import com.github.solisa14.fitlogbackend.util.JwtUtil;
+import jakarta.validation.Valid;
 
 /**
  * Controller for handling user authentication and registration using RESTful
@@ -30,8 +30,8 @@ public class AuthenticationController {
     private final UserService userService;
 
     public AuthenticationController(AuthenticationManager authenticationManager,
-                                    JwtUtil jwtUtil,
-                                    UserService userService) {
+            JwtUtil jwtUtil,
+            UserService userService) {
         this.authenticationManager = authenticationManager;
         this.jwtUtil = jwtUtil;
         this.userService = userService;
@@ -42,7 +42,7 @@ public class AuthenticationController {
      * password).
      *
      * @param authenticationRequest the authentication request containing email
-     *                              and password
+     * and password
      * @return ResponseEntity containing the authentication response with JWT
      * token and refresh token
      */

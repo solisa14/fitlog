@@ -1,7 +1,8 @@
 package com.github.solisa14.fitlogbackend.exception;
 
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
@@ -11,25 +12,25 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-
-import java.io.IOException;
-import java.time.LocalDateTime;
-import java.util.List;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
- * Global exception handler for the application. This class uses @RestControllerAdvice to provide
- * centralized exception handling across all @RequestMapping methods.
+ * Global exception handler for the application. This class uses
+ * @RestControllerAdvice to provide centralized exception handling across all
+ * @RequestMapping methods.
  */
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
     /**
-     * Handles MethodArgumentNotValidException, typically thrown when validation on an argument
-     * annotated with @Valid fails.
+     * Handles MethodArgumentNotValidException, typically thrown when validation
+     * on an argument annotated with @Valid fails.
      *
-     * @param e       The MethodArgumentNotValidException instance.
+     * @param e The MethodArgumentNotValidException instance.
      * @param request The HttpServletRequest that resulted in the exception.
-     * @return A ResponseEntity containing ErrorResponse with BAD_REQUEST status and error details.
+     * @return A ResponseEntity containing ErrorResponse with BAD_REQUEST status
+     * and error details.
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorResponse> handleMethodArgumentNotValidException(
@@ -54,11 +55,13 @@ public class GlobalExceptionHandler {
     }
 
     /**
-     * Handles IOException, which may occur during input or output operations, such as reading from or writing to a file or network.
+     * Handles IOException, which may occur during input or output operations,
+     * such as reading from or writing to a file or network.
      *
-     * @param e       The IOException instance.
+     * @param e The IOException instance.
      * @param request The HttpServletRequest that resulted in the exception.
-     * @return A ResponseEntity containing ErrorResponse with INTERNAL_SERVER_ERROR status and error details.
+     * @return A ResponseEntity containing ErrorResponse with
+     * INTERNAL_SERVER_ERROR status and error details.
      */
     @ExceptionHandler(IOException.class)
     public ResponseEntity<ErrorResponse> handleIOException(
@@ -73,12 +76,13 @@ public class GlobalExceptionHandler {
     }
 
     /**
-     * Handles EmailAlreadyExistsException, a custom exception thrown when a user tries to register
-     * with an email that already exists in the database.
+     * Handles EmailAlreadyExistsException, a custom exception thrown when a
+     * user tries to register with an email that already exists in the database.
      *
-     * @param e       The EmailAlreadyExistsException instance.
+     * @param e The EmailAlreadyExistsException instance.
      * @param request The HttpServletRequest that resulted in the exception.
-     * @return A ResponseEntity containing ErrorResponse with CONFLICT status and error details.
+     * @return A ResponseEntity containing ErrorResponse with CONFLICT status
+     * and error details.
      */
     @ExceptionHandler(com.github.solisa14.fitlogbackend.exception.EmailAlreadyExistsException.class)
     public ResponseEntity<ErrorResponse> handleEmailAlreadyExistsException(
@@ -87,12 +91,13 @@ public class GlobalExceptionHandler {
     }
 
     /**
-     * Handles ResourceNotFoundException, a custom exception thrown when a requested resource is not
-     * found in the system.
+     * Handles ResourceNotFoundException, a custom exception thrown when a
+     * requested resource is not found in the system.
      *
-     * @param e       The ResourceNotFoundException instance.
+     * @param e The ResourceNotFoundException instance.
      * @param request The HttpServletRequest that resulted in the exception.
-     * @return A ResponseEntity containing ErrorResponse with NOT_FOUND status and error details.
+     * @return A ResponseEntity containing ErrorResponse with NOT_FOUND status
+     * and error details.
      */
     @ExceptionHandler(com.github.solisa14.fitlogbackend.exception.ResourceNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleResourceNotFoundException(
@@ -101,12 +106,13 @@ public class GlobalExceptionHandler {
     }
 
     /**
-     * Handles UsernameNotFoundException, thrown by Spring Security when a user is not found during
-     * the authentication process.
+     * Handles UsernameNotFoundException, thrown by Spring Security when a user
+     * is not found during the authentication process.
      *
-     * @param e       The UsernameNotFoundException instance.
+     * @param e The UsernameNotFoundException instance.
      * @param request The HttpServletRequest that resulted in the exception.
-     * @return A ResponseEntity containing ErrorResponse with NOT_FOUND status and error details.
+     * @return A ResponseEntity containing ErrorResponse with NOT_FOUND status
+     * and error details.
      */
     @ExceptionHandler(UsernameNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleUsernameNotFoundException(
@@ -115,12 +121,13 @@ public class GlobalExceptionHandler {
     }
 
     /**
-     * Handles BadCredentialsException, thrown by Spring Security when authentication fails due to
-     * incorrect credentials.
+     * Handles BadCredentialsException, thrown by Spring Security when
+     * authentication fails due to incorrect credentials.
      *
-     * @param e       The BadCredentialsException instance.
+     * @param e The BadCredentialsException instance.
      * @param request The HttpServletRequest that resulted in the exception.
-     * @return A ResponseEntity containing ErrorResponse with UNAUTHORIZED status and error details.
+     * @return A ResponseEntity containing ErrorResponse with UNAUTHORIZED
+     * status and error details.
      */
     @ExceptionHandler(BadCredentialsException.class)
     public ResponseEntity<ErrorResponse> handleBadCredentialsException(
@@ -129,12 +136,14 @@ public class GlobalExceptionHandler {
     }
 
     /**
-     * Handles AccessDeniedException, thrown by Spring Security when an authenticated user attempts
-     * to access a resource they are not authorized to access.
+     * Handles AccessDeniedException, thrown by Spring Security when an
+     * authenticated user attempts to access a resource they are not authorized
+     * to access.
      *
-     * @param e       The AccessDeniedException instance.
+     * @param e The AccessDeniedException instance.
      * @param request The HttpServletRequest that resulted in the exception.
-     * @return A ResponseEntity containing ErrorResponse with FORBIDDEN status and error details.
+     * @return A ResponseEntity containing ErrorResponse with FORBIDDEN status
+     * and error details.
      */
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<ErrorResponse> handleAccessDeniedException(
@@ -143,12 +152,13 @@ public class GlobalExceptionHandler {
     }
 
     /**
-     * Handles all other unhandled exceptions, serving as a global fallback. It's advisable to log
-     * the exception here for debugging purposes.
+     * Handles all other unhandled exceptions, serving as a global fallback.
+     * It's advisable to log the exception here for debugging purposes.
      *
-     * @param e       The Exception instance.
+     * @param e The Exception instance.
      * @param request The HttpServletRequest that resulted in the exception.
-     * @return A ResponseEntity containing ErrorResponse with INTERNAL_SERVER_ERROR status.
+     * @return A ResponseEntity containing ErrorResponse with
+     * INTERNAL_SERVER_ERROR status.
      */
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleGlobalException(Exception e, HttpServletRequest request) {

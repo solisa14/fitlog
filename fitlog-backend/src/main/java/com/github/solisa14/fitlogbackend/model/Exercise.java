@@ -1,14 +1,26 @@
 package com.github.solisa14.fitlogbackend.model;
 
+import java.util.Set;
 import com.github.solisa14.fitlogbackend.enums.MuscleGroup;
 import com.github.solisa14.fitlogbackend.enums.TrackingType;
-import jakarta.persistence.*;
-
-import java.util.Set;
+import jakarta.persistence.CollectionTable;
+import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 /**
- * Represents an exercise entity in the application. Each exercise is associated with a user and has
- * a name set of muscle groups and a tracking type to be used for dynamically tracking each set.
+ * Represents an exercise entity in the application. Each exercise is associated
+ * with a user and has a name set of muscle groups and a tracking type to be
+ * used for dynamically tracking each set.
  */
 @Entity(name = "exercise")
 @Table(name = "exercises")
@@ -86,11 +98,11 @@ public class Exercise {
 
     @Override
     public String toString() {
-        return String.format("Exercise{" +
-                "id=%d, " +
-                "name='%s', " +
-                "muscleGroups=%s, " +
-                "trackingType=%s" +
-                "}", id, name, muscleGroups.toString(), trackingType.toString());
+        return String.format("Exercise{"
+                + "id=%d, "
+                + "name='%s', "
+                + "muscleGroups=%s, "
+                + "trackingType=%s"
+                + "}", id, name, muscleGroups.toString(), trackingType.toString());
     }
 }

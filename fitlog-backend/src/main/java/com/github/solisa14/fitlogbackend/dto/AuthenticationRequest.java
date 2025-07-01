@@ -8,6 +8,7 @@ import jakarta.validation.constraints.Pattern;
  * Data Transfer Object for authentication requests.
  */
 public class AuthenticationRequest {
+
     @NotBlank(message = "Email should not be blank")
     @Email(message = "Email should be a valid email address")
     private String email;
