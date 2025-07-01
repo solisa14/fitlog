@@ -60,6 +60,7 @@ public class ApplicationConfiguration {
      * @return AuthenticationProvider implementation
      */
     @Bean
+    @SuppressWarnings("unused")
     AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authenticationProvider
                 = new DaoAuthenticationProvider(userDetailsService());

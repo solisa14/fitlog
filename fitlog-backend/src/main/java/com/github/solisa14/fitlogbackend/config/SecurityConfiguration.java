@@ -68,6 +68,7 @@ public class SecurityConfiguration {
      * @return CorsConfigurationSource object that defines the CORS rules
      */
     @Bean
+    @SuppressWarnings("unused")
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
 
