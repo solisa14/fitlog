@@ -7,7 +7,7 @@ export default function LoginPage() {
 
     const handleLogin = async (email: string, password: string) => {
         const response = await login(email, password);
-        if (response.token && response.refreshToken) {
+        if (response.token) {
             navigate("/exercises"); // TODO: change to home page
         } else {
             throw new Error("Login failed, please try again.");

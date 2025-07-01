@@ -11,9 +11,6 @@ function setAuthToken(token: string): void {
     sessionStorage.setItem('authToken', token);
 }
 
-function setRefreshToken(token: string): void {
-    sessionStorage.setItem('refreshToken', token);
-}
 
 export function isAuthenticated(): boolean {
     const token = getAuthToken();
@@ -30,7 +27,6 @@ export async function login(email: string, password: string): Promise<AuthRespon
     const data = await processApiResponse<AuthResponse>(response);
 
     setAuthToken(data.token);
-    setRefreshToken(data.refreshToken);
     return data;
 }
 
@@ -46,6 +42,5 @@ export async function register(email: string, password: string): Promise<AuthRes
     const data = await processApiResponse<AuthResponse>(response);
 
     setAuthToken(data.token);
-    setRefreshToken(data.refreshToken);
     return data;
 }

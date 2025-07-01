@@ -7,7 +7,7 @@ export default function RegisterPage() {
 
     const handleRegister = async (email: string, password: string) => {
         const response = await register(email, password);
-        if (response.token && response.refreshToken) {
+        if (response.token) {
             navigate("/exercises"); // TODO: change to home page later
         } else {
             throw new Error("Registration failed, please try again.");
