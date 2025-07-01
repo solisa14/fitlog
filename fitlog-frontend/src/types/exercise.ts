@@ -8,14 +8,7 @@ export interface Exercise {
 }
 
 export interface ExerciseRequest {
-    id: string;
     name: string;
     muscleGroups: MuscleGroup[];
     trackingType: TrackingType;
-}
-
-export interface ExerciseResponse {
-    id: string;
-    name: string;
-    muscleGroups: MuscleGroup[];
 }
