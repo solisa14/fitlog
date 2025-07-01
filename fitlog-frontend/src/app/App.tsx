@@ -8,7 +8,12 @@ import ExercisePage from "../features/exercise/ExercisePage.tsx";
 export default function App() {
   return (
     <div>
-      <BrowserRouter>
+      <BrowserRouter
+        future={{
+          v7_relativeSplatPath: true,
+          v7_startTransition: true,
+        }}
+      >
         <Routes>
           {/* Public Routes */}
           <Route path="" element={<LoginPage />} />
