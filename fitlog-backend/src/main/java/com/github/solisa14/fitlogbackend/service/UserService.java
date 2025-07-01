@@ -1,6 +1,6 @@
 package com.github.solisa14.fitlogbackend.service;
 
-import com.github.solisa14.fitlogbackend.dto.UserRegistrationDto;
+import com.github.solisa14.fitlogbackend.dto.AuthenticationRequest;
 import com.github.solisa14.fitlogbackend.exception.EmailAlreadyExistsException;
 import com.github.solisa14.fitlogbackend.model.User;
 import com.github.solisa14.fitlogbackend.repository.UserRepository;
@@ -26,19 +26,19 @@ public class UserService {
      * Registers a new user with the provided details. It checks for existing email and encodes the
      * password before saving.
      *
-     * @param registrationDto DTO containing user registration data.
+     * @param authenticationRequest DTO containing user registration data.
      * @return The saved User entity.
      * @throws EmailAlreadyExistsException if the email is already in use.
      */
-    public User registerUser(UserRegistrationDto registrationDto)
+    public User registerUser(AuthenticationRequest authenticationRequest)
             throws EmailAlreadyExistsException {
         // Check if email already exists to prevent duplicates
-        if (userRepository.findByEmail(registrationDto.getEmail()).isPresent()) {
+        if (userRepository.findByEmail(authenticationRequest.getEmail()).isPresent()) {
             throw new EmailAlreadyExistsException(
                     "Email is already associated with an existing user");
         }
-        User newUser = new User(registrationDto.getEmail(),
-                passwordEncoder.encode(registrationDto.getPassword())
+        User newUser = new User(authenticationRequest.getEmail(),
+                passwordEncoder.encode(authenticationRequest.getPassword())
         );
         return userRepository.save(newUser);
     }

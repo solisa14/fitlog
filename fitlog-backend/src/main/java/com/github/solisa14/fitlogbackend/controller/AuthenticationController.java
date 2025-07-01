@@ -1,9 +1,8 @@
 package com.github.solisa14.fitlogbackend.controller;
 
-import com.github.solisa14.fitlogbackend.dto.*;
-import com.github.solisa14.fitlogbackend.model.RefreshToken;
+import com.github.solisa14.fitlogbackend.dto.AuthenticationRequest;
+import com.github.solisa14.fitlogbackend.dto.AuthenticationResponse;
 import com.github.solisa14.fitlogbackend.model.User;
-import com.github.solisa14.fitlogbackend.service.RefreshTokenService;
 import com.github.solisa14.fitlogbackend.service.UserService;
 import com.github.solisa14.fitlogbackend.util.JwtUtil;
 import jakarta.validation.Valid;
@@ -28,15 +27,13 @@ public class AuthenticationController {
 
     private final AuthenticationManager authenticationManager;
     private final JwtUtil jwtUtil;
-    private final RefreshTokenService refreshTokenService;
     private final UserService userService;
 
     public AuthenticationController(AuthenticationManager authenticationManager,
-                                    JwtUtil jwtUtil, RefreshTokenService refreshTokenService,
+                                    JwtUtil jwtUtil,
                                     UserService userService) {
         this.authenticationManager = authenticationManager;
         this.jwtUtil = jwtUtil;
-        this.refreshTokenService = refreshTokenService;
         this.userService = userService;
     }
 
@@ -50,84 +47,39 @@ public class AuthenticationController {
      * token and refresh token
      */
     @PostMapping("/login")
-    public ResponseEntity<AuthenticationResponseDto> login(
-            @Valid @RequestBody AuthenticationRequestDto authenticationRequest) {
+    public ResponseEntity<AuthenticationResponse> login(
+            @Valid @RequestBody AuthenticationRequest authenticationRequest) {
         // Authenticate user credentials using the AuthenticationManager
         Authentication authentication = authenticationManager
                 .authenticate(new UsernamePasswordAuthenticationToken(
                         authenticationRequest.getEmail(),
                         authenticationRequest.getPassword()));
-        // If authentication is successful, retrieve user details and generate JWT token and
-        // refresh
-        // token
+        // If authentication is successful, retrieve user details and generate JWT token an refresh token
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         String token = jwtUtil.generateToken(userDetails);
-        RefreshToken refreshToken
-                = refreshTokenService.createRefreshToken((User) userDetails);
 
         return ResponseEntity.status(HttpStatus.OK)
-                .body(new AuthenticationResponseDto(userDetails.getUsername(),
-                        token, jwtUtil.getExpirationTime(),
-                        refreshToken.getToken()));
+                .body(new AuthenticationResponse(userDetails.getUsername(),
+                        token, jwtUtil.getExpirationTime()));
     }
 
     /**
      * Handles user registration by creating a new user account.
      *
-     * @param userRegistrationDto the user registration data
+     * @param authenticationRequest the user registration data
      * @return ResponseEntity containing the authentication response with JWT
      * token and refresh token
      */
     @PostMapping("/register")
-    public ResponseEntity<AuthenticationResponseDto> register(
-            @Valid @RequestBody UserRegistrationDto userRegistrationDto) {
-        User user = userService.registerUser(userRegistrationDto);
+    public ResponseEntity<AuthenticationResponse> register(
+            @Valid @RequestBody AuthenticationRequest authenticationRequest) {
+        User user = userService.registerUser(authenticationRequest);
         String token = jwtUtil.generateToken(user);
-        RefreshToken refreshToken = refreshTokenService.createRefreshToken(user);
 
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(new AuthenticationResponseDto(user.getUsername(),
-                        token, jwtUtil.getExpirationTime(),
-                        refreshToken.getToken()));
+                .body(new AuthenticationResponse(user.getUsername(),
+                        token, jwtUtil.getExpirationTime()));
     }
 
-    /**
-     * Handles user logout by deleting the refresh token associated with the
-     * user.
-     *
-     * @param logoutRequest the logout request containing the refresh token
-     * @return ResponseEntity indicating a successful logout
-     */
-    @PostMapping("/logout")
-    public ResponseEntity<Void> logout(@Valid @RequestBody LogoutRequestDto logoutRequest) {
-        String refreshToken = logoutRequest.getRefreshToken();
-        if (refreshToken != null) {
-            refreshTokenService.deleteByToken(refreshToken);
-        }
-        return ResponseEntity.ok().build();
-    }
-
-    /**
-     * Refreshes the access token using a valid refresh token.
-     *
-     * @param refreshRequest the refresh request containing the refresh token
-     * @return ResponseEntity containing the new authentication response with
-     * access token and refresh token
-     */
-    @PostMapping("/refresh")
-    public ResponseEntity<AuthenticationResponseDto> refresh(
-            @Valid @RequestBody RefreshTokenRequestDto refreshRequest) {
-        String refreshToken = refreshRequest.getRefreshToken();
-
-        // Look up the refresh token and check if it is valid
-        return refreshTokenService.findByToken(refreshToken)
-                .filter(token -> !token.isExpired()).map(token -> {
-                    String newAccessToken
-                            = jwtUtil.generateToken(token.getUser());
-                    return ResponseEntity.ok(new AuthenticationResponseDto(
-                            token.getUser().getUsername(),
-                            newAccessToken, jwtUtil.getExpirationTime(),
-                            refreshToken));
-                }).orElse(ResponseEntity.status(HttpStatus.UNAUTHORIZED).build());
-    }
+    // TODO: implement logout functionality again
 }

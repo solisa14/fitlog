@@ -8,9 +8,9 @@ public enum TrackingType {
 
     @Override
     public String toString() {
-        String[] name = name().toLowerCase().split("_");
+        String[] splitName = name().toLowerCase().split("_");
         StringBuilder sb = new StringBuilder();
-        for (String s : name) {
+        for (String s : splitName) {
             sb.append(s.substring(0, 1).toUpperCase()).append(s.substring(1)).append(" ");
         }
         return sb.toString().trim();

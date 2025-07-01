@@ -91,6 +91,6 @@ public class Exercise {
                 "name='%s', " +
                 "muscleGroups=%s, " +
                 "trackingType=%s" +
-                "}", id, name, muscleGroups, trackingType);
+                "}", id, name, muscleGroups.toString(), trackingType.toString());
     }
 }
