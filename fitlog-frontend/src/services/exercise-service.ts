@@ -1,66 +1,86 @@
-import {getAuthToken} from "./auth-service.ts";
-import type {ExerciseRequest, ExerciseResponse} from '../types/exercise.ts';
-import {makeAuthenticatedRequest, processApiResponse} from './api-helpers';
+import type { Exercise, ExerciseRequest } from "../types/exercise";
+import { apiRequest } from "./api";
+import { getAuthToken } from "./auth-service";
 
 const BASE_URL: string = "http://localhost:8080/api/v1/exercises";
 
 export async function createExercise(
-    exerciseRequest: ExerciseRequest
-): Promise<ExerciseResponse> {
+  exerciseRequest: ExerciseRequest
+): Promise<Exercise> {
+  try {
     const token = getAuthTokenAndValidate();
-
-    const response = await makeAuthenticatedRequest(BASE_URL, {
+    const response: Exercise = await apiRequest<Exercise>(
+      BASE_URL,
+      {
         method: "POST",
         body: JSON.stringify(exerciseRequest),
-    }, token);
-
-    return processApiResponse<ExerciseResponse>(response);
+      },
+      token
+    );
+    return response;
+  } catch (error) {
+    console.error("Error creating exercise:", error);
+    throw error;
+  }
 }
 
-export async function getExercises(): Promise<ExerciseResponse[]> {
+export async function getExercises(): Promise<Exercise[]> {
+  try {
     const token = getAuthTokenAndValidate();
-
-    const response = await makeAuthenticatedRequest(BASE_URL, {
+    const response: Exercise[] = await apiRequest<Exercise[]>(
+      BASE_URL,
+      {
         method: "GET",
-    }, token);
-
-    return processApiResponse<ExerciseResponse[]>(response);
+      },
+      token
+    );
+    return response;
+  } catch (error) {
+    console.error("Error getting exercises:", error);
+    throw error;
+  }
 }
 
 export async function updateExercise(
-    exerciseRequest: ExerciseRequest
-): Promise<ExerciseResponse> {
+  exerciseRequest: ExerciseRequest
+): Promise<Exercise> {
+  try {
     const token = getAuthTokenAndValidate();
-
-    const response = await makeAuthenticatedRequest(`${BASE_URL}/${exerciseRequest.id}`, {
+    const response: Exercise = await apiRequest<Exercise>(
+      BASE_URL,
+      {
         method: "PUT",
         body: JSON.stringify(exerciseRequest),
-    }, token);
-
-    return processApiResponse<ExerciseResponse>(response);
+      },
+      token
+    );
+    return response;
+  } catch (error) {
+    console.error("Error updating exercise:", error);
+    throw error;
+  }
 }
 
 export async function deleteExercise(id: string): Promise<void> {
+  try {
     const token = getAuthTokenAndValidate();
-
-    const response = await makeAuthenticatedRequest(`${BASE_URL}/${id}`, {
+    await apiRequest<void>(
+      `${BASE_URL}/${id}`,
+      {
         method: "DELETE",
-    }, token);
-
-    if (!response.ok) {
-        try {
-            const errorData = await response.json();
-            throw new Error(errorData.detail || "Failed to delete exercise");
-        } catch {
-            throw new Error("Failed to delete exercise");
-        }
-    }
+      },
+      token
+    );
+  } catch (error) {
+    console.error("Error deleting exercise:", error);
+    throw error;
+  }
 }
 
 function getAuthTokenAndValidate(): string {
-    const token = getAuthToken();
-    if (!token) {
-        throw new Error("No auth token found");
-    }
-    return token;
+  const token = getAuthToken();
+  if (!token) {
+    throw new Error("No auth token found");
+  }
+  return token;
 }
