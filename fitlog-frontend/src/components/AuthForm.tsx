@@ -1,84 +1,74 @@
-import {type ChangeEvent, type FormEvent, useState} from "react";
-import {Link} from "react-router-dom";
+import { type ChangeEvent, type FormEvent, useState } from "react";
+import { Link } from "react-router-dom";
 import ErrorMessage from "./ErrorMessage";
-import styles from "./AuthForm.module.css";
 
 interface AuthFormProps {
-    title: string;
-    buttonText: string;
-    linkText: string;
-    linkTo: string;
-    onSubmit: (email: string, password: string) => Promise<void>;
-    isLoading?: boolean;
+  title: string;
+  buttonText: string;
+  linkText: string;
+  linkTo: string;
+  onSubmit: (email: string, password: string) => Promise<void>;
+}
+
+interface AuthFormData {
+  email: string;
+  password: string;
 }
 
 export default function AuthForm({
-                                     title,
-                                     buttonText,
-                                     linkText,
-                                     linkTo,
-                                     onSubmit,
-                                     isLoading = false,
-                                 }: AuthFormProps) {
-    const [form, setForm] = useState({email: "", password: ""});
-    const [errorMessage, setErrorMessage] = useState("");
+  title,
+  buttonText,
+  linkText,
+  linkTo,
+  onSubmit,
+}: AuthFormProps) {
+  const [form, setForm] = useState<AuthFormData>({ email: "", password: "" });
+  const [errorMessage, setErrorMessage] = useState<string>("");
 
-    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-        const {name, value} = e.target;
-        setForm(prev => ({...prev, [name]: value}));
-    };
+  const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
+    const { name, value } = e.target;
+    setForm((prevForm) => ({ ...prevForm, [name]: value }));
+  };
 
-    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        try {
-            setErrorMessage("");
-            await onSubmit(form.email, form.password);
-            setForm({email: "", password: ""});
-        } catch (error) {
-            if (error instanceof Error) {
-                setErrorMessage(error.message);
-            } else {
-                setErrorMessage("An unexpected error occurred");
-            }
-        }
-    };
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
+    e.preventDefault();
+    try {
+      setErrorMessage("");
+      await onSubmit(form.email, form.password);
+      setForm({ email: "", password: "" });
+    } catch (error) {
+      if (error instanceof Error) {
+        setErrorMessage(error.message);
+      } else {
+        setErrorMessage("An unexpected error occurred");
+      }
+    }
+  };
 
-    return (
-        <div className={styles.authPage}>
-            <h1>{title}</h1>
-            <form className={styles.authForm} onSubmit={handleSubmit}>
-                <input
-                    className={styles.authInput}
-                    type="email"
-                    name="email"
-                    placeholder="Email"
-                    required
-                    value={form.email}
-                    onChange={handleChange}
-                    disabled={isLoading}
-                />
-                <input
-                    className={styles.authInput}
-                    type="password"
-                    name="password"
-                    placeholder="Password"
-                    required
-                    value={form.password}
-                    onChange={handleChange}
-                    disabled={isLoading}
-                />
-                {errorMessage && <ErrorMessage message={errorMessage}/>}
-                <button
-                    className={styles.authButton}
-                    type="submit"
-                    disabled={isLoading}
-                >
-                    {isLoading ? "Loading..." : buttonText}
-                </button>
-            </form>
-            <Link to={linkTo} className={styles.authLink}>
-                {linkText}
-            </Link>
-        </div>
-    );
-} 
+  return (
+    <div>
+      <h1>{title}</h1>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="email"
+          name="email"
+          placeholder="Email"
+          required
+          value={form.email}
+          onChange={handleChange}
+        />
+        <input
+          type="password"
+          name="password"
+          placeholder="Password"
+          required
+          value={form.password}
+          onChange={handleChange}
+        />
+        {errorMessage && <ErrorMessage message={errorMessage} />}
+        <button type="submit">{buttonText}</button>
+      </form>
+      <Link to={linkTo}>{linkText}</Link>
+    </div>
+  );
+}

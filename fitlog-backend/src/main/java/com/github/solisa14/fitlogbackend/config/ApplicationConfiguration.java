@@ -10,16 +10,17 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
 import com.github.solisa14.fitlogbackend.repository.UserRepository;
 
 /**
- * Configures the application beans, including user details service, authentication manager,
- * authentication provider, and password encoder. This configuration is essential for setting up
- * Spring Security throughout the application.
+ * Configures the application beans, including user details service,
+ * authentication manager, authentication provider, and password encoder. This
+ * configuration is essential for setting up Spring Security throughout the
+ * application.
  */
 @Configuration
 public class ApplicationConfiguration {
+
     private final UserRepository userRepository;
 
     public ApplicationConfiguration(UserRepository userRepository) {
@@ -27,8 +28,8 @@ public class ApplicationConfiguration {
     }
 
     /**
-     * Provides a UserDetailsService bean that retrieves user details by email. This is used for
-     * authentication.
+     * Provides a UserDetailsService bean that retrieves user details by email.
+     * This is used for authentication.
      *
      * @return UserDetailsService implementation
      */
@@ -43,7 +44,8 @@ public class ApplicationConfiguration {
      *
      * @param configuration the AuthenticationConfiguration
      * @return the AuthenticationManager
-     * @throws Exception if an error occurs while creating the AuthenticationManager
+     * @throws Exception if an error occurs while creating the
+     * AuthenticationManager
      */
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration)
@@ -52,22 +54,22 @@ public class ApplicationConfiguration {
     }
 
     /**
-     * Provides an AuthenticationProvider bean that uses the UserDetailsService and PasswordEncoder.
-     * This is used for authenticating users.
+     * Provides an AuthenticationProvider bean that uses the UserDetailsService
+     * and PasswordEncoder. This is used for authenticating users.
      *
      * @return AuthenticationProvider implementation
      */
     @Bean
     AuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider authenticationProvider =
-                new DaoAuthenticationProvider(userDetailsService());
+        DaoAuthenticationProvider authenticationProvider
+                = new DaoAuthenticationProvider(userDetailsService());
         authenticationProvider.setPasswordEncoder(passwordEncoder());
         return authenticationProvider;
     }
 
     /**
-     * Provides a PasswordEncoder bean that uses BCrypt for encoding passwords. This is used to
-     * securely store and verify user passwords.
+     * Provides a PasswordEncoder bean that uses BCrypt for encoding passwords.
+     * This is used to securely store and verify user passwords.
      *
      * @return PasswordEncoder implementation
      */

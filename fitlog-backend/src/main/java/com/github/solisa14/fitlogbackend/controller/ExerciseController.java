@@ -1,21 +1,27 @@
 package com.github.solisa14.fitlogbackend.controller;
 
+import static com.github.solisa14.fitlogbackend.util.SecurityUtil.*;
+import java.util.List;
+import java.util.Optional;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import com.github.solisa14.fitlogbackend.dto.ExerciseRequest;
 import com.github.solisa14.fitlogbackend.dto.ExerciseResponse;
 import com.github.solisa14.fitlogbackend.model.Exercise;
 import com.github.solisa14.fitlogbackend.service.ExerciseService;
 import jakarta.validation.Valid;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.Optional;
-
-import static com.github.solisa14.fitlogbackend.util.SecurityUtil.getCurrentUser;
 
 /**
- * Controller for handling exercise-related operations using RESTful API endpoints.
+ * Controller for handling exercise-related operations using RESTful API
+ * endpoints.
  */
 @RestController
 @RequestMapping("/api/v1/exercises")
@@ -30,14 +36,14 @@ public class ExerciseController {
     /**
      * Retrieves all exercises from the database.
      *
-     * @return ResponseEntity containing a list of ExerciseResponse objects or a NO_CONTENT
-     * status if no exercises are found.
+     * @return ResponseEntity containing a list of ExerciseResponse objects or a
+     * NO_CONTENT status if no exercises are found.
      */
     @GetMapping
     public ResponseEntity<List<ExerciseResponse>> getAllExercises() {
         List<Exercise> foundExercises = exerciseService.getAllExercises();
-        List<ExerciseResponse> exercises =
-                foundExercises.stream().map(ExerciseResponse::new).toList();
+        List<ExerciseResponse> exercises
+                = foundExercises.stream().map(ExerciseResponse::new).toList();
         return ResponseEntity.status(HttpStatus.OK).body(exercises);
     }
 
@@ -45,8 +51,8 @@ public class ExerciseController {
      * Retrieves an exercise by its ID.
      *
      * @param id the ID of the exercise to retrieve
-     * @return ResponseEntity containing the ExerciseResponse if found, or NOT_FOUND status if
-     * not found
+     * @return ResponseEntity containing the ExerciseResponse if found, or
+     * NOT_FOUND status if not found
      */
     @GetMapping("{id}")
     public ResponseEntity<ExerciseResponse> getExerciseById(@PathVariable Long id) {
@@ -59,8 +65,10 @@ public class ExerciseController {
     /**
      * Creates a new exercise.
      *
-     * @param newExercise the ExerciseRequest containing the details of the new exercise
-     * @return ResponseEntity containing the created ExerciseResponse with status CREATED
+     * @param newExercise the ExerciseRequest containing the details of the new
+     * exercise
+     * @return ResponseEntity containing the created ExerciseResponse with
+     * status CREATED
      */
     @PostMapping
     public ResponseEntity<ExerciseResponse> createExercise(
@@ -78,15 +86,15 @@ public class ExerciseController {
     /**
      * Updates an existing exercise by its ID.
      *
-     * @param id                     the ID of the exercise to update
-     * @param updatedExerciseRequest the ExerciseRequest containing the updated details of the
-     *                               exercise
-     * @return ResponseEntity containing the updated ExerciseResponse if found, or NOT_FOUND
-     * status if not found
+     * @param id the ID of the exercise to update
+     * @param updatedExerciseRequest the ExerciseRequest containing the updated
+     * details of the exercise
+     * @return ResponseEntity containing the updated ExerciseResponse if found,
+     * or NOT_FOUND status if not found
      */
     @PutMapping("/{id}")
     public ResponseEntity<ExerciseResponse> updateExercise(@PathVariable Long id,
-                                                           @Valid @RequestBody ExerciseRequest updatedExerciseRequest) {
+            @Valid @RequestBody ExerciseRequest updatedExerciseRequest) {
         Exercise updatedExercise = new Exercise(updatedExerciseRequest.getName(),
                 updatedExerciseRequest.getMuscleGroups(),
                 updatedExerciseRequest.getTrackingType(),
@@ -95,7 +103,7 @@ public class ExerciseController {
         Optional<Exercise> savedExercise = exerciseService.updateExercise(id, updatedExercise);
         return savedExercise
                 .map(exercise -> ResponseEntity.status(HttpStatus.OK)
-                        .body(new ExerciseResponse(exercise)))
+                .body(new ExerciseResponse(exercise)))
                 .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 

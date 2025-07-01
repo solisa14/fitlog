@@ -1,15 +1,16 @@
 package com.github.solisa14.fitlogbackend.service;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 import com.github.solisa14.fitlogbackend.dto.AuthenticationRequest;
 import com.github.solisa14.fitlogbackend.exception.EmailAlreadyExistsException;
 import com.github.solisa14.fitlogbackend.model.User;
 import com.github.solisa14.fitlogbackend.repository.UserRepository;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
 
 /**
- * Service class for user-related operations such as registration, updates, and deletion. It
- * interacts with the UserRepository and uses PasswordEncoder for security.
+ * Service class for user-related operations such as registration, updates, and
+ * deletion. It interacts with the UserRepository and uses PasswordEncoder for
+ * security.
  */
 @Service
 public class UserService {
@@ -23,8 +24,8 @@ public class UserService {
     }
 
     /**
-     * Registers a new user with the provided details. It checks for existing email and encodes the
-     * password before saving.
+     * Registers a new user with the provided details. It checks for existing
+     * email and encodes the password before saving.
      *
      * @param authenticationRequest DTO containing user registration data.
      * @return The saved User entity.

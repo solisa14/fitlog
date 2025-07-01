@@ -1,15 +1,15 @@
 package com.github.solisa14.fitlogbackend.dto;
 
+import java.util.Set;
 import com.github.solisa14.fitlogbackend.enums.MuscleGroup;
 import com.github.solisa14.fitlogbackend.enums.TrackingType;
 import com.github.solisa14.fitlogbackend.model.Exercise;
-
-import java.util.Set;
 
 /**
  * Data Transfer Object for exercise responses.
  */
 public class ExerciseResponse {
+
     private Long id;
     private String name;
     private Set<MuscleGroup> muscleGroups;

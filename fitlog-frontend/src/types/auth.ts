@@ -1,13 +1,13 @@
 export interface AuthResponse {
-    email: string;
-    password: string;
-    token: string;
+  email: string;
+  password: string;
+  token: string;
 }
 
 export interface ErrorResponse {
-    type: string;
-    detail: string;
-    status: number;
-    title: string;
-    instance: string;
-} 
+  type: string;
+  detail: string;
+  status: number;
+  title: string;
+  instance: string;
+}
