@@ -3,34 +3,34 @@ package com.github.solisa14.fitlogbackend.dto;
 import com.github.solisa14.fitlogbackend.enums.MuscleGroup;
 import com.github.solisa14.fitlogbackend.enums.TrackingType;
 import com.github.solisa14.fitlogbackend.model.Exercise;
-import jakarta.validation.constraints.*;
 
 import java.util.Set;
 
 /**
- * Data Transfer Object for exercise creation and update requests.
+ * Data Transfer Object for exercise responses.
  */
-public class ExerciseRequestDto {
-    @NotBlank(message = "Exercise name should not be blank")
-    @Size(max = 50, message = "Exercise name should not exceed 50 characters")
-    @Pattern(regexp = "^[a-zA-Z0-9\\s\\-_]+$",
-            message = "Exercise name should contain only letters, numbers, spaces, hyphens and underscores")
+public class ExerciseResponse {
+    private Long id;
     private String name;
-
-    @NotEmpty(message = "There should be at least one or more muscle group for this exercise.")
     private Set<MuscleGroup> muscleGroups;
-
-    @NotNull(message = "Exercise must have a tracking type.")
     private TrackingType trackingType;
 
-
-    public ExerciseRequestDto() {
+    public ExerciseResponse() {
     }
 
-    public ExerciseRequestDto(Exercise exercise) {
+    public ExerciseResponse(Exercise exercise) {
+        id = exercise.getId();
         name = exercise.getName();
         muscleGroups = exercise.getMuscleGroups();
         trackingType = exercise.getTrackingType();
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {

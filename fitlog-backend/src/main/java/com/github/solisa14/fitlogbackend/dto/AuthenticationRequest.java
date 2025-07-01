@@ -7,7 +7,7 @@ import jakarta.validation.constraints.Pattern;
 /**
  * Data Transfer Object for authentication requests.
  */
-public class AuthenticationRequestDto {
+public class AuthenticationRequest {
     @NotBlank(message = "Email should not be blank")
     @Email(message = "Email should be a valid email address")
     private String email;
@@ -18,10 +18,10 @@ public class AuthenticationRequestDto {
             message = "Password should be a minimum of 12 characters with at least one lowercase, uppercase, digit, and special character")
     private String password;
 
-    public AuthenticationRequestDto() {
+    public AuthenticationRequest() {
     }
 
-    public AuthenticationRequestDto(String email, String password) {
+    public AuthenticationRequest(String email, String password) {
         this.email = email;
         this.password = password;
     }
