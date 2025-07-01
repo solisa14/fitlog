@@ -5,7 +5,7 @@ import HomePage from "../features/home/HomePage.tsx";
 import PrivateRoutes from "./PrivateRoutes.tsx";
 import ExercisePage from "../features/exercise/ExercisePage.tsx";
 
-function App() {
+export default function App() {
     return (
         <div>
             <BrowserRouter>
@@ -33,5 +33,3 @@ function App() {
         </div>
     )
 }
-
-export default App
