@@ -27,9 +27,9 @@ export default function ExerciseRow({
   }
 
   return (
-    <tr id={id}>
-      <td>{name}</td>
-      <td>
+    <tr id={id} className="border-b border-gray-200 hover:bg-gray-50">
+      <td className="px-4 py-3 text-left font-medium">{name}</td>
+      <td className="px-4 py-3 text-left">
         <div>
           {muscleGroups && muscleGroups.length > 0
             ? muscleGroups
@@ -40,11 +40,23 @@ export default function ExerciseRow({
             : "None"}
         </div>
       </td>
-      <td>{getTrackingTypeDisplayName(trackingType)}</td>
-      <td>
-        <div>
-          <button onClick={handleEdit}>Edit</button>
-          <button onClick={handleDelete}>Delete</button>
+      <td className="px-4 py-3 text-left">
+        {getTrackingTypeDisplayName(trackingType)}
+      </td>
+      <td className="px-4 py-3">
+        <div className="flex gap-2">
+          <button
+            onClick={handleEdit}
+            className="px-3 py-1 text-white bg-blue-500 rounded-lg hover:bg-blue-600 transition-colors text-sm font-medium"
+          >
+            Edit
+          </button>
+          <button
+            onClick={handleDelete}
+            className="px-3 py-1 text-white bg-red-500 rounded-lg hover:bg-red-600 transition-colors text-sm font-medium"
+          >
+            Delete
+          </button>
         </div>
       </td>
     </tr>
