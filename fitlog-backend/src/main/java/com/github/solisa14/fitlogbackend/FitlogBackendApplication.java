@@ -10,5 +10,6 @@ public class FitlogBackendApplication {
         SpringApplication.run(FitlogBackendApplication.class, args);
     }
 
+    // TODO: implement the Workout entity and restructure API endpoints to go through a workout controller instead of a dedicated ExerciseSetController
     // TODO: handle escaping references once done with exercise set model implementation
 }
