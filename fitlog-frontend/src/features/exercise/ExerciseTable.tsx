@@ -1,4 +1,4 @@
-import type { Exercise } from "../../types/exercise.ts";
+import type {Exercise} from "../../types/exercise.ts";
 import ExerciseRow from "./ExerciseRow.tsx";
 
 interface ExerciseTableProps {
@@ -23,9 +23,9 @@ export default function ExerciseTable({
   }
 
   return (
-    <div className="overflow-hidden mt-6 w-full rounded-xl border-2 border-gray-500">
+      <div className="overflow-hidden w-full rounded-lg border border-gray-300">
       <table className="w-full">
-        <thead className="bg-gray-100 border-b-2 border-gray-500">
+          <thead className="bg-gray-100 border-b border-gray-300">
           <tr>
             <th className="px-4 py-3 font-bold text-left text-gray-700">
               Name

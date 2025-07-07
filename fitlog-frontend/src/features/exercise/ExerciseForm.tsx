@@ -1,12 +1,12 @@
 import * as React from "react";
-import { useEffect, useState } from "react";
+import {useEffect, useState} from "react";
 import {
   getMuscleGroupDisplayName,
   getTrackingTypeDisplayName,
   MuscleGroup,
   TrackingType,
 } from "../../types/enum.ts";
-import type { Exercise } from "../../types/exercise.ts";
+import type {Exercise} from "../../types/exercise.ts";
 
 interface ExerciseFormProps {
   exercise: Exercise | null;
@@ -72,8 +72,10 @@ export default function ExerciseForm({
   }
 
   return (
-    <div className="flex fixed inset-0 z-50 justify-center items-center p-4 bg-gray-200 bg-opacity-50">
-      <div className="bg-white rounded-xl border-2 border-gray-500 p-6 w-full max-w-md max-h-[90vh] overflow-y-auto">
+      <div
+          className="flex fixed inset-0 z-50 justify-center items-center p-4 backdrop-blur-xs">
+        <div
+            className="bg-white rounded-lg border border-gray-300 p-6 w-full max-w-md max-h-[90vh] overflow-y-auto">
         <h2 className="mb-6 text-2xl font-bold text-center text-gray-800">
           {exercise ? "Edit Exercise" : "Create Exercise"}
         </h2>
@@ -145,14 +147,14 @@ export default function ExerciseForm({
           <div className="flex gap-3 pt-4">
             <button
               type="submit"
-              className="flex-1 px-4 py-2 font-medium text-white bg-red-500 rounded-lg transition-colors hover:bg-red-600"
+              className="flex-1 px-3 py-2 font-medium text-white bg-red-500 rounded-lg transition-colors hover:bg-red-600"
             >
               {exercise ? "Update Exercise" : "Create Exercise"}
             </button>
             <button
               type="button"
               onClick={onCancel}
-              className="flex-1 px-4 py-2 font-medium text-gray-700 bg-gray-200 rounded-lg transition-colors hover:bg-gray-300"
+              className="flex-1 px-3 py-2 font-medium text-gray-700 bg-gray-200 rounded-lg transition-colors hover:bg-gray-300"
             >
               Cancel
             </button>
