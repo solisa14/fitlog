@@ -1,7 +1,10 @@
+import NavBar from "../../components/NavBar.tsx";
+
 const HomePage = () => {
   return (
     <div>
-      <h1>Placeholder</h1>
+        <NavBar/>
+        {/* Placeholder for new workout logging */}
     </div>
   );
 };
