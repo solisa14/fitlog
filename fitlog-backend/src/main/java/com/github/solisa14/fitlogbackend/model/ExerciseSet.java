@@ -27,8 +27,18 @@ public class ExerciseSet {
     @JoinColumn(name = "exercise_id")
     private Exercise exercise;
 
+    @ManyToOne
+    @JoinColumn(name = "workout_id")
+    private Workout workout;
+
     @Column(name = "logged_at")
     private LocalDateTime loggedAt;
+
+    @Column
+    private LocalDateTime createdAt;
+
+    @Column
+    private LocalDateTime updatedAt;
 
     @Min(value = 1)
     @Column(name = "set_number")
@@ -60,6 +70,17 @@ public class ExerciseSet {
         this.loggedAt = LocalDateTime.now();
         this.duration = duration;
         this.distance = distance;
+    }
+
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
+        updatedAt = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        updatedAt = LocalDateTime.now();
     }
 
     public void logSet(Integer reps, Double weight, Double rpe) {
@@ -114,12 +135,36 @@ public class ExerciseSet {
         this.exercise = exercise;
     }
 
+    public Workout getWorkout() {
+        return workout;
+    }
+
+    public void setWorkout(Workout workout) {
+        this.workout = workout;
+    }
+
     public LocalDateTime getLoggedAt() {
         return loggedAt;
     }
 
     public void setLoggedAt(LocalDateTime loggedAt) {
         this.loggedAt = loggedAt;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
     public int getSetNumber() {
