@@ -9,4 +9,6 @@ public class FitlogBackendApplication {
     public static void main(String[] args) {
         SpringApplication.run(FitlogBackendApplication.class, args);
     }
+
+    // TODO: handle escaping references once done with exercise set model implementation
 }
