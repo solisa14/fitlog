@@ -1,5 +1,6 @@
 package com.github.solisa14.fitlogbackend.model;
 
+import com.github.solisa14.fitlogbackend.enums.MuscleGroup;
 import com.github.solisa14.fitlogbackend.enums.TrackingType;
 import com.github.solisa14.fitlogbackend.exception.TrackingTypeMismatchException;
 import jakarta.persistence.*;
@@ -7,6 +8,7 @@ import jakarta.validation.constraints.Min;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 @Table(name = "exercise_set")
@@ -162,4 +164,17 @@ public class ExerciseSet {
     public void setDistance(double distance) {
         this.distance = distance;
     }
+
+    public String getExerciseName() {
+        return exercise.getName();
+    }
+
+    public Set<MuscleGroup> getMuscleGroups() {
+        return exercise.getMuscleGroups();
+    }
+
+    public TrackingType getTrackingType() {
+        return exercise.getTrackingType();
+    }
+
 }
