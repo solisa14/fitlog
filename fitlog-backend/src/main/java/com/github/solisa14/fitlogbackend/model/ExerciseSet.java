@@ -10,6 +10,11 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Set;
 
+/**
+ * Represents an exercise set in the application. Each exercise set is
+ * associated with an exercise and has a set number, reps, weight, RPE,
+ * duration, and distance.
+ */
 @Entity
 @Table(name = "exercise_set")
 public class ExerciseSet {
