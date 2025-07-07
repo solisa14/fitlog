@@ -1,5 +1,5 @@
-import type { AuthResponse } from "../types/auth";
-import { apiRequest, HttpError } from "./api";
+import type {AuthResponse} from "../types/auth";
+import {apiRequest, HttpError} from "./api";
 
 const BASE_URL: string = "http://localhost:8080/api/v1/auth";
 
@@ -51,4 +51,8 @@ export function getAuthToken(): string | null {
 
 function setAuthToken(token: string): void {
   sessionStorage.setItem("authToken", token);
+}
+
+export function logout(): void {
+  sessionStorage.removeItem("authToken");
 }
