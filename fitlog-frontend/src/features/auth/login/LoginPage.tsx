@@ -1,5 +1,5 @@
-import { useNavigate } from "react-router-dom";
-import { login } from "../../../services/auth-service.ts";
+import {useNavigate} from "react-router-dom";
+import {login} from "../../../services/auth-service.ts";
 import AuthForm from "../../../components/AuthForm";
 
 export default function LoginPage() {
@@ -11,7 +11,7 @@ export default function LoginPage() {
   ): Promise<void> => {
     const response = await login(email, password);
     if (response.token) {
-      navigate("/exercises"); // TODO: change to home page
+      navigate("/home");
     } else {
       throw new Error("Login failed, please try again.");
     }

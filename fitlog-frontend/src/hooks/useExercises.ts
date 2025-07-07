@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import type { Exercise } from "../types/exercise.ts";
+import {useEffect, useState} from "react";
+import type {Exercise} from "../types/exercise.ts";
 import {
   createExercise,
   deleteExercise,
@@ -12,7 +12,6 @@ export function useExercises() {
   const [exerciseToEdit, setExerciseToEdit] = useState<Exercise | null>(null);
   const [displayExerciseForm, setDisplayExerciseForm] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  // TODO: Add loading state
 
   async function handleCreateExercise(exercise: Exercise): Promise<void> {
     try {
