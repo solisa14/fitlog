@@ -1,11 +1,13 @@
 package com.github.solisa14.fitlogbackend.service;
 
-import static com.github.solisa14.fitlogbackend.util.SecurityUtil.*;
-import java.util.List;
-import java.util.Optional;
-import org.springframework.stereotype.Service;
 import com.github.solisa14.fitlogbackend.model.Exercise;
 import com.github.solisa14.fitlogbackend.repository.ExerciseRepository;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+
+import static com.github.solisa14.fitlogbackend.util.SecurityUtil.getCurrentUser;
 
 /**
  * Service class for managing exercises. It handles CRUD operations for

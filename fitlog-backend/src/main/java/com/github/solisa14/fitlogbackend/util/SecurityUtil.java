@@ -1,8 +1,8 @@
 package com.github.solisa14.fitlogbackend.util;
 
+import com.github.solisa14.fitlogbackend.model.User;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import com.github.solisa14.fitlogbackend.model.User;
 
 public class SecurityUtil {
 

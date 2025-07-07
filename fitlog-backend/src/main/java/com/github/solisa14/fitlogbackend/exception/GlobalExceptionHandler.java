@@ -151,14 +151,14 @@ public class GlobalExceptionHandler {
     }
 
     /**
-     * Handles TrackingTypeMismatchException, a custom exception thrown when there
-     * is a mismatch between the tracking type provided and the expected tracking
-     * type of an exercise.
+     * Handles TrackingTypeMismatchException, a custom exception thrown when
+     * there is a mismatch between the tracking type provided and the expected
+     * tracking type of an exercise.
      *
-     * @param e       The TrackingTypeMismatchException instance.
+     * @param e The TrackingTypeMismatchException instance.
      * @param request The HttpServletRequest that resulted in the exception.
-     * @return A ResponseEntity containing ErrorResponse with a BAD_REQUEST status
-     * and the details of the exception.
+     * @return A ResponseEntity containing ErrorResponse with a BAD_REQUEST
+     * status and the details of the exception.
      */
     @ExceptionHandler(TrackingTypeMismatchException.class)
     public ResponseEntity<ErrorResponse> handleTrackingTypeMismatchException(

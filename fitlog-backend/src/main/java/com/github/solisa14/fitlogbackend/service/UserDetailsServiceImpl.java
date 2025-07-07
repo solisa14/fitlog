@@ -1,10 +1,10 @@
 package com.github.solisa14.fitlogbackend.service;
 
+import com.github.solisa14.fitlogbackend.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import com.github.solisa14.fitlogbackend.repository.UserRepository;
 
 /**
  * Implementation of Spring Security's UserDetailsService. This service is
