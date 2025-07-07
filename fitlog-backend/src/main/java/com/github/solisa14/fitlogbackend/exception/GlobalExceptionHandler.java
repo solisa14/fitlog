@@ -1,8 +1,7 @@
 package com.github.solisa14.fitlogbackend.exception;
 
-import java.io.IOException;
-import java.time.LocalDateTime;
-import java.util.List;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
@@ -12,13 +11,13 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
+
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.util.List;
 
 /**
- * Global exception handler for the application. This class uses
- * @RestControllerAdvice to provide centralized exception handling across all
- * @RequestMapping methods.
+ * Global exception handler for the application.
  */
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -149,6 +148,22 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handleAccessDeniedException(
             AccessDeniedException e, HttpServletRequest request) {
         return getErrorResponse(e, request, HttpStatus.FORBIDDEN);
+    }
+
+    /**
+     * Handles TrackingTypeMismatchException, a custom exception thrown when there
+     * is a mismatch between the tracking type provided and the expected tracking
+     * type of an exercise.
+     *
+     * @param e       The TrackingTypeMismatchException instance.
+     * @param request The HttpServletRequest that resulted in the exception.
+     * @return A ResponseEntity containing ErrorResponse with a BAD_REQUEST status
+     * and the details of the exception.
+     */
+    @ExceptionHandler(TrackingTypeMismatchException.class)
+    public ResponseEntity<ErrorResponse> handleTrackingTypeMismatchException(
+            TrackingTypeMismatchException e, HttpServletRequest request) {
+        return getErrorResponse(e, request, HttpStatus.BAD_REQUEST);
     }
 
     /**
