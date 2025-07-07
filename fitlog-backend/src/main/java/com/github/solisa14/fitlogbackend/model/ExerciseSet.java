@@ -30,24 +30,24 @@ public class ExerciseSet {
     private int setNumber;
 
     @Column(name = "reps")
-    private int reps;
+    private Integer reps;
 
     @Column(name = "weight")
-    private double weight;
+    private Double weight;
 
     @Column(name = "rpe")
-    private double rpe; // Rate of Perceived Exertion
+    private Double rpe; // Rate of Perceived Exertion
 
     @Column(name = "duration")
     private Duration duration;
 
     @Column(name = "distance")
-    private double distance;
+    private Double distance;
 
     public ExerciseSet() {
     }
 
-    public ExerciseSet(Exercise exercise, int reps, double weight, double rpe, Duration duration, double distance) {
+    public ExerciseSet(Exercise exercise, Integer reps, Double weight, Double rpe, Duration duration, Double distance) {
         this.reps = reps;
         this.exercise = exercise;
         this.weight = weight;
@@ -57,7 +57,7 @@ public class ExerciseSet {
         this.distance = distance;
     }
 
-    public void logSet(int reps, double weight, double rpe) {
+    public void logSet(Integer reps, Double weight, Double rpe) {
         if (exercise.getTrackingType().equals(TrackingType.REPS_AND_WEIGHT)) {
             setReps(reps);
             setWeight(weight);
@@ -75,7 +75,7 @@ public class ExerciseSet {
         }
     }
 
-    public void logSet(Duration duration, double distance) {
+    public void logSet(Duration duration, Double distance) {
         if (exercise.getTrackingType().equals(TrackingType.DISTANCE_AND_DURATION)) {
             setDuration(duration);
             setDistance(distance);
@@ -84,7 +84,7 @@ public class ExerciseSet {
         }
     }
 
-    public void logSet(int reps, double rpe) {
+    public void logSet(Integer reps, Double rpe) {
         if (exercise.getTrackingType().equals(TrackingType.REPS_ONLY)) {
             setReps(reps);
             setRpe(rpe);
@@ -125,27 +125,27 @@ public class ExerciseSet {
         this.setNumber = setNumber;
     }
 
-    public int getReps() {
+    public Integer getReps() {
         return reps;
     }
 
-    public void setReps(int reps) {
+    public void setReps(Integer reps) {
         this.reps = reps;
     }
 
-    public double getWeight() {
+    public Double getWeight() {
         return weight;
     }
 
-    public void setWeight(double weight) {
+    public void setWeight(Double weight) {
         this.weight = weight;
     }
 
-    public double getRpe() {
+    public Double getRpe() {
         return rpe;
     }
 
-    public void setRpe(double rpe) {
+    public void setRpe(Double rpe) {
         this.rpe = rpe;
     }
 
@@ -157,11 +157,11 @@ public class ExerciseSet {
         this.duration = duration;
     }
 
-    public double getDistance() {
+    public Double getDistance() {
         return distance;
     }
 
-    public void setDistance(double distance) {
+    public void setDistance(Double distance) {
         this.distance = distance;
     }
 
