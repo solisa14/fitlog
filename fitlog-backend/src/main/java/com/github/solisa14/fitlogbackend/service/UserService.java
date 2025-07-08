@@ -2,6 +2,7 @@ package com.github.solisa14.fitlogbackend.service;
 
 import com.github.solisa14.fitlogbackend.dto.AuthenticationRequest;
 import com.github.solisa14.fitlogbackend.exception.EmailAlreadyExistsException;
+import com.github.solisa14.fitlogbackend.mapper.UserMapper;
 import com.github.solisa14.fitlogbackend.model.User;
 import com.github.solisa14.fitlogbackend.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,10 +18,12 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final UserMapper mapper;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, UserMapper mapper) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.mapper = mapper;
     }
 
     /**
@@ -38,9 +41,8 @@ public class UserService {
             throw new EmailAlreadyExistsException(
                     "Email is already associated with an existing user");
         }
-        User newUser = new User(authenticationRequest.getEmail(),
-                passwordEncoder.encode(authenticationRequest.getPassword())
-        );
+        authenticationRequest.setPassword(passwordEncoder.encode(authenticationRequest.getPassword()));
+        User newUser = mapper.toUser(authenticationRequest);
         return userRepository.save(newUser);
     }
 

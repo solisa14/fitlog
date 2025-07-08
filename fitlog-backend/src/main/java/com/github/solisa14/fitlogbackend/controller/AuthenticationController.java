@@ -2,6 +2,7 @@ package com.github.solisa14.fitlogbackend.controller;
 
 import com.github.solisa14.fitlogbackend.dto.AuthenticationRequest;
 import com.github.solisa14.fitlogbackend.dto.AuthenticationResponse;
+import com.github.solisa14.fitlogbackend.mapper.UserMapper;
 import com.github.solisa14.fitlogbackend.model.User;
 import com.github.solisa14.fitlogbackend.service.UserService;
 import com.github.solisa14.fitlogbackend.util.JwtUtil;
@@ -28,13 +29,16 @@ public class AuthenticationController {
     private final AuthenticationManager authenticationManager;
     private final JwtUtil jwtUtil;
     private final UserService userService;
+    private final UserMapper mapper;
 
     public AuthenticationController(AuthenticationManager authenticationManager,
                                     JwtUtil jwtUtil,
-                                    UserService userService) {
+                                    UserService userService,
+                                    UserMapper mapper) {
         this.authenticationManager = authenticationManager;
         this.jwtUtil = jwtUtil;
         this.userService = userService;
+        this.mapper = mapper;
     }
 
     /**
@@ -59,8 +63,7 @@ public class AuthenticationController {
         String token = jwtUtil.generateToken(userDetails);
 
         return ResponseEntity.status(HttpStatus.OK)
-                .body(new AuthenticationResponse(userDetails.getUsername(),
-                        token, jwtUtil.getExpirationTime()));
+                .body(mapper.toResponseDto((User) userDetails, token));
     }
 
     /**
@@ -77,7 +80,6 @@ public class AuthenticationController {
         String token = jwtUtil.generateToken(user);
 
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(new AuthenticationResponse(user.getUsername(),
-                        token, jwtUtil.getExpirationTime()));
+                .body(mapper.toResponseDto(user, token));
     }
 }
