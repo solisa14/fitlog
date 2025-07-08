@@ -15,15 +15,6 @@ public enum TrackingType {
         this.name = name;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    @JsonValue
-    public String toJson() {
-        return this.name;
-    }
-
     @JsonCreator
     public static TrackingType fromJson(String name) {
         for (TrackingType trackingType : TrackingType.values()) {
@@ -32,6 +23,15 @@ public enum TrackingType {
             }
         }
         throw new IllegalArgumentException("Invalid tracking type: " + name);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    @JsonValue
+    public String toJson() {
+        return this.name;
     }
 
     @Override

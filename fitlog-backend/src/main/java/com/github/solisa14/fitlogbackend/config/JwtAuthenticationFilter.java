@@ -1,6 +1,10 @@
 package com.github.solisa14.fitlogbackend.config;
 
-import java.io.IOException;
+import com.github.solisa14.fitlogbackend.util.JwtUtil;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -12,11 +16,8 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.servlet.HandlerExceptionResolver;
-import com.github.solisa14.fitlogbackend.util.JwtUtil;
-import jakarta.servlet.FilterChain;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+
+import java.io.IOException;
 
 /**
  * Configuration class for the JWT authentication filter. This filter intercepts
@@ -32,7 +33,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final UserDetailsService userDetailsService;
 
     public JwtAuthenticationFilter(JwtUtil jwtUtil, UserDetailsService userDetailsService,
-            HandlerExceptionResolver handlerExceptionResolver) {
+                                   HandlerExceptionResolver handlerExceptionResolver) {
         this.jwtService = jwtUtil;
         this.userDetailsService = userDetailsService;
         this.handlerExceptionResolver = handlerExceptionResolver;
@@ -46,15 +47,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
      * security context and continues the filter chain. Throws exceptions if the
      * token is invalid or user details are not found.
      *
-     * @param request HTTP request
-     * @param response HTTP response
+     * @param request     HTTP request
+     * @param response    HTTP response
      * @param filterChain Filter chain to continue processing the request
      * @throws ServletException If an error occurs during request processing
-     * @throws IOException If an I/O error occurs during request processing
+     * @throws IOException      If an I/O error occurs during request processing
      */
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request,
-            @NonNull HttpServletResponse response, @NonNull FilterChain filterChain)
+                                    @NonNull HttpServletResponse response, @NonNull FilterChain filterChain)
             throws ServletException, IOException {
         final String authHeader = request.getHeader("Authorization");
 
@@ -76,7 +77,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 if (jwtService.isTokenValid(jwt, userDetails)) {
                     UsernamePasswordAuthenticationToken authToken
                             = new UsernamePasswordAuthenticationToken(userDetails, null,
-                                    userDetails.getAuthorities());
+                            userDetails.getAuthorities());
 
                     // Set details for the authentication token
                     authToken

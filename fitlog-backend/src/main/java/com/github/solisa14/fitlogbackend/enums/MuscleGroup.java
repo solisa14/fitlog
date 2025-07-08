@@ -41,15 +41,6 @@ public enum MuscleGroup {
         this.name = name;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    @JsonValue
-    public String toJson() {
-        return this.name;
-    }
-
     @JsonCreator
     public static MuscleGroup fromJson(String name) {
         for (MuscleGroup muscleGroup : MuscleGroup.values()) {
@@ -58,6 +49,15 @@ public enum MuscleGroup {
             }
         }
         throw new IllegalArgumentException("Invalid muscle group: " + name);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    @JsonValue
+    public String toJson() {
+        return this.name;
     }
 
     @Override

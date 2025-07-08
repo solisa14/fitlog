@@ -47,7 +47,7 @@ public class ExerciseService {
      * Updates an existing exercise for the currently authenticated user. It
      * finds the exercise by ID and user, then updates its name and description.
      *
-     * @param id The ID of the exercise to update.
+     * @param id              The ID of the exercise to update.
      * @param updatedExercise The Exercise entity with updated information.
      * @return An Optional containing the updated Exercise if successful,
      * otherwise empty.

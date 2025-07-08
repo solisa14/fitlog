@@ -26,7 +26,7 @@ public class GlobalExceptionHandler {
      * Handles MethodArgumentNotValidException, typically thrown when validation
      * on an argument annotated with @Valid fails.
      *
-     * @param e The MethodArgumentNotValidException instance.
+     * @param e       The MethodArgumentNotValidException instance.
      * @param request The HttpServletRequest that resulted in the exception.
      * @return A ResponseEntity containing ErrorResponse with BAD_REQUEST status
      * and error details.
@@ -57,7 +57,7 @@ public class GlobalExceptionHandler {
      * Handles IOException, which may occur during input or output operations,
      * such as reading from or writing to a file or network.
      *
-     * @param e The IOException instance.
+     * @param e       The IOException instance.
      * @param request The HttpServletRequest that resulted in the exception.
      * @return A ResponseEntity containing ErrorResponse with
      * INTERNAL_SERVER_ERROR status and error details.
@@ -78,7 +78,7 @@ public class GlobalExceptionHandler {
      * Handles EmailAlreadyExistsException, a custom exception thrown when a
      * user tries to register with an email that already exists in the database.
      *
-     * @param e The EmailAlreadyExistsException instance.
+     * @param e       The EmailAlreadyExistsException instance.
      * @param request The HttpServletRequest that resulted in the exception.
      * @return A ResponseEntity containing ErrorResponse with CONFLICT status
      * and error details.
@@ -93,7 +93,7 @@ public class GlobalExceptionHandler {
      * Handles ResourceNotFoundException, a custom exception thrown when a
      * requested resource is not found in the system.
      *
-     * @param e The ResourceNotFoundException instance.
+     * @param e       The ResourceNotFoundException instance.
      * @param request The HttpServletRequest that resulted in the exception.
      * @return A ResponseEntity containing ErrorResponse with NOT_FOUND status
      * and error details.
@@ -108,7 +108,7 @@ public class GlobalExceptionHandler {
      * Handles UsernameNotFoundException, thrown by Spring Security when a user
      * is not found during the authentication process.
      *
-     * @param e The UsernameNotFoundException instance.
+     * @param e       The UsernameNotFoundException instance.
      * @param request The HttpServletRequest that resulted in the exception.
      * @return A ResponseEntity containing ErrorResponse with NOT_FOUND status
      * and error details.
@@ -123,7 +123,7 @@ public class GlobalExceptionHandler {
      * Handles BadCredentialsException, thrown by Spring Security when
      * authentication fails due to incorrect credentials.
      *
-     * @param e The BadCredentialsException instance.
+     * @param e       The BadCredentialsException instance.
      * @param request The HttpServletRequest that resulted in the exception.
      * @return A ResponseEntity containing ErrorResponse with UNAUTHORIZED
      * status and error details.
@@ -139,7 +139,7 @@ public class GlobalExceptionHandler {
      * authenticated user attempts to access a resource they are not authorized
      * to access.
      *
-     * @param e The AccessDeniedException instance.
+     * @param e       The AccessDeniedException instance.
      * @param request The HttpServletRequest that resulted in the exception.
      * @return A ResponseEntity containing ErrorResponse with FORBIDDEN status
      * and error details.
@@ -155,7 +155,7 @@ public class GlobalExceptionHandler {
      * there is a mismatch between the tracking type provided and the expected
      * tracking type of an exercise.
      *
-     * @param e The TrackingTypeMismatchException instance.
+     * @param e       The TrackingTypeMismatchException instance.
      * @param request The HttpServletRequest that resulted in the exception.
      * @return A ResponseEntity containing ErrorResponse with a BAD_REQUEST
      * status and the details of the exception.
@@ -170,7 +170,7 @@ public class GlobalExceptionHandler {
      * Handles all other unhandled exceptions, serving as a global fallback.
      * It's advisable to log the exception here for debugging purposes.
      *
-     * @param e The Exception instance.
+     * @param e       The Exception instance.
      * @param request The HttpServletRequest that resulted in the exception.
      * @return A ResponseEntity containing ErrorResponse with
      * INTERNAL_SERVER_ERROR status.

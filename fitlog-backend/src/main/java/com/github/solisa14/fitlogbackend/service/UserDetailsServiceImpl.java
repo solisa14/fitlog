@@ -25,7 +25,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
      * @param email The email address of the user to load.
      * @return UserDetails object containing the user's information.
      * @throws UsernameNotFoundException if no user is found with the given
-     * email.
+     *                                   email.
      */
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {

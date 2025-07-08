@@ -61,7 +61,7 @@ public class ExerciseController {
      * Creates a new exercise.
      *
      * @param newExercise the ExerciseRequest containing the details of the new
-     * exercise
+     *                    exercise
      * @return ResponseEntity containing the created ExerciseResponse with
      * status CREATED
      */
@@ -81,15 +81,15 @@ public class ExerciseController {
     /**
      * Updates an existing exercise by its ID.
      *
-     * @param id the ID of the exercise to update
+     * @param id                     the ID of the exercise to update
      * @param updatedExerciseRequest the ExerciseRequest containing the updated
-     * details of the exercise
+     *                               details of the exercise
      * @return ResponseEntity containing the updated ExerciseResponse if found,
      * or NOT_FOUND status if not found
      */
     @PutMapping("/{id}")
     public ResponseEntity<ExerciseResponse> updateExercise(@PathVariable Long id,
-            @Valid @RequestBody ExerciseRequest updatedExerciseRequest) {
+                                                           @Valid @RequestBody ExerciseRequest updatedExerciseRequest) {
         Exercise updatedExercise = new Exercise(updatedExerciseRequest.getName(),
                 updatedExerciseRequest.getMuscleGroups(),
                 updatedExerciseRequest.getTrackingType(),
@@ -98,7 +98,7 @@ public class ExerciseController {
         Optional<Exercise> savedExercise = exerciseService.updateExercise(id, updatedExercise);
         return savedExercise
                 .map(exercise -> ResponseEntity.status(HttpStatus.OK)
-                .body(new ExerciseResponse(exercise)))
+                        .body(new ExerciseResponse(exercise)))
                 .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 

@@ -41,10 +41,10 @@ public class JwtUtil {
      * Extracts a specific claim from the JWT token using a claims resolver
      * function.
      *
-     * @param token The JWT token.
+     * @param token          The JWT token.
      * @param claimsResolver A function to resolve the desired claim from the
-     * token's claims.
-     * @param <T> The type of the claim to be extracted.
+     *                       token's claims.
+     * @param <T>            The type of the claim to be extracted.
      * @return The extracted claim.
      */
     public <T> T extractClaim(String token, java.util.function.Function<Claims, T> claimsResolver) {
@@ -87,12 +87,12 @@ public class JwtUtil {
      *
      * @param extraClaims Additional claims to include in the token.
      * @param userDetails The UserDetails object representing the user
-     * (subject).
-     * @param expiration The expiration time for the token in milliseconds.
+     *                    (subject).
+     * @param expiration  The expiration time for the token in milliseconds.
      * @return The constructed JWT token string.
      */
     private String buildToken(Map<String, Object> extraClaims, UserDetails userDetails,
-            long expiration) {
+                              long expiration) {
         return Jwts.builder().setClaims(extraClaims).setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + expiration))
@@ -104,7 +104,7 @@ public class JwtUtil {
      * username in the token matches the UserDetails' username and if the token
      * is not expired.
      *
-     * @param token The JWT token to validate.
+     * @param token       The JWT token to validate.
      * @param userDetails The UserDetails object to validate against.
      * @return True if the token is valid, false otherwise.
      */

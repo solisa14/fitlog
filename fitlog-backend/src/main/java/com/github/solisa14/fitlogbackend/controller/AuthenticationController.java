@@ -30,8 +30,8 @@ public class AuthenticationController {
     private final UserService userService;
 
     public AuthenticationController(AuthenticationManager authenticationManager,
-            JwtUtil jwtUtil,
-            UserService userService) {
+                                    JwtUtil jwtUtil,
+                                    UserService userService) {
         this.authenticationManager = authenticationManager;
         this.jwtUtil = jwtUtil;
         this.userService = userService;
@@ -42,7 +42,7 @@ public class AuthenticationController {
      * password).
      *
      * @param authenticationRequest the authentication request containing email
-     * and password
+     *                              and password
      * @return ResponseEntity containing the authentication response with JWT
      * token and refresh token
      */
