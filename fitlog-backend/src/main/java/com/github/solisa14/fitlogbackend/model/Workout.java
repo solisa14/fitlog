@@ -2,15 +2,12 @@ package com.github.solisa14.fitlogbackend.model;
 
 import jakarta.persistence.*;
 
-import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Objects;
 
 @Entity
 @Table(name = "workouts")
 public class Workout {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -67,12 +64,20 @@ public class Workout {
         this.user = user;
     }
 
-    public List<ExerciseSet> getExerciseSet() {
+    public List<ExerciseSet> getExerciseSets() {
         return exerciseSets;
     }
 
-    public void setExerciseSet(List<ExerciseSet> exerciseSets) {
+    public void setExerciseSets(List<ExerciseSet> exerciseSets) {
         this.exerciseSets = exerciseSets;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public LocalDateTime getCreatedAt() {
@@ -89,30 +94,5 @@ public class Workout {
 
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void addExerciseSet(ExerciseSet exerciseSet) {
-        this.exerciseSets.add(exerciseSet);
-        exerciseSet.setWorkout(this);
-    }
-
-    public void removeExerciseSet(ExerciseSet exerciseSet) {
-        this.exerciseSets.remove(exerciseSet);
-        exerciseSet.setWorkout(null);
-    }
-
-    public Duration getTotalDuration() {
-        return exerciseSets.stream()
-                .map(ExerciseSet::getDuration)
-                .filter(Objects::nonNull)
-                .reduce(Duration.ZERO, Duration::plus);
     }
 }

@@ -4,6 +4,7 @@ import com.github.solisa14.fitlogbackend.model.Workout;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Data Transfer Object for workout responses.
@@ -24,9 +25,7 @@ public class WorkoutResponse {
         name = workout.getName();
         createdAt = workout.getCreatedAt();
         updatedAt = workout.getUpdatedAt();
-        exerciseSets = workout.getExerciseSet().stream()
-                .map(ExerciseSetResponse::new)
-                .toList();
+        exerciseSets = workout.getExerciseSets().stream().map(ExerciseSetResponse::new).collect(Collectors.toList());
     }
 
     public Long getId() {

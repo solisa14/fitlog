@@ -1,12 +1,12 @@
 package com.github.solisa14.fitlogbackend.dto;
 
-import com.github.solisa14.fitlogbackend.model.ExerciseSet;
 import com.github.solisa14.fitlogbackend.model.Workout;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Data Transfer Object for workout creation and update requests.
@@ -18,16 +18,14 @@ public class WorkoutRequest {
     private String name;
 
     @NotEmpty(message = "Workout should contain at least one exercise set")
-    private List<Long> exerciseSetIds;
+    private List<ExerciseSetRequest> exerciseSets;
 
     public WorkoutRequest() {
     }
 
     public WorkoutRequest(Workout workout) {
         name = workout.getName();
-        exerciseSetIds = workout.getExerciseSet().stream()
-                .map(ExerciseSet::getId)
-                .toList();
+        exerciseSets = workout.getExerciseSets().stream().map(ExerciseSetRequest::new).collect(Collectors.toList());
     }
 
     public String getName() {
@@ -38,11 +36,11 @@ public class WorkoutRequest {
         this.name = name;
     }
 
-    public List<Long> getExerciseSetIds() {
-        return exerciseSetIds;
+    public List<ExerciseSetRequest> getExerciseSets() {
+        return exerciseSets;
     }
 
-    public void setExerciseSetIds(List<Long> exerciseSetIds) {
-        this.exerciseSetIds = exerciseSetIds;
+    public void setExerciseSets(List<ExerciseSetRequest> exerciseSets) {
+        this.exerciseSets = exerciseSets;
     }
 }
