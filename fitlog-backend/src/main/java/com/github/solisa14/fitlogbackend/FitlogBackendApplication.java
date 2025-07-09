@@ -11,6 +11,5 @@ public class FitlogBackendApplication {
     }
 
     // TODO: remove loggedAt from workout
-    // TODO: handle escaping references once done with exercise set model implementation
     // TODO: implement the frontend for the working workouts backend endpoints
 }
