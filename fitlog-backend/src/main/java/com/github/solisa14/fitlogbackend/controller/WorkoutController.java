@@ -48,4 +48,13 @@ public class WorkoutController {
         WorkoutResponse createdWorkout = workoutMapper.toResponseDto(workoutService.createWorkout(newWorkout));
         return ResponseEntity.status(HttpStatus.CREATED).body(createdWorkout);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<WorkoutResponse> updateWorkout(@RequestBody @Valid WorkoutRequest workoutRequest, @PathVariable Long id) {
+        Workout workoutToUpdate = workoutMapper.toWorkout(workoutRequest);
+        Optional<Workout> updatedWorkout = workoutService.updateWorkout(workoutToUpdate, id);
+        return updatedWorkout
+                .map(workout -> ResponseEntity.status(HttpStatus.OK).body(workoutMapper.toResponseDto(workout)))
+                .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+    }
 }

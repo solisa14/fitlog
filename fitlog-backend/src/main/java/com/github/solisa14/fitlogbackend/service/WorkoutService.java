@@ -4,6 +4,7 @@ import com.github.solisa14.fitlogbackend.model.ExerciseSet;
 import com.github.solisa14.fitlogbackend.model.Workout;
 import com.github.solisa14.fitlogbackend.repository.WorkoutRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -36,4 +37,22 @@ public class WorkoutService {
         }
         return workoutRepository.save(newWorkout);
     }
+
+    @Transactional
+    public Optional<Workout> updateWorkout(Workout updatedWorkout, Long id) {
+        return workoutRepository.findByUserAndId(getCurrentUser(), id).map(workout -> {
+            workout.setName(updatedWorkout.getName());
+            // Clear the existing collection to remove old sets
+            workout.getExerciseSets().clear();
+            // Add the new sets from the request
+            if (updatedWorkout.getExerciseSets() != null) {
+                for (ExerciseSet newSet : updatedWorkout.getExerciseSets()) {
+                    newSet.setWorkout(workout);
+                    workout.getExerciseSets().add(newSet);
+                }
+            }
+            return workout;
+        });
+    }
 }
+
