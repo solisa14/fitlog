@@ -5,6 +5,7 @@ import com.github.solisa14.fitlogbackend.enums.TrackingType;
 import com.github.solisa14.fitlogbackend.model.Exercise;
 import jakarta.validation.constraints.*;
 
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -42,7 +43,7 @@ public class ExerciseRequest {
     }
 
     public Set<MuscleGroup> getMuscleGroups() {
-        return muscleGroups;
+        return new HashSet<>(muscleGroups);
     }
 
     public void setMuscleGroups(Set<MuscleGroup> muscleGroups) {

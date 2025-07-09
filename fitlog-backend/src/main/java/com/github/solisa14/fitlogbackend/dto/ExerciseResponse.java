@@ -4,6 +4,7 @@ import com.github.solisa14.fitlogbackend.enums.MuscleGroup;
 import com.github.solisa14.fitlogbackend.enums.TrackingType;
 import com.github.solisa14.fitlogbackend.model.Exercise;
 
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -43,7 +44,7 @@ public class ExerciseResponse {
     }
 
     public Set<MuscleGroup> getMuscleGroups() {
-        return muscleGroups;
+        return new HashSet<>(muscleGroups);
     }
 
     public void setMuscleGroups(Set<MuscleGroup> muscleGroups) {
