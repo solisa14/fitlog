@@ -5,6 +5,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -55,7 +56,7 @@ public class User implements UserDetails {
     }
 
     public List<Exercise> getExercises() {
-        return exercises;
+        return new ArrayList<>(exercises);
     }
 
     public void setExercises(List<Exercise> exercises) {

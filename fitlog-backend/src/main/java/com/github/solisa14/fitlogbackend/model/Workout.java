@@ -3,6 +3,7 @@ package com.github.solisa14.fitlogbackend.model;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -66,7 +67,7 @@ public class Workout {
     }
 
     public List<ExerciseSet> getExerciseSets() {
-        return exerciseSets;
+        return new ArrayList<>(exerciseSets);
     }
 
     public void setExerciseSets(List<ExerciseSet> exerciseSets) {

@@ -5,6 +5,7 @@ import com.github.solisa14.fitlogbackend.enums.TrackingType;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -87,7 +88,7 @@ public class Exercise {
     }
 
     public Set<MuscleGroup> getMuscleGroups() {
-        return muscleGroups;
+        return new HashSet<>(muscleGroups);
     }
 
     public void setMuscleGroups(Set<MuscleGroup> muscleGroups) {
