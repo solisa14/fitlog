@@ -30,3 +30,18 @@ CREATE TABLE exercise_muscle_groups
 -- Create indexes for better performance
 CREATE INDEX idx_exercises_user_id ON exercises (user_id);
 CREATE INDEX idx_exercise_muscle_groups_exercise_id ON exercise_muscle_groups (exercise_id);
+
+-- Create exercise_set table
+CREATE TABLE exercise_set
+(
+    id          BIGSERIAL PRIMARY KEY,
+    exercise_id BIGINT,
+    logged_at   TIMESTAMP,
+    set_number  INTEGER,
+    reps        INTEGER,
+    weight      DOUBLE PRECISION,
+    rpe         DOUBLE PRECISION,
+    duration INTERVAL,
+    distance    DOUBLE PRECISION,
+    CONSTRAINT fk_exercise_set_exercise FOREIGN KEY (exercise_id) REFERENCES exercises (id) ON DELETE CASCADE
+);
