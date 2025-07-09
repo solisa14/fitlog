@@ -1,47 +1,54 @@
--- Initial database schema for FitLog application
-
--- Create users table
 CREATE TABLE users
 (
-    id       BIGSERIAL PRIMARY KEY,
-    email    VARCHAR(255) UNIQUE NOT NULL,
-    password VARCHAR(255)        NOT NULL
+    id         BIGSERIAL PRIMARY KEY,
+    email      VARCHAR(255) UNIQUE NOT NULL,
+    password   VARCHAR(255)        NOT NULL,
+    created_at TIMESTAMP,
+    updated_at TIMESTAMP
 );
 
--- Create exercises table
 CREATE TABLE exercises
 (
     id            BIGSERIAL PRIMARY KEY,
     name          VARCHAR(255) NOT NULL,
-    tracking_type VARCHAR(50)  NOT NULL,
-    user_id       BIGINT       NOT NULL,
-    CONSTRAINT fk_exercises_user FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
+    tracking_type VARCHAR(255) NOT NULL,
+    user_id       BIGINT,
+    created_at    TIMESTAMP,
+    updated_at    TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users (id)
 );
 
--- Create exercise_muscle_groups table for the ElementCollection
 CREATE TABLE exercise_muscle_groups
 (
-    exercise_id   BIGINT      NOT NULL,
-    muscle_groups VARCHAR(50) NOT NULL,
-    PRIMARY KEY (exercise_id, muscle_groups),
-    CONSTRAINT fk_exercise_muscle_groups_exercise FOREIGN KEY (exercise_id) REFERENCES exercises (id) ON DELETE CASCADE
+    exercise_id   BIGINT,
+    muscle_groups VARCHAR(255),
+    FOREIGN KEY (exercise_id) REFERENCES exercises (id)
 );
 
--- Create indexes for better performance
-CREATE INDEX idx_exercises_user_id ON exercises (user_id);
-CREATE INDEX idx_exercise_muscle_groups_exercise_id ON exercise_muscle_groups (exercise_id);
+CREATE TABLE workouts
+(
+    id         BIGSERIAL PRIMARY KEY,
+    name       VARCHAR(255) NOT NULL,
+    user_id    BIGINT,
+    created_at TIMESTAMP,
+    updated_at TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users (id)
+);
 
--- Create exercise_set table
 CREATE TABLE exercise_set
 (
     id          BIGSERIAL PRIMARY KEY,
     exercise_id BIGINT,
+    workout_id  BIGINT,
     logged_at   TIMESTAMP,
-    set_number  INTEGER,
-    reps        INTEGER,
+    created_at  TIMESTAMP,
+    updated_at  TIMESTAMP,
+    set_number  INT,
+    reps        INT,
     weight      DOUBLE PRECISION,
     rpe         DOUBLE PRECISION,
-    duration INTERVAL,
+    duration    NUMERIC(21, 0),
     distance    DOUBLE PRECISION,
-    CONSTRAINT fk_exercise_set_exercise FOREIGN KEY (exercise_id) REFERENCES exercises (id) ON DELETE CASCADE
+    FOREIGN KEY (exercise_id) REFERENCES exercises (id),
+    FOREIGN KEY (workout_id) REFERENCES workouts (id)
 );
