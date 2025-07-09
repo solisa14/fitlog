@@ -69,7 +69,7 @@ public class ExerciseSetResponse {
     }
 
     public Set<MuscleGroup> getMuscleGroups() {
-        return muscleGroups;
+        return new HashSet<>(muscleGroups);
     }
 
     public void setMuscleGroups(Set<MuscleGroup> muscleGroups) {
