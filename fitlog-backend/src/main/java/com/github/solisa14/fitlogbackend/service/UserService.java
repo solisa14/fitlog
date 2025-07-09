@@ -1,6 +1,5 @@
 package com.github.solisa14.fitlogbackend.service;
 
-import com.github.solisa14.fitlogbackend.dto.AuthenticationRequest;
 import com.github.solisa14.fitlogbackend.exception.EmailAlreadyExistsException;
 import com.github.solisa14.fitlogbackend.mapper.UserMapper;
 import com.github.solisa14.fitlogbackend.model.User;
@@ -18,32 +17,28 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private final UserMapper mapper;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, UserMapper mapper) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, UserMapper userMapper) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
-        this.mapper = mapper;
     }
 
     /**
      * Registers a new user with the provided details. It checks for existing
      * email and encodes the password before saving.
      *
-     * @param authenticationRequest DTO containing user registration data.
      * @return The saved User entity.
      * @throws EmailAlreadyExistsException if the email is already in use.
      */
-    public User registerUser(AuthenticationRequest authenticationRequest)
+    public User registerUser(User user)
             throws EmailAlreadyExistsException {
         // Check if email already exists to prevent duplicates
-        if (userRepository.findByEmail(authenticationRequest.getEmail()).isPresent()) {
+        if (userRepository.findByEmail(user.getEmail()).isPresent()) {
             throw new EmailAlreadyExistsException(
                     "Email is already associated with an existing user");
         }
-        authenticationRequest.setPassword(passwordEncoder.encode(authenticationRequest.getPassword()));
-        User newUser = mapper.toUser(authenticationRequest);
-        return userRepository.save(newUser);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        return userRepository.save(user);
     }
 
     /**

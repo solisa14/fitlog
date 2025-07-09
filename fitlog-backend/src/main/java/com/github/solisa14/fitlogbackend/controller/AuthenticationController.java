@@ -29,16 +29,16 @@ public class AuthenticationController {
     private final AuthenticationManager authenticationManager;
     private final JwtUtil jwtUtil;
     private final UserService userService;
-    private final UserMapper mapper;
+    private final UserMapper userMapper;
 
     public AuthenticationController(AuthenticationManager authenticationManager,
                                     JwtUtil jwtUtil,
                                     UserService userService,
-                                    UserMapper mapper) {
+                                    UserMapper userMapper) {
         this.authenticationManager = authenticationManager;
         this.jwtUtil = jwtUtil;
         this.userService = userService;
-        this.mapper = mapper;
+        this.userMapper = userMapper;
     }
 
     /**
@@ -63,7 +63,7 @@ public class AuthenticationController {
         String token = jwtUtil.generateToken(userDetails);
 
         return ResponseEntity.status(HttpStatus.OK)
-                .body(mapper.toResponseDto((User) userDetails, token));
+                .body(userMapper.toResponseDto((User) userDetails, token));
     }
 
     /**
@@ -76,10 +76,10 @@ public class AuthenticationController {
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(
             @Valid @RequestBody AuthenticationRequest authenticationRequest) {
-        User user = userService.registerUser(authenticationRequest);
+        User user = userService.registerUser(userMapper.toUser(authenticationRequest));
         String token = jwtUtil.generateToken(user);
 
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(mapper.toResponseDto(user, token));
+                .body(userMapper.toResponseDto(user, token));
     }
 }

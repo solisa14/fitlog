@@ -5,7 +5,7 @@ import com.github.solisa14.fitlogbackend.dto.AuthenticationResponse;
 import com.github.solisa14.fitlogbackend.model.User;
 import org.mapstruct.Mapper;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface UserMapper {
     User toUser(AuthenticationRequest authenticationRequest);
 
