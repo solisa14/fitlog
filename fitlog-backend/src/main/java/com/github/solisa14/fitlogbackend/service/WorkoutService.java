@@ -1,6 +1,8 @@
 package com.github.solisa14.fitlogbackend.service;
 
+import com.github.solisa14.fitlogbackend.model.ExerciseSet;
 import com.github.solisa14.fitlogbackend.model.Workout;
+import com.github.solisa14.fitlogbackend.repository.ExerciseSetRepository;
 import com.github.solisa14.fitlogbackend.repository.WorkoutRepository;
 import org.springframework.stereotype.Service;
 
@@ -13,9 +15,11 @@ import static com.github.solisa14.fitlogbackend.util.SecurityUtil.getCurrentUser
 public class WorkoutService {
 
     private final WorkoutRepository workoutRepository;
+    private final ExerciseSetRepository exerciseSetRepository;
 
-    public WorkoutService(WorkoutRepository workoutRepository) {
+    public WorkoutService(WorkoutRepository workoutRepository, ExerciseSetRepository exerciseSetRepository) {
         this.workoutRepository = workoutRepository;
+        this.exerciseSetRepository = exerciseSetRepository;
     }
 
     public List<Workout> getAllWorkouts() {
@@ -24,5 +28,15 @@ public class WorkoutService {
 
     public Optional<Workout> getWorkoutById(Long id) {
         return workoutRepository.findByUserAndId(getCurrentUser(), id);
+    }
+
+    public Workout createWorkout(Workout newWorkout) {
+        newWorkout.setUser(getCurrentUser());
+        if (newWorkout.getExerciseSets() != null) {
+            for (ExerciseSet set : newWorkout.getExerciseSets()) {
+                set.setWorkout(newWorkout);
+            }
+        }
+        return workoutRepository.save(newWorkout);
     }
 }
