@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,7 +38,7 @@ public class WorkoutRequest {
     }
 
     public List<ExerciseSetRequest> getExerciseSets() {
-        return exerciseSets;
+        return new ArrayList<>(exerciseSets);
     }
 
     public void setExerciseSets(List<ExerciseSetRequest> exerciseSets) {
