@@ -27,7 +27,7 @@ public class ExerciseSetService {
      * @return List of ExerciseSet objects
      */
     public List<ExerciseSet> getAllExerciseSets() {
-        return exerciseSetRepository.findAllByUser(getCurrentUser());
+        return exerciseSetRepository.findAllByWorkoutUser(getCurrentUser());
     }
 
     /**
@@ -37,6 +37,6 @@ public class ExerciseSetService {
      * @return Optional containing the ExerciseSet if found, otherwise empty
      */
     public Optional<ExerciseSet> getExerciseSetById(Long id) {
-        return exerciseSetRepository.findByIdAndUser(id, getCurrentUser());
+        return exerciseSetRepository.findByIdAndWorkoutUser(id, getCurrentUser());
     }
 }
