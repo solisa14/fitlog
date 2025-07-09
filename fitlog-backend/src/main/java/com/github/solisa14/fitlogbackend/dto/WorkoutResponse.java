@@ -3,6 +3,7 @@ package com.github.solisa14.fitlogbackend.dto;
 import com.github.solisa14.fitlogbackend.model.Workout;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -61,7 +62,7 @@ public class WorkoutResponse {
     }
 
     public List<ExerciseSetResponse> getExerciseSets() {
-        return exerciseSets;
+        return new ArrayList<>(exerciseSets);
     }
 
     public void setExerciseSets(List<ExerciseSetResponse> exerciseSets) {
