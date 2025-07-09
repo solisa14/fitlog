@@ -49,7 +49,7 @@ public class ExerciseController {
      * @return ResponseEntity containing the ExerciseResponse if found, or
      * NOT_FOUND status if not found
      */
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<ExerciseResponse> getExerciseById(@PathVariable Long id) {
         Optional<Exercise> exercise = exerciseService.getExerciseById(id);
         return exercise
