@@ -6,6 +6,7 @@ import com.github.solisa14.fitlogbackend.model.ExerciseSet;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
