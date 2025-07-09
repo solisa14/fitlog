@@ -57,4 +57,10 @@ public class WorkoutController {
                 .map(workout -> ResponseEntity.status(HttpStatus.OK).body(workoutMapper.toResponseDto(workout)))
                 .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteWorkout(@PathVariable Long id) {
+        workoutService.deleteWorkout(id);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
 }

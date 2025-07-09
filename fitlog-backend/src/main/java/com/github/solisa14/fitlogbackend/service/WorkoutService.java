@@ -11,7 +11,11 @@ import java.util.Optional;
 
 import static com.github.solisa14.fitlogbackend.util.SecurityUtil.getCurrentUser;
 
+/**
+ * Service class for managing workout operations.
+ */
 @Service
+@Transactional(readOnly = true)
 public class WorkoutService {
 
     private final WorkoutRepository workoutRepository;
@@ -20,14 +24,33 @@ public class WorkoutService {
         this.workoutRepository = workoutRepository;
     }
 
+    /**
+     * Retrieves all workouts for the currently authenticated user.
+     *
+     * @return A list of Workout entities.
+     */
     public List<Workout> getAllWorkouts() {
         return workoutRepository.findAllByUser(getCurrentUser());
     }
 
+    /**
+     * Retrieves a specific workout by its ID for the currently authenticated
+     * user.
+     *
+     * @param id The ID of the workout to retrieve.
+     * @return An Optional containing the Workout if found, otherwise empty.
+     */
     public Optional<Workout> getWorkoutById(Long id) {
         return workoutRepository.findByUserAndId(getCurrentUser(), id);
     }
 
+    /**
+     * Creates a new workout for the currently authenticated user.
+     *
+     * @param newWorkout The Workout entity to create.
+     * @return The saved Workout entity.
+     */
+    @Transactional
     public Workout createWorkout(Workout newWorkout) {
         newWorkout.setUser(getCurrentUser());
         if (newWorkout.getExerciseSets() != null) {
@@ -38,6 +61,14 @@ public class WorkoutService {
         return workoutRepository.save(newWorkout);
     }
 
+    /**
+     * Updates an existing workout for the currently authenticated user.
+     *
+     * @param updatedWorkout The Workout entity with updated information.
+     * @param id             The ID of the workout to update.
+     * @return An Optional containing the updated Workout if successful,
+     * otherwise empty.
+     */
     @Transactional
     public Optional<Workout> updateWorkout(Workout updatedWorkout, Long id) {
         return workoutRepository.findByUserAndId(getCurrentUser(), id).map(workout -> {
@@ -54,5 +85,14 @@ public class WorkoutService {
             return workout;
         });
     }
-}
 
+    /**
+     * Deletes a workout by its ID for the currently authenticated user.
+     *
+     * @param id The ID of the workout to delete.
+     */
+    @Transactional
+    public void deleteWorkout(Long id) {
+        workoutRepository.deleteByUserAndId(getCurrentUser(), id);
+    }
+}
