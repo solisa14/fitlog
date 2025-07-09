@@ -3,6 +3,7 @@ package com.github.solisa14.fitlogbackend.service;
 import com.github.solisa14.fitlogbackend.model.ExerciseSet;
 import com.github.solisa14.fitlogbackend.repository.ExerciseSetRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,6 +14,7 @@ import static com.github.solisa14.fitlogbackend.util.SecurityUtil.getCurrentUser
  * Service class for managing exercise set operations.
  */
 @Service
+@Transactional(readOnly = true)
 public class ExerciseSetService {
 
     private final ExerciseSetRepository exerciseSetRepository;

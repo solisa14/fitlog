@@ -6,6 +6,7 @@ import com.github.solisa14.fitlogbackend.model.User;
 import com.github.solisa14.fitlogbackend.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Service class for user-related operations such as registration, updates, and
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
  * security.
  */
 @Service
+@Transactional(readOnly = true)
 public class UserService {
 
     private final UserRepository userRepository;
@@ -27,9 +29,11 @@ public class UserService {
      * Registers a new user with the provided details. It checks for existing
      * email and encodes the password before saving.
      *
+     * @param user The User entity to register.
      * @return The saved User entity.
      * @throws EmailAlreadyExistsException if the email is already in use.
      */
+    @Transactional
     public User registerUser(User user)
             throws EmailAlreadyExistsException {
         // Check if email already exists to prevent duplicates
@@ -46,6 +50,7 @@ public class UserService {
      *
      * @param id The ID of the user to be deleted.
      */
+    @Transactional
     public void deleteUser(Long id) {
         userRepository.deleteById(id);
     }

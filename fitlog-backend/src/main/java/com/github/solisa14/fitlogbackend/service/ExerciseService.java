@@ -3,6 +3,7 @@ package com.github.solisa14.fitlogbackend.service;
 import com.github.solisa14.fitlogbackend.model.Exercise;
 import com.github.solisa14.fitlogbackend.repository.ExerciseRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,6 +16,7 @@ import static com.github.solisa14.fitlogbackend.util.SecurityUtil.getCurrentUser
  * authenticated user.
  */
 @Service
+@Transactional(readOnly = true)
 public class ExerciseService {
 
     private final ExerciseRepository exerciseRepository;
@@ -52,6 +54,7 @@ public class ExerciseService {
      * @return An Optional containing the updated Exercise if successful,
      * otherwise empty.
      */
+    @Transactional
     public Optional<Exercise> updateExercise(Long id, Exercise updatedExercise) {
         // Find the exercise by ID and current user before updating
         return exerciseRepository.findByIdAndUser(id, getCurrentUser()).map(exercise -> {
@@ -69,6 +72,7 @@ public class ExerciseService {
      * @param newExercise The Exercise entity to save.
      * @return The saved Exercise entity.
      */
+    @Transactional
     public Exercise saveExercise(Exercise newExercise) {
         newExercise.setUser(getCurrentUser()); // Set the current user to the new exercise
         return exerciseRepository.save(newExercise);
@@ -79,6 +83,7 @@ public class ExerciseService {
      *
      * @param id The ID of the exercise to delete.
      */
+    @Transactional
     public void deleteExercise(Long id) {
         exerciseRepository.deleteByIdAndUser(id, getCurrentUser());
     }
