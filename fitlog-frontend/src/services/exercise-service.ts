@@ -1,6 +1,6 @@
 import type {Exercise, ExerciseRequest} from "../types/exercise";
 import {apiRequest} from "./api";
-import {getAuthToken} from "./auth-service";
+import {getAuthTokenAndValidate} from "./auth-service";
 
 const BASE_URL: string = "http://localhost:8080/api/v1/exercises";
 
@@ -78,10 +78,3 @@ export async function deleteExercise(id: string): Promise<void> {
     }
 }
 
-function getAuthTokenAndValidate(): string {
-    const token = getAuthToken();
-    if (!token) {
-        throw new Error("No auth token found");
-    }
-    return token;
-}

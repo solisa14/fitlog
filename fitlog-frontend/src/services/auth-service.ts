@@ -56,3 +56,11 @@ function setAuthToken(token: string): void {
 export function logout(): void {
     sessionStorage.removeItem("authToken");
 }
+
+export function getAuthTokenAndValidate(): string {
+    const token = getAuthToken();
+    if (!token) {
+        throw new Error("No auth token found");
+    }
+    return token;
+}
