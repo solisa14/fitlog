@@ -45,11 +45,10 @@ public class Exercise {
     public Exercise() {
     }
 
-    public Exercise(String name, Set<MuscleGroup> muscleGroups, TrackingType trackingType, User user) {
-        this.name = name;
-        this.muscleGroups = muscleGroups;
-        this.trackingType = trackingType;
-        this.user = user;
+    public Exercise(Exercise exercise) {
+        this.name = exercise.name;
+        this.muscleGroups = exercise.muscleGroups;
+        this.trackingType = exercise.trackingType;
     }
 
     @PrePersist

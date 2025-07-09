@@ -2,6 +2,7 @@ package com.github.solisa14.fitlogbackend.controller;
 
 import com.github.solisa14.fitlogbackend.dto.ExerciseRequest;
 import com.github.solisa14.fitlogbackend.dto.ExerciseResponse;
+import com.github.solisa14.fitlogbackend.mapper.ExerciseMapper;
 import com.github.solisa14.fitlogbackend.model.Exercise;
 import com.github.solisa14.fitlogbackend.service.ExerciseService;
 import jakarta.validation.Valid;
@@ -12,8 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
-import static com.github.solisa14.fitlogbackend.util.SecurityUtil.getCurrentUser;
-
 /**
  * Controller for handling exercise-related operations using RESTful API
  * endpoints.
@@ -23,9 +22,11 @@ import static com.github.solisa14.fitlogbackend.util.SecurityUtil.getCurrentUser
 public class ExerciseController {
 
     private final ExerciseService exerciseService;
+    private final ExerciseMapper exerciseMapper;
 
-    public ExerciseController(ExerciseService exerciseService) {
+    public ExerciseController(ExerciseService exerciseService, ExerciseMapper exerciseMapper) {
         this.exerciseService = exerciseService;
+        this.exerciseMapper = exerciseMapper;
     }
 
     /**
@@ -37,8 +38,7 @@ public class ExerciseController {
     @GetMapping
     public ResponseEntity<List<ExerciseResponse>> getAllExercises() {
         List<Exercise> foundExercises = exerciseService.getAllExercises();
-        List<ExerciseResponse> exercises
-                = foundExercises.stream().map(ExerciseResponse::new).toList();
+        List<ExerciseResponse> exercises = foundExercises.stream().map(exerciseMapper::toResponseDto).toList();
         return ResponseEntity.status(HttpStatus.OK).body(exercises);
     }
 
@@ -53,7 +53,7 @@ public class ExerciseController {
     public ResponseEntity<ExerciseResponse> getExerciseById(@PathVariable Long id) {
         Optional<Exercise> exercise = exerciseService.getExerciseById(id);
         return exercise
-                .map(ex -> ResponseEntity.status(HttpStatus.OK).body(new ExerciseResponse(ex)))
+                .map(ex -> ResponseEntity.status(HttpStatus.OK).body(exerciseMapper.toResponseDto(ex)))
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
@@ -68,14 +68,8 @@ public class ExerciseController {
     @PostMapping
     public ResponseEntity<ExerciseResponse> createExercise(
             @Valid @RequestBody ExerciseRequest newExercise) {
-        Exercise savedExercise = exerciseService.saveExercise(
-                new Exercise(newExercise.getName(),
-                        newExercise.getMuscleGroups(),
-                        newExercise.getTrackingType(),
-                        getCurrentUser()
-                ));
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(new ExerciseResponse(savedExercise));
+        Exercise savedExercise = exerciseService.saveExercise(exerciseMapper.toExercise(newExercise));
+        return ResponseEntity.status(HttpStatus.CREATED).body(new ExerciseResponse(savedExercise));
     }
 
     /**
@@ -90,11 +84,7 @@ public class ExerciseController {
     @PutMapping("/{id}")
     public ResponseEntity<ExerciseResponse> updateExercise(@PathVariable Long id,
                                                            @Valid @RequestBody ExerciseRequest updatedExerciseRequest) {
-        Exercise updatedExercise = new Exercise(updatedExerciseRequest.getName(),
-                updatedExerciseRequest.getMuscleGroups(),
-                updatedExerciseRequest.getTrackingType(),
-                getCurrentUser()
-        );
+        Exercise updatedExercise = exerciseMapper.toExercise(updatedExerciseRequest);
         Optional<Exercise> savedExercise = exerciseService.updateExercise(id, updatedExercise);
         return savedExercise
                 .map(exercise -> ResponseEntity.status(HttpStatus.OK)
