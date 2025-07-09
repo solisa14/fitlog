@@ -21,6 +21,7 @@ interface ExerciseFormData {
     trackingType: TrackingType;
 }
 
+// TODO: make it so that the exercise form create or update button is disabled if the muscle groups is empty or if the tracking type is not selected
 export default function ExerciseForm({
                                          exercise,
                                          onCancel,
