@@ -69,7 +69,7 @@ public class ExerciseController {
     public ResponseEntity<ExerciseResponse> createExercise(
             @Valid @RequestBody ExerciseRequest newExercise) {
         Exercise savedExercise = exerciseService.saveExercise(exerciseMapper.toExercise(newExercise));
-        return ResponseEntity.status(HttpStatus.CREATED).body(new ExerciseResponse(savedExercise));
+        return ResponseEntity.status(HttpStatus.CREATED).body(exerciseMapper.toResponseDto(savedExercise));
     }
 
     /**
