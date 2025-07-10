@@ -22,6 +22,7 @@ interface ExerciseFormData {
 }
 
 // TODO: make it so that the exercise form create or update button is disabled if the muscle groups is empty or if the tracking type is not selected
+// TODO: add more strict input handling adhering to the rules set in the backend
 export default function ExerciseForm({
                                          exercise,
                                          onCancel,
