@@ -75,6 +75,7 @@ export async function apiRequest<T>(
         return (await response.json()) as T;
     } else {
         // These HttpError exceptions will now properly propagate to calling code
+        console.log(response); // log response to read backend error messages
         switch (status) {
             case 400:
                 throw new HttpError(400, "Bad request", response);
