@@ -5,7 +5,9 @@ import com.github.solisa14.fitlogbackend.enums.TrackingType;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -36,6 +38,9 @@ public class Exercise {
     @JoinColumn(name = "user_id")
     // Specifies the foreign key column in the exercise table
     private User user;
+
+    @OneToMany(mappedBy = "exercise", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ExerciseSet> exerciseSets = new ArrayList<>();
 
     @Column
     private LocalDateTime createdAt;
@@ -101,6 +106,14 @@ public class Exercise {
 
     public void setTrackingType(TrackingType trackingType) {
         this.trackingType = trackingType;
+    }
+
+    public List<ExerciseSet> getExerciseSets() {
+        return new ArrayList<>(exerciseSets);
+    }
+
+    public void setExerciseSets(List<ExerciseSet> exerciseSets) {
+        this.exerciseSets = exerciseSets;
     }
 
     public LocalDateTime getCreatedAt() {
