@@ -1,7 +1,7 @@
 import type {MuscleGroup, TrackingType} from "./enum";
 
 export interface Exercise {
-    id: number;
+    id: string;
     name: string;
     muscleGroups: MuscleGroup[];
     trackingType: TrackingType;
