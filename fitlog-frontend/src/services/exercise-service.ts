@@ -9,7 +9,7 @@ export async function createExercise(
 ): Promise<Exercise> {
     try {
         const token = getAuthTokenAndValidate();
-        const response: Exercise = await apiRequest<Exercise>(
+        return await apiRequest<Exercise>(
             BASE_URL,
             {
                 method: "POST",
@@ -17,7 +17,6 @@ export async function createExercise(
             },
             token
         );
-        return response;
     } catch (error) {
         console.error("Error creating exercise:", error);
         throw error;
@@ -27,14 +26,13 @@ export async function createExercise(
 export async function getExercises(): Promise<Exercise[]> {
     try {
         const token = getAuthTokenAndValidate();
-        const response: Exercise[] = await apiRequest<Exercise[]>(
+        return await apiRequest<Exercise[]>(
             BASE_URL,
             {
                 method: "GET",
             },
             token
         );
-        return response;
     } catch (error) {
         console.error("Error getting exercises:", error);
         throw error;
@@ -47,7 +45,7 @@ export async function updateExercise(
 ): Promise<Exercise> {
     try {
         const token = getAuthTokenAndValidate();
-        const response: Exercise = await apiRequest<Exercise>(
+        return await apiRequest<Exercise>(
             `${BASE_URL}/${id}`,
             {
                 method: "PUT",
@@ -55,7 +53,6 @@ export async function updateExercise(
             },
             token
         );
-        return response;
     } catch (error) {
         console.error("Error updating exercise:", error);
         throw error;
