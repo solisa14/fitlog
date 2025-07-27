@@ -1,64 +1,102 @@
-import {useExercises} from "../hooks/useExercises.ts";
 import NavBar from "./NavBar.tsx";
 import ErrorMessage from "./ErrorMessage.tsx";
-import ExerciseTable from "../features/exercise/ExerciseTable.tsx";
-import ExerciseForm from "../features/exercise/ExerciseForm.tsx";
+import ResourceTable from "./ResourceTable.tsx";
+import * as React from "react";
 
-export interface ResourcePageProps {
-    pageName: string;
-    resourceName: string;
+// TODO: Add error boundary component to catch and handle errors in ResourcePage and its children
+// This will prevent the entire app from crashing if there's an error in resource components
 
+export interface ResourceHook<T> {
+  items: T[];
+  itemToEdit: T | null;
+  displayForm: boolean;
+  error: string | null;
+  handleCreate: (item: T) => void;
+  handleUpdate: (item: T) => void;
+  handleDelete: (id: string) => void;
+  handleEdit: (item: T) => void;
+  handleToggleForm: () => void;
 }
 
-export default function ResourcePage() {
-    const {
-        exercises,
-        exerciseToEdit,
-        displayExerciseForm,
-        error,
-        handleCreateExercise,
-        handleUpdateExercise,
-        handleDeleteExercise,
-        handleEditExercise,
-        handleToggleExerciseForm,
-    } = useExercises();
+export interface ResourcePageProps<T> {
+  pageName: string;
+  columnNames: string[];
+  resourceName: string;
+  resourceHook: ResourceHook<T>;
+  ResourceForm: React.ComponentType<ResourceFormProps<T>>;
+  ResourceRow: React.ComponentType<ResourceRowProps<T>>;
+}
 
-    return (
-        <div className="flex flex-col w-full h-screen">
-            <NavBar/>
-            <div className="flex flex-col px-8 py-6 w-full">
-                <div
-                    className="flex flex-row justify-between items-center mb-6 w-full">
-                    <h1 className="text-2xl font-bold">My Exercises</h1>
-                    <button
-                        className="px-3 py-2 text-white bg-red-500 rounded-lg hover:bg-red-600"
-                        onClick={handleToggleExerciseForm}
-                    >
-                        + Create Exercise
-                    </button>
-                </div>
+export interface ResourceFormProps<T> {
+  itemToEdit: T | null;
+  onCancel: () => void;
+  onCreate: (item: T) => void;
+  onEdit: (item: T) => void;
+}
 
-                {error && <ErrorMessage message={error}/>}
+export interface ResourceRowProps<T> {
+  item: T;
+  onEdit: (item: T) => void;
+  onDelete: (id: string) => void;
+}
 
-                <ExerciseTable
-                    exercises={exercises}
-                    onEdit={handleEditExercise}
-                    onDelete={handleDeleteExercise}
-                />
+export default function ResourcePage<T>({
+  pageName,
+  columnNames,
+  resourceName,
+  resourceHook,
+  ResourceForm,
+  ResourceRow,
+}: ResourcePageProps<T>) {
+  const {
+    items,
+    itemToEdit,
+    displayForm,
+    error,
+    handleCreate,
+    handleUpdate,
+    handleDelete,
+    handleEdit,
+    handleToggleForm,
+  } = resourceHook;
 
-                {displayExerciseForm && (
-                    <div>
-                        <div>
-                            <ExerciseForm
-                                exercise={exerciseToEdit}
-                                onCancel={handleToggleExerciseForm}
-                                onCreate={handleCreateExercise}
-                                onEdit={handleUpdateExercise}
-                            />
-                        </div>
-                    </div>
-                )}
-            </div>
+  return (
+    <div className="flex flex-col w-full h-screen">
+      <NavBar />
+      <div className="flex flex-col px-8 py-6 w-full">
+        <div className="flex flex-row justify-between items-center mb-6 w-full">
+          <h1 className="text-2xl font-bold">{pageName}</h1>
+          <button
+            className="px-3 py-2 text-white bg-red-500 rounded-lg hover:bg-red-600"
+            onClick={handleToggleForm}
+          >
+            {`+ Create ${resourceName}`}
+          </button>
         </div>
-    );
+
+        {error && <ErrorMessage message={error} />}
+
+        <ResourceTable
+          items={items}
+          itemName={resourceName}
+          columnNames={columnNames}
+          onEdit={handleEdit}
+          onDelete={handleDelete}
+          ResourceRow={ResourceRow}
+        />
+        {displayForm && (
+          <div>
+            <div>
+              <ResourceForm
+                itemToEdit={itemToEdit}
+                onCancel={handleToggleForm}
+                onCreate={handleCreate}
+                onEdit={handleUpdate}
+              />
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
 }
