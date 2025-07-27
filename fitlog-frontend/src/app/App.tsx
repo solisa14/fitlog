@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import LoginPage from "../features/auth/login/LoginPage.tsx";
-import RegisterPage from "../features/auth/register/RegisterPage.tsx";
+import LoginPage from "../features/auth/LoginPage.tsx";
+import RegisterPage from "../features/auth/RegisterPage.tsx";
 import HomePage from "../features/home/HomePage.tsx";
 import PrivateRoutes from "./PrivateRoutes.tsx";
 import ExercisePage from "../features/exercise/ExercisePage.tsx";

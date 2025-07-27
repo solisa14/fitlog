@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import { register } from "../../../services/auth-service.ts";
-import AuthForm from "../../../components/AuthForm";
+import { register } from "../../services/auth-service.ts";
+import AuthForm from "../../components/AuthForm.tsx";
 
 export default function RegisterPage() {
   const navigate = useNavigate();
