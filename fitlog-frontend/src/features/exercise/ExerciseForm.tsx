@@ -43,7 +43,7 @@ export default function ExerciseForm({
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ): void {
     const { name, value } = e.target;
-    setormData((prevData: ExerciseFormData) => ({
+    setFormData((prevData: ExerciseFormData) => ({
       ...prevData,
       [name]: value,
     }));
@@ -54,7 +54,7 @@ export default function ExerciseForm({
       ...prevData,
       muscleGroups: checked
         ? [...prevData.muscleGroups, muscleGroup]
-        : prevData.muscleGroups.filter((mg: MuscleGroup) => mg !== muscleGrou),
+        : prevData.muscleGroups.filter((mg: MuscleGroup) => mg !== muscleGroup),
     }));
   }
 

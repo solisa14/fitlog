@@ -1,11 +1,7 @@
 import * as React from "react";
 import type { ResourceRowProps } from "./ResourcePage.tsx";
 
-interface BaseResource {
-  id: string;
-}
-
-interface ResourceTableProps<T extends BaseResource> {
+interface ResourceTableProps<T> {
   items: T[];
   itemName: string;
   columnNames: string[];
@@ -14,7 +10,7 @@ interface ResourceTableProps<T extends BaseResource> {
   ResourceRow: React.ComponentType<ResourceRowProps<T>>;
 }
 
-export default function ResourceTable<T extends BaseResource>({
+export default function ResourceTable<T>({
   items,
   itemName,
   columnNames,
@@ -52,8 +48,9 @@ export default function ResourceTable<T extends BaseResource>({
         </thead>
         <tbody className="bg-white">
           {items.map((item: T) => (
+            // TODO: Refactor this to not use 'any' if possible
             <ResourceRow
-              key={item.id}
+              key={(item as any).id}
               item={item}
               onEdit={onEdit}
               onDelete={onDelete}
