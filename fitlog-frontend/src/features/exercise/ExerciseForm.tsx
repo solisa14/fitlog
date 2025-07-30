@@ -2,16 +2,14 @@ import {
   getMuscleGroupDisplayName,
   getTrackingTypeDisplayName,
   MuscleGroup,
-  TrackingType
+  TrackingType,
 } from "../../types/enum.ts";
 import type { Exercise } from "../../types/exercise.ts";
 import type { ResourceFormProps } from "../../components/ResourcePage.tsx";
 import ResourceForm from "../../components/ResourceForm.tsx";
 import TextFieldComponent from "../../components/form/TextFieldComponent.tsx";
-import CheckboxGroupComponent
-  from "../../components/form/CheckboxGroupComponent.tsx";
-import SelectFieldComponent
-  from "../../components/form/SelectFieldComponent.tsx";
+import CheckboxGroupComponent from "../../components/form/CheckboxGroupComponent.tsx";
+import SelectFieldComponent from "../../components/form/SelectFieldComponent.tsx";
 
 export default function ExerciseForm({
   itemToEdit: exercise,
@@ -22,12 +20,12 @@ export default function ExerciseForm({
   const muscleGroupOptions = Object.values(MuscleGroup).map((muscleGroup) => ({
     value: muscleGroup,
     label: getMuscleGroupDisplayName(muscleGroup),
-  ));
+  }));
 
   const trackingTypeOptions = Object.values(TrackingType).map((type) => ({
     value: type,
     label: getTrackingTypeDisplayName(type),
-  ));
+  }));
 
   return (
     <ResourceForm
@@ -39,7 +37,7 @@ export default function ExerciseForm({
       initialData={{
         name: "",
         muscleGroups: [],
-        trackingType: TrackingType.REPS_AND_WEIGHT
+        trackingType: TrackingType.REPS_AND_WEIGHT,
       }}
     >
       {({ formData, handleChange, setError }) => {
