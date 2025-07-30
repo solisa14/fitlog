@@ -48,7 +48,6 @@ export default function ResourceTable<T>({
         </thead>
         <tbody className="bg-white">
           {items.map((item: T) => (
-            // TODO: Refactor this to not use 'any' if possible
             <ResourceRow
               key={(item as any).id}
               item={item}

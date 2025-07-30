@@ -3,9 +3,6 @@ import ErrorMessage from "./ErrorMessage.tsx";
 import ResourceTable from "./ResourceTable.tsx";
 import * as React from "react";
 
-// TODO: Add error boundary component to catch and handle errors in ResourcePage and its children
-// This will prevent the entire app from crashing if there's an error in resource components
-
 export interface ResourceHook<T> {
   items: T[];
   itemToEdit: T | null;
