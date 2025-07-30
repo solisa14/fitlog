@@ -1,14 +1,5 @@
 import * as React from "react";
-
-export interface TextFieldProps {
-  name: string;
-  label: string;
-  value?: string;
-  onChange?: (name: string, value: string) => void;
-  onError?: (field: string, error: string | null) => void;
-  placeholder?: string;
-  required?: boolean;
-}
+import type { TextFieldProps } from "../../types/form.ts";
 
 export default function TextFieldComponent({
   name,

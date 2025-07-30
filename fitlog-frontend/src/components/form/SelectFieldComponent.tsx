@@ -1,18 +1,5 @@
 import * as React from "react";
-
-export interface SelectOption {
-  value: string;
-  label: string;
-}
-
-export interface SelectFieldProps {
-  name: string;
-  label: string;
-  value?: string;
-  onChange?: (name: string, value: string) => void;
-  options: SelectOption[];
-  required?: boolean;
-}
+import type { SelectFieldProps } from "../../types/form.ts";
 
 export default function SelectFieldComponent({
   name,

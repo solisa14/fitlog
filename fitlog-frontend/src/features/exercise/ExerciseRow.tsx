@@ -4,7 +4,7 @@ import {
   MuscleGroup,
 } from "../../types/enum.ts";
 import RowActionButtons from "../../components/RowActionButtons.tsx";
-import type { ResourceRowProps } from "../../components/ResourcePage.tsx";
+import type { ResourceRowProps } from "../../types/resource.ts";
 import type { Exercise } from "../../types/exercise.ts";
 
 export default function ExerciseRow({

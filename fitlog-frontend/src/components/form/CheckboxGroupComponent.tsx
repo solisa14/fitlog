@@ -1,15 +1,4 @@
-export interface CheckboxOption {
-  value: string;
-  label: string;
-}
-
-export interface CheckboxGroupProps {
-  name: string;
-  label: string;
-  value?: string[];
-  onChange?: (name: string, value: string[]) => void;
-  options: CheckboxOption[];
-}
+import type { CheckboxGroupProps } from "../../types/form.ts";
 
 export default function CheckboxGroupComponent({
   name,

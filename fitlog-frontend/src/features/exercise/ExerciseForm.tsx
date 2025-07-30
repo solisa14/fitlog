@@ -5,7 +5,7 @@ import {
   TrackingType,
 } from "../../types/enum.ts";
 import type { Exercise } from "../../types/exercise.ts";
-import type { ResourceFormProps } from "../../components/ResourcePage.tsx";
+import type { ResourceFormProps } from "../../types/resource.ts";
 import ResourceForm from "../../components/ResourceForm.tsx";
 import TextFieldComponent from "../../components/form/TextFieldComponent.tsx";
 import CheckboxGroupComponent from "../../components/form/CheckboxGroupComponent.tsx";

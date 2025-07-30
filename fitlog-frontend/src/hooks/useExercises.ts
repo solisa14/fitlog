@@ -4,9 +4,9 @@ import {
   createExercise,
   deleteExercise,
   getExercises,
-  updateExercise,
+  updateExercise
 } from "../services/exercise-service.ts";
-import type { ResourceHook } from "../components/ResourcePage.tsx";
+import type { ResourceHook } from "../types/resource.ts";
 
 export function useExercises(): ResourceHook<Exercise> {
   const [exercises, setExercises] = useState<Exercise[]>([]);
@@ -25,7 +25,7 @@ export function useExercises(): ResourceHook<Exercise> {
       setDisplayExerciseForm(false);
     } catch (error) {
       setError(
-        error instanceof Error ? error.message : "Failed to create exercise"
+        error instanceof Error ? error.message : "Failed to create exercise",
       );
     }
   }
@@ -36,7 +36,7 @@ export function useExercises(): ResourceHook<Exercise> {
       setExercises(fetchedExercises);
     } catch (error) {
       setError(
-        error instanceof Error ? error.message : "Failed to fetch exerc"
+        error instanceof Error ? error.message : "Failed to fetch exercise,
       );
     }
   }
@@ -49,8 +49,8 @@ export function useExercises(): ResourceHook<Exercise> {
       setExercises((prev: Exercise[]): Exercise[] =>
         prev.map(
           (ex: Exercise): Exercise =>
-            (ex.id === exercise.id ? updatedExercise : ex) as Exercise
-        )
+            (ex.id === exercise.id ? updatedExercise : ex) as Exercise,
+        ),
       );
     } catch (error) {
       setError(
@@ -63,11 +63,11 @@ export function useExercises(): ResourceHook<Exercise> {
     try {
       await deleteExercise(id);
       setExercises((prev: Exercise[]): Exercise[] =>
-        prev.filter((ex: Exercise): boolean => ex.id !== id)
+        prev.filter((ex: Exercise): boolean => ex.id !== id),
       );
     } catch (error) {
       setError(
-        error instanceof Error ? error.message : "Failed to delete exee"
+        error instanceof Error ? error.message : "Failed to delete exercise"
       );
     }
   }

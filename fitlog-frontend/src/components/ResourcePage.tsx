@@ -2,40 +2,7 @@ import NavBar from "./NavBar.tsx";
 import ErrorMessage from "./ErrorMessage.tsx";
 import ResourceTable from "./ResourceTable.tsx";
 import * as React from "react";
-
-export interface ResourceHook<T> {
-  items: T[];
-  itemToEdit: T | null;
-  displayForm: boolean;
-  error: string | null;
-  handleCreate: (item: T) => void;
-  handleUpdate: (item: T) => void;
-  handleDelete: (id: string) => void;
-  handleEdit: (item: T) => void;
-  handleToggleForm: () => void;
-}
-
-export interface ResourcePageProps<T> {
-  pageName: string;
-  columnNames: string[];
-  resourceName: string;
-  resourceHook: ResourceHook<T>;
-  ResourceForm: React.ComponentType<ResourceFormProps<T>>;
-  ResourceRow: React.ComponentType<ResourceRowProps<T>>;
-}
-
-export interface ResourceFormProps<T> {
-  itemToEdit: T | null;
-  onCancel: () => void;
-  onCreate: (item: T) => void;
-  onEdit: (item: T) => void;
-}
-
-export interface ResourceRowProps<T> {
-  item: T;
-  onEdit: (item: T) => void;
-  onDelete: (id: string) => void;
-}
+import type { ResourceHook, ResourcePageProps } from "../types/resource.ts";
 
 export default function ResourcePage<T>({
   pageName,
@@ -55,7 +22,7 @@ export default function ResourcePage<T>({
     handleDelete,
     handleEdit,
     handleToggleForm,
-  } = resourceHook;
+  }: ResourceHook<T> = resourceHook;
 
   return (
     <div className="flex flex-col w-full h-screen">

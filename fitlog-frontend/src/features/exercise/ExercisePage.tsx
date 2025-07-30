@@ -1,10 +1,9 @@
 import { useExercises } from "../../hooks/useExercises.ts";
-import ResourcePage, {
-  type ResourceHook,
-} from "../../components/ResourcePage.tsx";
+import ResourcePage from "../../components/ResourcePage.tsx";
 import type { Exercise } from "../../types/exercise.ts";
 import ExerciseForm from "./ExerciseForm.tsx";
 import ExerciseRow from "./ExerciseRow.tsx";
+import type { ResourceHook } from "../../types/resource.ts";
 
 export default function ExercisePage() {
   const exerciseHook: ResourceHook<Exercise> = useExercises();
