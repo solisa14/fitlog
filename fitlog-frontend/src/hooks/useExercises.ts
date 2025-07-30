@@ -4,7 +4,7 @@ import {
   createExercise,
   deleteExercise,
   getExercises,
-  updateExercise
+  updateExercise,
 } from "../services/exercise-service.ts";
 import type { ResourceHook } from "../types/resource.ts";
 
@@ -36,7 +36,7 @@ export function useExercises(): ResourceHook<Exercise> {
       setExercises(fetchedExercises);
     } catch (error) {
       setError(
-        error instanceof Error ? error.message : "Failed to fetch exercise,
+        error instanceof Error ? error.message : "Failed to fetch exercise",
       );
     }
   }
@@ -54,7 +54,7 @@ export function useExercises(): ResourceHook<Exercise> {
       );
     } catch (error) {
       setError(
-        error instanceof Error ? error.message : "Failed to update exercise"
+        error instanceof Error ? error.message : "Failed to update exercise",
       );
     }
   }
@@ -67,7 +67,7 @@ export function useExercises(): ResourceHook<Exercise> {
       );
     } catch (error) {
       setError(
-        error instanceof Error ? error.message : "Failed to delete exercise"
+        error instanceof Error ? error.message : "Failed to delete exercise",
       );
     }
   }
