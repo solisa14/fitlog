@@ -2,52 +2,32 @@ import {
   getMuscleGroupDisplayName,
   getTrackingTypeDisplayName,
   MuscleGroup,
-  TrackingType,
+  TrackingType
 } from "../../types/enum.ts";
 import type { Exercise } from "../../types/exercise.ts";
 import type { ResourceFormProps } from "../../components/ResourcePage.tsx";
-import ResourceForm, {
-  type FieldConfig,
-} from "../../components/ResourceForm.tsx";
+import ResourceForm from "../../components/ResourceForm.tsx";
+import TextFieldComponent from "../../components/form/TextFieldComponent.tsx";
+import CheckboxGroupComponent
+  from "../../components/form/CheckboxGroupComponent.tsx";
+import SelectFieldComponent
+  from "../../components/form/SelectFieldComponent.tsx";
 
-// TODO: make it so that the exercise form create or update button is disabled if the muscle groups is empty or if the tracking type is not selected
-// TODO: add more strict input handling adhering to the rules set in the backend
 export default function ExerciseForm({
   itemToEdit: exercise,
   onCancel,
   onCreate,
   onEdit,
 }: ResourceFormProps<Exercise>) {
-  const fields: FieldConfig[] = [
-    {
-      name: "name",
-      label: "Exercise Name",
-      type: "text",
-      required: true,
-      placeholder: "Enter exercise name",
-    },
-    {
-      name: "muscleGroups",
-      label: "Muscle Groups",
-      type: "checkbox-group",
-      options: Object.values(MuscleGroup).map((muscleGroup) => ({
-        value: muscleGroup,
-        label: getMuscleGroupDisplayName(muscleGroup),
-      })),
-      defaultValue: [],
-    },
-    {
-      name: "trackingType",
-      label: "Tracking Type",
-      type: "select",
-      required: true,
-      options: Object.values(TrackingType).map((type) => ({
-        value: type,
-        label: getTrackingTypeDisplayName(type),
-      })),
-      defaultValue: TrackingType.REPS_AND_WEIGHT,
-    },
-  ];
+  const muscleGroupOptions = Object.values(MuscleGroup).map((muscleGroup) => ({
+    value: muscleGroup,
+    label: getMuscleGroupDisplayName(muscleGroup),
+  ));
+
+  const trackingTypeOptions = Object.values(TrackingType).map((type) => ({
+    value: type,
+    label: getTrackingTypeDisplayName(type),
+  ));
 
   return (
     <ResourceForm
@@ -56,7 +36,51 @@ export default function ExerciseForm({
       onCreate={onCreate}
       onEdit={onEdit}
       title="Exercise"
-      fields={fields}
-    />
+      initialData={{
+        name: "",
+        muscleGroups: [],
+        trackingType: TrackingType.REPS_AND_WEIGHT
+      }}
+    >
+      {({ formData, handleChange, setError }) => {
+        const handleMuscleGroupChange = (name: string, value: string[]) => {
+          handleChange(name, value);
+          if (value.length === 0) {
+            setError(name, "At least one muscle group is required");
+          } else {
+            setError(name, null);
+          }
+        };
+
+        return (
+          <>
+            <TextFieldComponent
+              name="name"
+              label="Exercise Name"
+              placeholder="Enter exercise name"
+              required
+              value={formData.name}
+              onChange={handleChange}
+              onError={setError}
+            />
+            <CheckboxGroupComponent
+              name="muscleGroups"
+              label="Muscle Groups"
+              options={muscleGroupOptions}
+              value={formData.muscleGroups}
+              onChange={handleMuscleGroupChange}
+            />
+            <SelectFieldComponent
+              name="trackingType"
+              label="Tracking Type"
+              options={trackingTypeOptions}
+              required
+              value={formData.trackingType}
+              onChange={handleChange}
+            />
+          </>
+        );
+      }}
+    </ResourceForm>
   );
 }
